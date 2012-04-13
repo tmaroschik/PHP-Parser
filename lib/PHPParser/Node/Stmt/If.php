@@ -20,14 +20,14 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt
      * @param int                 $line       Line
      * @param null|string         $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $cond, array $subNodes = array(), $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Expr $cond, array $subNodes = array(), $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             $subNodes + array(
                 'stmts'   => array(),
                 'elseifs' => array(),
                 'else'    => null,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
         $this->cond = $cond;
     }

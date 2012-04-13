@@ -14,13 +14,13 @@ class PHPParser_Node_Expr_FuncCall extends PHPParser_Node_Expr
      * @param int                                     $line       Line
      * @param null|string                             $docComment Nearest doc comment
      */
-    public function __construct($name, array $args = array(), $line = -1, $docComment = null) {
+    public function __construct($name, array $args = array(), $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'name' => $name,
                 'args' => $args
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

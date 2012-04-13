@@ -14,13 +14,13 @@ class PHPParser_Node_Stmt_Declare extends PHPParser_Node_Stmt
      * @param int                                  $line       Line
      * @param null|string                          $docComment Nearest doc comment
      */
-    public function __construct(array $declares, array $stmts, $line = -1, $docComment = null) {
+    public function __construct(array $declares, array $stmts, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'declares' => $declares,
                 'stmts'    => $stmts,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

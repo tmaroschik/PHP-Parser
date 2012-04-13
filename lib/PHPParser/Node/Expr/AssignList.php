@@ -14,13 +14,13 @@ class PHPParser_Node_Expr_AssignList extends PHPParser_Node_Expr
      * @param int                 $line       Line
      * @param null|string         $docComment Nearest doc comment
      */
-    public function __construct(array $vars, PHPParser_Node_Expr $expr, $line = -1, $docComment = null) {
+    public function __construct(array $vars, PHPParser_Node_Expr $expr, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'vars' => $vars,
                 'expr' => $expr
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

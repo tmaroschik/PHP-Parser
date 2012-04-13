@@ -77,7 +77,7 @@ abstract class PHPParser_PrettyPrinterAbstract
      * @return string Pretty printed nodes
      */
     public function prettyPrint(array $nodes) {
-        return str_replace("\n" . $this->noIndentToken, "\n", $this->pStmts($nodes, false));
+        return str_replace(PHP_EOL . $this->noIndentToken, PHP_EOL, $this->pStmts($nodes, false));
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class PHPParser_PrettyPrinterAbstract
      * @return string Pretty printed node
      */
     public function prettyPrintExpr(PHPParser_Node_Expr $node) {
-        return str_replace("\n" . $this->noIndentToken, "\n", $this->p($node));
+        return str_replace(PHP_EOL . $this->noIndentToken, PHP_EOL, $this->p($node));
     }
 
     /**
@@ -102,21 +102,25 @@ abstract class PHPParser_PrettyPrinterAbstract
     protected function pStmts(array $nodes, $indent = true) {
         $pNodes = array();
         foreach ($nodes as $node) {
-            $pNodes[] = ((null !== $docComment = $node->getDocComment())
-                         ? preg_replace('~^\s+\*~m', ' *', $docComment) . "\n"
-                         : '')
-                      . $this->p($node)
+			$implodable = ((null !== $comment = $node->getComment())
+                 ? trim(preg_replace('~^\s+\*~m', ' *', preg_replace('~//\s+~m', '// ', $comment))) . PHP_EOL
+                 : '');
+            $implodable .= ((null !== $docComment = $node->getDocComment())
+                    ? preg_replace('~^\s+\*~m', ' *', $docComment) . PHP_EOL
+                    : '');
+            $implodable .= $this->p($node)
                       . ($node instanceof PHPParser_Node_Expr ? ';' : '');
+            $pNodes[] = $implodable;
         }
 
         if ($indent) {
-            return '    ' . preg_replace(
+            return "\t" . preg_replace(
                 '~\n(?!$|' . $this->noIndentToken . ')~',
-                "\n" . '    ',
-                implode("\n", $pNodes)
+                PHP_EOL . "\t",
+                implode(PHP_EOL, $pNodes)
             );
         } else {
-            return implode("\n", $pNodes);
+            return implode(PHP_EOL, $pNodes);
         }
     }
 
@@ -185,6 +189,6 @@ abstract class PHPParser_PrettyPrinterAbstract
      * @return mixed String marked with $this->noIndentToken's.
      */
     protected function pSafe($string) {
-        return str_replace("\n", "\n" . $this->noIndentToken, $string);
+        return str_replace(PHP_EOL, PHP_EOL . $this->noIndentToken, $string);
     }
 }

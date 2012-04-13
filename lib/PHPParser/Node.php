@@ -43,7 +43,21 @@ interface PHPParser_Node
      * @param null|string $docComment Nearest doc comment or null
      */
     public function setDocComment($docComment);
-    
+
+    /**
+     * Gets the nearest comment.
+     *
+     * @return null|string Nearest comment or null
+     */
+    public function getComment();
+
+    /**
+     * Sets the nearest comment.
+     *
+     * @param null|string $comment Nearest comment or null
+     */
+    public function setComment($comment);
+
     /**
      * Sets an attribute on a node.
      *
@@ -51,16 +65,16 @@ interface PHPParser_Node
      * @param mixed $value
      */
     public function setAttribute($key, $value);
-    
+
     /**
      * Returns whether an attribute exists.
-     * 
+     *
      * @param string $key
      *
      * @return Boolean
      */
     public function hasAttribute($key);
-    
+
     /**
      * Returns the value of an attribute.
      *
@@ -70,7 +84,7 @@ interface PHPParser_Node
      * @return mixed
      */
     public function getAttribute($key, $default = null);
-    
+
     /**
      * Returns all attributes for the given node.
      *

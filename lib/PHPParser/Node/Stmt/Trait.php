@@ -14,13 +14,13 @@ class PHPParser_Node_Stmt_Trait extends PHPParser_Node_Stmt
      * @param int              $line       Line
      * @param null|string      $docComment Nearest doc comment
      */
-    public function __construct($name, array $stmts = array(), $line = -1, $docComment = null) {
+    public function __construct($name, array $stmts = array(), $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'name'  => $name,
                 'stmts' => $stmts,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

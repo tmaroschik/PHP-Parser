@@ -5,6 +5,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     protected $subNodes;
     protected $line;
     protected $docComment;
+    protected $comment;
     protected $attributes;
 
     /**
@@ -14,10 +15,11 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      * @param int         $line       Line
      * @param null|string $docComment Nearest doc comment
      */
-    public function __construct(array $subNodes, $line = -1, $docComment = null) {
+    public function __construct(array $subNodes, $line = -1, $docComment = null, $comment = null) {
         $this->subNodes   = $subNodes;
         $this->line       = $line;
         $this->docComment = $docComment;
+        $this->comment    = $comment;
         $this->attributes = array();
     }
 
@@ -74,28 +76,46 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     public function setDocComment($docComment) {
         $this->docComment = $docComment;
     }
-    
+
+    /**
+      * Gets the nearest comment.
+      *
+      * @return null|string Nearest doc comment or null
+      */
+     public function getComment() {
+         return $this->comment;
+     }
+
+     /**
+      * Sets the nearest  comment.
+      *
+      * @param null|string $comment Nearest comment or null
+      */
+     public function setComment($comment) {
+         $this->comment = $comment;
+     }
+
     /**
      * @inheritDoc
      */
     public function setAttribute($key, $value) {
         $this->attributes[$key] = $value;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function hasAttribute($key) {
         return array_key_exists($key, $this->attributes);
     }
-    
+
     /**
      * @inheritDoc
      */
     public function getAttribute($key, $default = null) {
         return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
     }
-    
+
     /**
      * @inheritDoc
      */

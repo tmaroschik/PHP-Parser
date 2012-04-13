@@ -14,13 +14,13 @@ class PHPParser_Node_Expr_BitwiseAnd extends PHPParser_Node_Expr
      * @param int                 $line       Line
      * @param null|string         $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $left, PHPParser_Node_Expr $right, $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Expr $left, PHPParser_Node_Expr $right, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'left'  => $left,
                 'right' => $right
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

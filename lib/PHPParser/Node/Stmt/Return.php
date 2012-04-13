@@ -12,12 +12,12 @@ class PHPParser_Node_Stmt_Return extends PHPParser_Node_Stmt
      * @param int                      $line       Line
      * @param null|string              $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $expr = null, $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Expr $expr = null, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'expr' => $expr,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

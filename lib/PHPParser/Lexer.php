@@ -71,8 +71,9 @@ class PHPParser_Lexer
      *
      * @return int Token id
      */
-    public function lex(&$value = null, &$line = null, &$docComment = null) {
+    public function lex(&$value = null, &$line = null, &$docComment = null, &$comment = null) {
         $docComment = null;
+        $comment = null;
 
         while (isset($this->tokens[++$this->pos])) {
             $token = $this->tokens[$this->pos];
@@ -93,6 +94,8 @@ class PHPParser_Lexer
 
                 if (T_DOC_COMMENT === $token[0]) {
                     $docComment = $token[1];
+                } elseif (T_COMMENT === $token[0]) {
+                    $comment = ($comment === null) ? $token[1] : $comment . PHP_EOL . $token[1];
                 } elseif (!isset(self::$dropTokens[$token[0]])) {
                     $value = $token[1];
                     $line  = $token[2];

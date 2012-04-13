@@ -16,14 +16,14 @@ class PHPParser_Node_Expr_Ternary extends PHPParser_Node_Expr
      * @param int                      $line       Line
      * @param null|string              $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $cond, $if, PHPParser_Node_Expr $else, $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Expr $cond, $if, PHPParser_Node_Expr $else, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'cond' => $cond,
                 'if'   => $if,
                 'else' => $else
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

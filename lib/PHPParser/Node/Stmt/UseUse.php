@@ -14,7 +14,7 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt
      * @param int                 $line       Line
      * @param null|string         $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Name $name, $alias = null, $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Name $name, $alias = null, $line = -1, $docComment = null, $comment = null) {
         if (null === $alias) {
             $alias = $name->getLast();
         }
@@ -31,7 +31,7 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt
                 'name'  => $name,
                 'alias' => $alias,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

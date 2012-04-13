@@ -14,13 +14,13 @@ class PHPParser_Node_Expr_ClassConstFetch extends PHPParser_Node_Expr
      * @param int                                     $line       Line
      * @param null|string                             $docComment Nearest doc comment
      */
-    public function __construct($class, $name, $line = -1, $docComment = null) {
+    public function __construct($class, $name, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'class' => $class,
                 'name'  => $name
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

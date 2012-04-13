@@ -14,13 +14,13 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr
      * @param int         $line       Line
      * @param null|string $docComment Nearest doc comment
      */
-    public function __construct($var, $byRef = false, $line = -1, $docComment = null) {
+    public function __construct($var, $byRef = false, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'var'   => $var,
                 'byRef' => $byRef
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

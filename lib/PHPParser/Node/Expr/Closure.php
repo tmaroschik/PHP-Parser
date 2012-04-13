@@ -21,7 +21,7 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr
      * @param int         $line       Line
      * @param null|string $docComment Nearest doc comment
      */
-    public function __construct(array $subNodes = array(), $line = -1, $docComment = null) {
+    public function __construct(array $subNodes = array(), $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             $subNodes + array(
                 'stmts'  => array(),
@@ -30,7 +30,7 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr
                 'byRef'  => false,
                 'static' => false,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

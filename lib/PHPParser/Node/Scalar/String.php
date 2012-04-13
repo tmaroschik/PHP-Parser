@@ -23,12 +23,12 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      * @param int         $line       Line
      * @param null|string $docComment Nearest doc comment
      */
-    public function __construct($value = '', $line = -1, $docComment = null) {
+    public function __construct($value = '', $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'value' => $value
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 
@@ -41,7 +41,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      *
      * @return PHPParser_Node_Scalar_String String Node
      */
-    public static function create($str, $line = -1, $docComment = null) {
+    public static function create($str, $line = -1, $docComment = null, $comment = null) {
         $bLength = 0;
         if ('b' === $str[0]) {
             $bLength = 1;

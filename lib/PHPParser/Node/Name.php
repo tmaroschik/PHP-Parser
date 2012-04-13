@@ -12,7 +12,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      * @param int          $line       Line
      * @param null|string  $docComment Nearest doc comment
      */
-    public function __construct($parts, $line = -1, $docComment = null) {
+    public function __construct($parts, $line = -1, $docComment = null, $comment = null) {
         if (!is_array($parts)) {
             $parts = explode('\\', $parts);
         }
@@ -21,7 +21,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
             array(
                 'parts' => $parts,
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 

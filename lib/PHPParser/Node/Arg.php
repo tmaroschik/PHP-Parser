@@ -14,13 +14,13 @@ class PHPParser_Node_Arg extends PHPParser_NodeAbstract
      * @param int                 $line       Line
      * @param null|string         $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $value, $byRef = false, $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Expr $value, $byRef = false, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'value' => $value,
                 'byRef' => $byRef
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }

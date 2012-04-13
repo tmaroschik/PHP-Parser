@@ -37,14 +37,14 @@ $grammarCode = resolveArrays($grammarCode);
 file_put_contents(TMP_FILE, $grammarCode);
 
 echo 'Building parser. Output: "',
-     trim(shell_exec('kmyacc -l -m kmyacc.php.parser -p PHPParser_Parser ' . TMP_FILE . ' 2>&1')),
+     trim(shell_exec('/usr/local/bin/kmyacc -l -m kmyacc.php.parser -p PHPParser_Parser ' . TMP_FILE . ' 2>&1')),
      '"', "\n";
 
 rename(RESULT_FILE, '../lib/PHPParser/Parser.php');
 
 if (isset($_GET['debug'])) {
     echo 'Building debug parser. Output: "',
-    trim(shell_exec('kmyacc -t -v -l -m kmyacc.php.parser -p PHPParser_Parser ' . TMP_FILE . ' 2>&1')),
+    trim(shell_exec('/usr/local/bin/kmyacc -t -v -l -m kmyacc.php.parser -p PHPParser_Parser ' . TMP_FILE . ' 2>&1')),
     '"', "\n";
 
     if (!is_dir('../lib/PHPParser/Parser')) {
@@ -85,7 +85,7 @@ function resolveNodes($code) {
                 $paramCode .= $param . ', ';
             }
 
-            return 'new PHPParser_Node_' . $matches['name'] . '(' . $paramCode . '$line, $docComment)';
+            return 'new PHPParser_Node_' . $matches['name'] . '(' . $paramCode . '$line, $docComment, $comment)';
         },
         $code
     );

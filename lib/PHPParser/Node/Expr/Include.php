@@ -19,13 +19,13 @@ class PHPParser_Node_Expr_Include extends PHPParser_Node_Expr
      * @param int                 $line       Line
      * @param null|string         $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $expr, $type, $line = -1, $docComment = null) {
+    public function __construct(PHPParser_Node_Expr $expr, $type, $line = -1, $docComment = null, $comment = null) {
         parent::__construct(
             array(
                 'expr' => $expr,
                 'type' => $type
             ),
-            $line, $docComment
+            $line, $docComment, $comment
         );
     }
 }
