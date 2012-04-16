@@ -12,12 +12,12 @@ class PHPParser_Node_Stmt_Global extends PHPParser_Node_Stmt
      * @param int                   $line       Line
      * @param null|string           $docComment Nearest doc comment
      */
-    public function __construct(array $vars, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(array $vars, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'vars' => $vars,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

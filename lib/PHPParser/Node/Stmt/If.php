@@ -18,16 +18,16 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt
      *                                        'elseifs' => array(): Elseif clauses
      *                                        'else'    => null   : Else clause
      * @param int                 $line       Line
-     * @param null|string         $docComment Nearest doc comment
+     * @param null|array          $ignorables All Ignorables
      */
-    public function __construct(PHPParser_Node_Expr $cond, array $subNodes = array(), $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Expr $cond, array $subNodes = array(), $line = -1, $ignorables = null) {
         parent::__construct(
             $subNodes + array(
                 'stmts'   => array(),
                 'elseifs' => array(),
                 'else'    => null,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
         $this->cond = $cond;
     }

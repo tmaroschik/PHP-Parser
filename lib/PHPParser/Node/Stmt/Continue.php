@@ -12,12 +12,12 @@ class PHPParser_Node_Stmt_Continue extends PHPParser_Node_Stmt
      * @param int                      $line       Line
      * @param null|string              $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $num = null, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Expr $num = null, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'num' => $num,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

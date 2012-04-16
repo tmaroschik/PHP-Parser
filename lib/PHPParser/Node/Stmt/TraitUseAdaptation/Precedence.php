@@ -16,14 +16,14 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
      * @param int                   $line        Line
      * @param null|string           $docComment  Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Name $trait, $method, array $insteadof, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Name $trait, $method, array $insteadof, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'trait'     => $trait,
                 'method'    => $method,
                 'insteadof' => $insteadof,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

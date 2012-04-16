@@ -21,14 +21,14 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      *
      * @param string      $value      Value of the string
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables All Ignorables
      */
-    public function __construct($value = '', $line = -1, $docComment = null, $comment = null) {
+    public function __construct($value = '', $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'value' => $value
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 
@@ -37,11 +37,11 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
      *
      * @param string      $str        String
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables All Ignorables
      *
      * @return PHPParser_Node_Scalar_String String Node
      */
-    public static function create($str, $line = -1, $docComment = null, $comment = null) {
+    public static function create($str, $line = -1, $ignorables = null) {
         $bLength = 0;
         if ('b' === $str[0]) {
             $bLength = 1;
@@ -57,7 +57,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar
             $str = self::parseEscapeSequences(substr($str, $bLength + 1, -1), '"');
         }
 
-        return new self($str, $line, $docComment);
+        return new self($str, $line, $ignorables);
     }
 
     /**

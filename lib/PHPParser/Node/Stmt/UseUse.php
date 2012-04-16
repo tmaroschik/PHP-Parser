@@ -12,9 +12,9 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt
      * @param PHPParser_Node_Name $name       Namespace/Class to alias
      * @param null|string         $alias      Alias
      * @param int                 $line       Line
-     * @param null|string         $docComment Nearest doc comment
+     * @param null|array          $ignorables All Ignorables
      */
-    public function __construct(PHPParser_Node_Name $name, $alias = null, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Name $name, $alias = null, $line = -1, $ignorables = null) {
         if (null === $alias) {
             $alias = $name->getLast();
         }
@@ -31,7 +31,7 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt
                 'name'  => $name,
                 'alias' => $alias,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

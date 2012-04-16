@@ -4,8 +4,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
 {
     protected $subNodes;
     protected $line;
-    protected $docComment;
-    protected $comment;
+    protected $ignorables;
     protected $attributes;
 
     /**
@@ -13,13 +12,12 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      *
      * @param array       $subNodes   Array of sub nodes
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|string $ignorables all ignorables
      */
-    public function __construct(array $subNodes, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(array $subNodes, $line = -1, $ignorables = null) {
         $this->subNodes   = $subNodes;
         $this->line       = $line;
-        $this->docComment = $docComment;
-        $this->comment    = $comment;
+        $this->ignorables = $ignorables;
         $this->attributes = array();
     }
 
@@ -64,8 +62,8 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      *
      * @return null|string Nearest doc comment or null
      */
-    public function getDocComment() {
-        return $this->docComment;
+    public function getIgnorables() {
+        return $this->ignorables;
     }
 
     /**
@@ -73,27 +71,23 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      *
      * @param null|string $docComment Nearest doc comment or null
      */
-    public function setDocComment($docComment) {
-        $this->docComment = $docComment;
+    public function setIgnorables($docComment) {
+        $this->ignorables = $docComment;
     }
 
-    /**
-      * Gets the nearest comment.
-      *
-      * @return null|string Nearest doc comment or null
-      */
-     public function getComment() {
-         return $this->comment;
-     }
-
-     /**
-      * Sets the nearest  comment.
-      *
-      * @param null|string $comment Nearest comment or null
-      */
-     public function setComment($comment) {
-         $this->comment = $comment;
-     }
+	/**
+	 * @return bool
+	 */
+	public function hasLineBreaks() {
+		if (null !== $this->ignorables) {
+			foreach ($this->ignorables as $ignorable) {
+				if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->value, PHP_EOL) !== false) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
     /**
      * @inheritDoc

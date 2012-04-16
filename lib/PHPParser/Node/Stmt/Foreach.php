@@ -19,16 +19,16 @@ class PHPParser_Node_Stmt_Foreach extends PHPParser_Node_Stmt
      *                                        'byRef'  => false  : Whether to assign value by reference
      *                                        'stmts'  => array(): Statements
      * @param int                 $line       Line
-     * @param null|string         $docComment Nearest doc comment
+     * @param null|array          $ignorables All Ignorables
      */
-    public function __construct(PHPParser_Node_Expr $expr, PHPParser_Node_Expr $valueVar, array $subNodes = array(), $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Expr $expr, PHPParser_Node_Expr $valueVar, array $subNodes = array(), $line = -1, $ignorables = null) {
         parent::__construct(
             $subNodes + array(
                 'keyVar' => null,
                 'byRef'  => false,
                 'stmts'  => array(),
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
         $this->expr     = $expr;
         $this->valueVar = $valueVar;

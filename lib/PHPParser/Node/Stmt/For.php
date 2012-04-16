@@ -19,7 +19,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt
      * @param int         $line       Line
      * @param null|string $docComment Nearest doc comment
      */
-    public function __construct(array $subNodes = array(), $line = -1, $docComment = null, $comment = null) {
+    public function __construct(array $subNodes = array(), $line = -1, $ignorables = null) {
         parent::__construct(
             $subNodes + array(
                 'init'  => array(),
@@ -27,7 +27,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt
                 'loop'  => array(),
                 'stmts' => array(),
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

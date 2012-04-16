@@ -12,15 +12,15 @@ class PHPParser_Node_Expr_AssignShiftRight extends PHPParser_Node_Expr
      * @param PHPParser_Node_Expr $var        Variable
      * @param PHPParser_Node_Expr $expr       Expression
      * @param int                 $line       Line
-     * @param null|string         $docComment Nearest doc comment
+     * @param null|array          $ignorables All Ignorables
      */
-    public function __construct(PHPParser_Node_Expr $var, PHPParser_Node_Expr $expr, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Expr $var, PHPParser_Node_Expr $expr, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'var'  => $var,
                 'expr' => $expr
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

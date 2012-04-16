@@ -34,8 +34,8 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(15, $node->getLine());
 
         // change of doc comment
-        $node->setDocComment('/** other doc comment */');
-        $this->assertEquals('/** other doc comment */', $node->getDocComment());
+        $node->setIgnorables('/** other doc comment */');
+        $this->assertEquals('/** other doc comment */', $node->getIgnorables());
 
         // direct modification
         $node->subNode = 'newValue';

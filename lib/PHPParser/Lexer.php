@@ -9,7 +9,7 @@ class PHPParser_Lexer
 
     protected static $tokenMap;
     protected static $dropTokens = array(
-        T_WHITESPACE => 1, T_COMMENT => 1, T_OPEN_TAG => 1
+        T_OPEN_TAG => 1
     );
 
     /**
@@ -67,13 +67,12 @@ class PHPParser_Lexer
      *
      * @param mixed $value      Variable to store token content in
      * @param mixed $line       Variable to store line in
-     * @param mixed $docComment Variable to store doc comment in
+     * @param mixed $ignorables Variable to store ignorables in
      *
      * @return int Token id
      */
-    public function lex(&$value = null, &$line = null, &$docComment = null, &$comment = null) {
-        $docComment = null;
-        $comment = null;
+    public function lex(&$value = null, &$line = null, &$ignorables = null) {
+        $ignorables = array();
 
         while (isset($this->tokens[++$this->pos])) {
             $token = $this->tokens[$this->pos];
@@ -93,9 +92,11 @@ class PHPParser_Lexer
                 $this->line += substr_count($token[1], "\n");
 
                 if (T_DOC_COMMENT === $token[0]) {
-                    $docComment = $token[1];
+                    $ignorables[] = new PHPParser_Node_Ignorable_DocComment($token[1], $token[2]);
                 } elseif (T_COMMENT === $token[0]) {
-                    $comment = ($comment === null) ? $token[1] : $comment . PHP_EOL . $token[1];
+                    $ignorables[] = new PHPParser_Node_Ignorable_Comment($token[1], $token[2]);
+                } elseif (T_WHITESPACE === $token[0]) {
+                    $ignorables[] = new PHPParser_Node_Ignorable_Whitespace($token[1], $token[2]);
                 } elseif (!isset(self::$dropTokens[$token[0]])) {
                     $value = $token[1];
                     $line  = $token[2];

@@ -33,30 +33,16 @@ interface PHPParser_Node
     /**
      * Gets the nearest doc comment.
      *
-     * @return null|string Nearest doc comment or null
+     * @return null|array $ignorables All Ignorables
      */
-    public function getDocComment();
+    public function getIgnorables();
 
     /**
      * Sets the nearest doc comment.
      *
-     * @param null|string $docComment Nearest doc comment or null
+     * @param null|array $ignorables All Ignorables
      */
-    public function setDocComment($docComment);
-
-    /**
-     * Gets the nearest comment.
-     *
-     * @return null|string Nearest comment or null
-     */
-    public function getComment();
-
-    /**
-     * Sets the nearest comment.
-     *
-     * @param null|string $comment Nearest comment or null
-     */
-    public function setComment($comment);
+    public function setIgnorables($ignorables);
 
     /**
      * Sets an attribute on a node.

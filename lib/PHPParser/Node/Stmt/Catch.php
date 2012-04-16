@@ -14,16 +14,16 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt
      * @param string              $var        Variable for exception
      * @param PHPParser_Node[]    $stmts      Statements
      * @param int                 $line       Line
-     * @param null|string         $docComment Nearest doc comment
+     * @param null|array          $ignorables All Ignorables
      */
-    public function __construct(PHPParser_Node_Name $type, $var, array $stmts = array(), $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Name $type, $var, array $stmts = array(), $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'type'  => $type,
                 'var'   => $var,
                 'stmts' => $stmts,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

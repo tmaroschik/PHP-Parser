@@ -156,8 +156,7 @@ class #(-p)
         $yysstk       = array($yystate = 0); // State stack
         $this->yyastk = array();             // AST   stack (?)
         $yylstk       = array($yyline  = 1); // Line  stack
-        $yydstk       = array($yyDC = null); // Doc comment stack
-        $yycstk       = array($yyC = null); // Comment stack
+        $yyignstk       = array($yyIGN = null); // Ignorable stack
 
         $yychar       = -1;
 
@@ -169,13 +168,12 @@ class #(-p)
                 $yyn = self::$yydefault[$yystate];
             } else {
                 if ($yychar < 0) {
-                    if (($yychar = $lexer->lex($yylval, $yyline, $yyDC, $yyC)) < 0)
+                    if (($yychar = $lexer->lex($yylval, $yyline, $yyIGN)) < 0)
                         $yychar = 0;
                     $yychar = $yychar < self::YYMAXLEX ?
                         self::$yytranslate[$yychar] : self::YYBADCH;
                     $yylstk[$this->yysp] = $yyline;
-                    $yydstk[$this->yysp] = $yyDC;
-                    $yycstk[$this->yysp] = $yyC;
+                    $yyignstk[$this->yysp] = $yyIGN;
 #if -t
                     $this->YYTRACE_READ($yychar);
 #endif
@@ -205,8 +203,7 @@ class #(-p)
                         $yysstk[$this->yysp]       = $yystate = $yyn;
                         $this->yyastk[$this->yysp] = $yylval;
                         $yylstk[$this->yysp]       = $yyline;
-                        $yydstk[$this->yysp]       = $yyDC;
-                        $yycstk[$this->yysp]       = $yyC;
+                        $yyignstk[$this->yysp]       = $yyIGN;
                         $yychar = -1;
 
                         if ($yyn < self::YYNLSTATES)
@@ -238,8 +235,7 @@ class #(-p)
                     try {
                         $this->{'yyn' . $yyn}(
                             $yylstk[$this->yysp - self::$yylen[$yyn]],
-                            $yydstk[$this->yysp - self::$yylen[$yyn]],
-                            $yycstk[$this->yysp - self::$yylen[$yyn]]
+                            $yyignstk[$this->yysp - self::$yylen[$yyn]]
                         );
                     } catch (PHPParser_Error $e) {
                         if (-1 === $e->getRawLine()) {
@@ -265,8 +261,7 @@ class #(-p)
                     $yysstk[$this->yysp] = $yystate;
                     $this->yyastk[$this->yysp] = $this->yyval;
                     $yylstk[$this->yysp]       = $yyline;
-                    $yydstk[$this->yysp]       = $yyDC;
-                    $yycstk[$this->yysp]       = $yyC;
+                    $yyignstk[$this->yysp]       = $yyIGN;
                 } else {
                     /* error */
                     throw new PHPParser_Error(
@@ -285,7 +280,7 @@ class #(-p)
 #ifnot -t
 #reduce
 
-    protected function yyn%n($line, $docComment, $comment) {
+    protected function yyn%n($line, $ignorables) {
         %b
     }
 #noact

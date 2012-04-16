@@ -14,16 +14,16 @@ class PHPParser_Node_Expr_ArrayItem extends PHPParser_Node_Expr
      * @param null|PHPParser_Node_Expr $key        Key
      * @param bool                     $byRef      Whether to assign by reference
      * @param int                      $line       Line
-     * @param null|string              $docComment Nearest doc comment
+     * @param null|array               $ignorables All Ignorables
      */
-	    public function __construct(PHPParser_Node_Expr $value, PHPParser_Node_Expr $key = null, $byRef = false, $line = -1, $docComment = null, $comment = null) {
+	    public function __construct(PHPParser_Node_Expr $value, PHPParser_Node_Expr $key = null, $byRef = false, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'key'   => $key,
                 'value' => $value,
                 'byRef' => $byRef
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

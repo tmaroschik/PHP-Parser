@@ -14,13 +14,13 @@ class PHPParser_Node_Stmt_Switch extends PHPParser_Node_Stmt
      * @param int                        $line       Line
      * @param null|string                $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $cond, array $cases, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Expr $cond, array $cases, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'cond'  => $cond,
                 'cases' => $cases,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

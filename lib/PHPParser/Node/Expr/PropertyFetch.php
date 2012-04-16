@@ -14,13 +14,13 @@ class PHPParser_Node_Expr_PropertyFetch extends PHPParser_Node_Expr
      * @param int                        $line       Line
      * @param null|string                $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Expr $var, $name, $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Expr $var, $name, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'var'  => $var,
                 'name' => $name
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

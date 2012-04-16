@@ -19,9 +19,9 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr
      *                                'byRef'  => false  : Whether to return by reference
      *                                'static' => false  : Whether the closure is static
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables All Ignorables
      */
-    public function __construct(array $subNodes = array(), $line = -1, $docComment = null, $comment = null) {
+    public function __construct(array $subNodes = array(), $line = -1, $ignorables = null) {
         parent::__construct(
             $subNodes + array(
                 'stmts'  => array(),
@@ -30,7 +30,7 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr
                 'byRef'  => false,
                 'static' => false,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

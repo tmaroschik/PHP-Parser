@@ -12,15 +12,15 @@ class PHPParser_Node_Expr_ClassConstFetch extends PHPParser_Node_Expr
      * @param PHPParser_Node_Name|PHPParser_Node_Expr $class      Class name
      * @param string                                  $name       Constant name
      * @param int                                     $line       Line
-     * @param null|string                             $docComment Nearest doc comment
+     * @param null|array                              $ignorables All Ignorables
      */
-    public function __construct($class, $name, $line = -1, $docComment = null, $comment = null) {
+    public function __construct($class, $name, $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'class' => $class,
                 'name'  => $name
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
     }
 }

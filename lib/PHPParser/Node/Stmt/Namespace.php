@@ -20,13 +20,13 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt
      * @param int                      $line       Line
      * @param null|string              $docComment Nearest doc comment
      */
-    public function __construct(PHPParser_Node_Name $name = null, $stmts = array(), $line = -1, $docComment = null, $comment = null) {
+    public function __construct(PHPParser_Node_Name $name = null, $stmts = array(), $line = -1, $ignorables = null) {
         parent::__construct(
             array(
                 'name'  => $name,
                 'stmts' => $stmts,
             ),
-            $line, $docComment, $comment
+            $line, $ignorables
         );
 
         if (isset(self::$specialNames[(string) $this->name])) {
