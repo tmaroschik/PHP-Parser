@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_Label extends PHPParser_Node_Stmt
      *
      * @param string      $name       Name
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables Ignorables
      */
     public function __construct($name, $line = -1, $ignorables = null) {
         parent::__construct(

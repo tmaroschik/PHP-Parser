@@ -10,7 +10,7 @@ class PHPParser_Node_Scalar_Encapsed extends PHPParser_Node_Scalar
      *
      * @param array       $parts      Encaps list
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables Ignorables
      */
     public function __construct(array $parts = array(), $line = -1, $ignorables = null) {
         parent::__construct(

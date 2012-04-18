@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_Return extends PHPParser_Node_Stmt
      *
      * @param null|PHPParser_Node_Expr $expr       Expression
      * @param int                      $line       Line
-     * @param null|string              $docComment Nearest doc comment
+     * @param null|array               $ignorables Ignorables
      */
     public function __construct(PHPParser_Node_Expr $expr = null, $line = -1, $ignorables = null) {
         parent::__construct(

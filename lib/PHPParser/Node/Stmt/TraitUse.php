@@ -12,7 +12,7 @@ class PHPParser_Node_Stmt_TraitUse extends PHPParser_Node_Stmt
      * @param PHPParser_Node_Name[]               $traits      Traits
      * @param PHPParser_Node_TraitUseAdaptation[] $adaptations Adaptations
      * @param int                                 $line        Line
-     * @param null|string                         $docComment  Nearest doc comment
+     * @param null|array                          $ignorables  Ignorables
      */
     public function __construct(array $traits, array $adaptations = array(), $line = -1, $ignorables = null) {
         parent::__construct(

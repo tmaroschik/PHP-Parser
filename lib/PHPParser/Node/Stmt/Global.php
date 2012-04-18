@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_Global extends PHPParser_Node_Stmt
      *
      * @param PHPParser_Node_Expr[] $vars       Variables to unset
      * @param int                   $line       Line
-     * @param null|string           $docComment Nearest doc comment
+     * @param null|array            $ignorables Ignorables
      */
     public function __construct(array $vars, $line = -1, $ignorables = null) {
         parent::__construct(

@@ -44,32 +44,32 @@ namespace {
 EOC;
         $expectedCode = <<<EOC
 namespace Foo {
-    use Hallo as Hi;
-    new \\Foo\\Bar();
-    new \\Hallo();
-    new \\Hallo\\Bar();
-    new \\Bar();
-    new \\Foo\\Bar();
-    bar();
-    hi();
-    \\Hallo\\bar();
-    \\Foo\\foo\\bar();
-    \\bar();
-    \\Foo\\bar();
+	use Hallo as Hi;
+	new \\Foo\\Bar();
+	new \\Hallo();
+	new \\Hallo\\Bar();
+	new \\Bar();
+	new \\Foo\\Bar();
+	bar();
+	hi();
+	\\Hallo\\bar();
+	\\Foo\\foo\\bar();
+	\\bar();
+	\\Foo\\bar();
 }
 namespace {
-    use Hallo as Hi;
-    new \\Bar();
-    new \\Hallo();
-    new \\Hallo\\Bar();
-    new \\Bar();
-    new \\Bar();
-    bar();
-    hi();
-    \\Hallo\\bar();
-    \\foo\\bar();
-    \\bar();
-    \\bar();
+	use Hallo as Hi;
+	new \\Bar();
+	new \\Hallo();
+	new \\Hallo\\Bar();
+	new \\Bar();
+	new \\Bar();
+	bar();
+	hi();
+	\\Hallo\\bar();
+	\\foo\\bar();
+	\\bar();
+	\\bar();
 }
 EOC;
 
@@ -111,21 +111,21 @@ namespace NS {
 EOC;
         $expectedCode = <<<EOC
 namespace NS {
-    class A extends \\NS\\B implements \\NS\\C
-    {
-        use \\NS\\A;
-    }
-    interface A extends \\NS\\C
-    {
-        public function a(\\NS\\A \$a);
-    }
-    \\NS\\A::b();
-    \\NS\\A::\$b;
-    \\NS\\A::B;
-    new \\NS\\A();
-    \$a instanceof \\NS\\A;
-    \\NS\\a();
-    \\NS\\A;
+	class A extends \\NS\\B implements \\NS\\C
+	{
+		use \\NS\\A;
+	}
+	interface A extends \\NS\\C
+	{
+		public function a(\\NS\\A \$a);
+	}
+	\\NS\\A::b();
+	\\NS\\A::\$b;
+	\\NS\\A::B;
+	new \\NS\\A();
+	\$a instanceof \\NS\\A;
+	\\NS\\a();
+	\\NS\\A;
 }
 EOC;
 

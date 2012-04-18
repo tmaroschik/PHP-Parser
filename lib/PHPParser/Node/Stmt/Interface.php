@@ -21,7 +21,7 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt
      *                                'extends' => array(): Name of extended interfaces
      *                                'stmts'   => array(): Statements
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables Ignorables
      */
     public function __construct($name, array $subNodes = array(), $line = -1, $ignorables = null) {
         parent::__construct(

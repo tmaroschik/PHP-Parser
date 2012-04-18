@@ -12,7 +12,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
      *
      * @param array       $subNodes   Array of sub nodes
      * @param int         $line       Line
-     * @param null|string $ignorables all ignorables
+     * @param null|array  $ignorables all ignorables
      */
     public function __construct(array $subNodes, $line = -1, $ignorables = null) {
         $this->subNodes   = $subNodes;
@@ -58,36 +58,46 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, IteratorAggrega
     }
 
     /**
-     * Gets the nearest doc comment.
+     * Gets the Ignorables
      *
-     * @return null|string Nearest doc comment or null
+     * @return null|array Ignorables
      */
     public function getIgnorables() {
         return $this->ignorables;
     }
 
     /**
-     * Sets the nearest doc comment.
+     * Sets the Ignorables
      *
-     * @param null|string $docComment Nearest doc comment or null
+     * @param null|array  $ignorables Ignorables
      */
-    public function setIgnorables($docComment) {
-        $this->ignorables = $docComment;
+    public function setIgnorables($ignorables) {
+        $this->ignorables = $ignorables;
     }
 
-	/**
-	 * @return bool
-	 */
-	public function hasLineBreaks() {
-		if (null !== $this->ignorables) {
-			foreach ($this->ignorables as $ignorable) {
-				if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->value, PHP_EOL) !== false) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    /**
+     * @param PHPParser_Node_Ignorable $ignorable
+     */
+    public function addIgnorable(PHPParser_Node_Ignorable $ignorable) {
+        if (!is_array($this->ignorables)) {
+            $this->ignorables = array();
+        }
+        $this->ignorables[] = $ignorable;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasLineBreaks() {
+        if (null !== $this->ignorables) {
+            foreach ($this->ignorables as $ignorable) {
+                if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->value, PHP_EOL) !== false) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * @inheritDoc

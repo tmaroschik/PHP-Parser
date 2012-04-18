@@ -12,7 +12,7 @@ class PHPParser_Node_Stmt_TryCatch extends PHPParser_Node_Stmt
      * @param PHPParser_Node[]            $stmts      Statements
      * @param PHPParser_Node_Stmt_Catch[] $catches    Catches
      * @param int                         $line       Line
-     * @param null|string                 $docComment Nearest doc comment
+     * @param null|array                  $ignorables Ignorables
      */
     public function __construct(array $stmts, array $catches, $line = -1, $ignorables = null) {
         parent::__construct(

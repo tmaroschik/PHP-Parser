@@ -12,7 +12,7 @@ class PHPParser_Node_Expr_Instanceof extends PHPParser_Node_Expr
      * @param PHPParser_Node_Expr                     $expr       Expression
      * @param PHPParser_Node_Name|PHPParser_Node_Expr $class      Class name
      * @param int                                     $line       Line
-     * @param null|string                             $docComment Nearest doc comment
+     * @param null|array                              $ignorables Ignorables
      */
     public function __construct(PHPParser_Node_Expr $expr, $class, $line = -1, $ignorables = null) {
         parent::__construct(

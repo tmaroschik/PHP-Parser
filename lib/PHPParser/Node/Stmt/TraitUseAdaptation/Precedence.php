@@ -14,7 +14,7 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
      * @param string                $method      Method name
      * @param PHPParser_Node_Name[] $insteadof   Overwritten traits
      * @param int                   $line        Line
-     * @param null|string           $docComment  Nearest doc comment
+     * @param null|array            $ignorables  Ignorables
      */
     public function __construct(PHPParser_Node_Name $trait, $method, array $insteadof, $line = -1, $ignorables = null) {
         parent::__construct(

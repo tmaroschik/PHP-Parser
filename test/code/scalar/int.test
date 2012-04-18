@@ -21,10 +21,10 @@ array(
         value: 1
     )
     2: Scalar_LNumber(
-        value: 2147483647
+        value: 9223372036854775807
     )
     3: Scalar_DNumber(
-        value: 2147483648
+        value: 9.2233720368548E+18
     )
     4: Scalar_LNumber(
         value: 4095

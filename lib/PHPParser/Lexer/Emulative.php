@@ -155,8 +155,8 @@ class PHPParser_Lexer_Emulative extends PHPParser_Lexer
         }
     }
 
-    public function lex(&$value = null, &$line = null, &$docComment = null) {
-        $token = parent::lex($value, $line, $docComment);
+    public function lex(&$value = null, &$line = null, &$ignorables = null) {
+        $token = parent::lex($value, $line, $ignorables);
 
         // replace new keywords by their respective tokens. This is not done
         // if we currently are in an object access (e.g. in $obj->namespace

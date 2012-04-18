@@ -31,12 +31,18 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
     public function testLex($code, $tokens) {
         $lexer = new PHPParser_Lexer($code);
 
-        while ($id = $lexer->lex($value, $line, $docComment)) {
+        while ($id = $lexer->lex($value, $line, $ignorables)) {
             $token = array_shift($tokens);
 
             $this->assertEquals($token[0], $id);
             $this->assertEquals($token[1], $value);
             $this->assertEquals($token[2], $line);
+            $docComment = null;
+            foreach ($ignorables as $ignorable) {
+                if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
+                    $docComment = ($docComment === null) ? $ignorable->value : $docComment . $ignorable->value;
+                }
+            }
             $this->assertEquals($token[3], $docComment);
         }
     }
@@ -65,7 +71,7 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
             array(
                 '<?php /** docComment 1 *//** docComment 2 */ token',
                 array(
-                    array(PHPParser_Parser::T_STRING, 'token', 1, '/** docComment 2 */'),
+                    array(PHPParser_Parser::T_STRING, 'token', 1, '/** docComment 1 *//** docComment 2 */'),
                 )
             ),
         );

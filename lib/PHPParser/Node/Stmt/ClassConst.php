@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_ClassConst extends PHPParser_Node_Stmt
      *
      * @param PHPParser_Node_Const[] $consts     Constant declarations
      * @param int                    $line       Line
-     * @param null|string            $docComment Nearest doc comment
+     * @param null|array             $ignorables Ignorables
      */
     public function __construct(array $consts, $line = -1, $ignorables = null) {
         parent::__construct(

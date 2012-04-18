@@ -10,7 +10,7 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
                     'subNode' => 'value'
                 ),
                 10,
-                '/** doc comment */'
+                new PHPParser_Node_Ignorable_DocComment('/** doc comment */')
             ),
             'PHPParser_Node_Dummy'
         );
@@ -18,7 +18,11 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Dummy', $node->getType());
         $this->assertEquals(array('subNode'), $node->getSubNodeNames());
         $this->assertEquals(10, $node->getLine());
-        $this->assertEquals('/** doc comment */', $node->getDocComment());
+        foreach ($node->getIgnorables() as $ignorable) {
+            if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
+                $this->assertEquals('/** doc comment */', $ignorable->value);
+            }
+        }
         $this->assertEquals('value', $node->subNode);
         $this->assertTrue(isset($node->subNode));
 

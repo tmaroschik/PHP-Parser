@@ -10,7 +10,7 @@ class PHPParser_Node_Scalar_LNumber extends PHPParser_Node_Scalar
      *
      * @param int         $value      Value of the number
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables Ignorables
      */
     public function __construct($value = 0, $line = -1, $ignorables = null) {
         parent::__construct(

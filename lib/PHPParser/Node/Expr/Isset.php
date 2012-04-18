@@ -10,7 +10,7 @@ class PHPParser_Node_Expr_Isset extends PHPParser_Node_Expr
      *
      * @param PHPParser_Node_Expr[] $vars       Variables
      * @param int                   $line       Line
-     * @param null|string           $docComment Nearest doc comment
+     * @param null|array            $ignorables Ignorables
      */
     public function __construct(array $vars, $line = -1, $ignorables = null) {
         parent::__construct(

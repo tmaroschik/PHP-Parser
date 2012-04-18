@@ -12,7 +12,7 @@ class PHPParser_Node_Stmt_PropertyProperty extends PHPParser_Node_Stmt
      * @param string                   $name       Name
      * @param null|PHPParser_Node_Expr $default    Default value
      * @param int                      $line       Line
-     * @param null|string              $docComment Nearest doc comment
+     * @param null|array               $ignorables Ignorables
      */
     public function __construct($name, PHPParser_Node_Expr $default = null, $line = -1, $ignorables = null) {
         parent::__construct(

@@ -12,7 +12,7 @@ class PHPParser_Node_Stmt_Case extends PHPParser_Node_Stmt
      * @param null|PHPParser_Node_Expr $cond       Condition (null for default)
      * @param PHPParser_Node[]         $stmts      Statements
      * @param int                      $line       Line
-     * @param null|string              $docComment Nearest doc comment
+     * @param null|array               $ignorables Ignorables
      */
     public function __construct($cond, array $stmts = array(), $line = -1, $ignorables = null) {
         parent::__construct(

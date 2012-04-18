@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_InlineHTML extends PHPParser_Node_Stmt
      *
      * @param string      $value      String
      * @param int         $line       Line
-     * @param null|string $docComment Nearest doc comment
+     * @param null|array  $ignorables Ignorables
      */
     public function __construct($value, $line = -1, $ignorables = null) {
         parent::__construct(

@@ -15,8 +15,9 @@ class PHPParser_Tests_Unserializer_XMLTest extends PHPUnit_Framework_TestCase
 XML;
 
         $unserializer  = new PHPParser_Unserializer_XML;
+
         $this->assertEquals(
-            new PHPParser_Node_Scalar_String('Test', 1, '/** doc comment */'),
+            new PHPParser_Node_Scalar_String('Test', 1, array(new PHPParser_Node_Ignorable_DocComment('/** doc comment */'))),
             $unserializer->unserialize($xml)
         );
     }

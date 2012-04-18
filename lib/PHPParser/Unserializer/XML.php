@@ -57,7 +57,9 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer
         $node->setLine(null !== $line ? $line : -1);
 
         $docComment = $this->reader->getAttribute('docComment');
-        $node->setDocComment($docComment);
+        if (null !== $docComment) {
+            $node->addIgnorable(new PHPParser_Node_Ignorable_DocComment($docComment));
+        }
 
         $depthLimit = $this->reader->depth;
         while ($this->reader->read() && $depthLimit < $this->reader->depth) {

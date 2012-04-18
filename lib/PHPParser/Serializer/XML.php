@@ -37,8 +37,12 @@ class PHPParser_Serializer_XML implements PHPParser_Serializer
                 $this->writer->writeAttribute('line', $line);
             }
 
-            if (null !== $docComment = $node->getDocComment()) {
-                $this->writer->writeAttribute('docComment', $docComment);
+            foreach ($node->getIgnorables() as $ignorable) {
+                if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
+                    $this->writer->writeAttribute('docComment', $ignorable->value);
+                } elseif ($ignorable instanceof PHPParser_Node_Ignorable_Comment) {
+                    $this->writer->writeAttribute('comment', $ignorable->value);
+                }
             }
 
             foreach ($node as $name => $subNode) {

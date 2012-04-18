@@ -16,7 +16,7 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Alias extends PHPParser_Node_Stmt_T
      * @param null|int                 $newModifier New modifier
      * @param null|string              $newName     New name
      * @param int                      $line        Line
-     * @param null|string              $docComment  Nearest doc comment
+     * @param null|array               $ignorables  Ignorables
      */
     public function __construct($trait, $method, $newModifier, $newName, $line = -1, $ignorables = null) {
         parent::__construct(
