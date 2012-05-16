@@ -14,7 +14,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      */
     public function __construct($parts, $line = -1, $ignorables = null) {
         if (!is_array($parts)) {
-            $parts = explode('\\', $parts);
+            $parts = explode('\\', ltrim($parts, '\\'));
         }
 
         parent::__construct(
@@ -97,7 +97,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract
      * @return string String representation
      */
     public function __toString() {
-        return implode('\\', $this->parts);
+        return $this->toString();
     }
 
     /**

@@ -11,6 +11,21 @@
 
 class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
 {
+
+
+        /**
+      * Pretty prints an array of nodes (statements).
+      *
+      * @param PHPParser_Node[] $nodes Array of nodes
+      *
+      * @return string Pretty printed nodes
+      */
+     public function prettyPrint(array $nodes) {
+         $code = str_replace(PHP_EOL . $this->noIndentToken, PHP_EOL, $this->pStmts($nodes, false));
+         $code = preg_replace("![ \t]+$!m", '', $code);
+         return $code;
+     }
+
     // Special nodes
 
     public function pParam(PHPParser_Node_Param $node) {
@@ -31,15 +46,15 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
     // Names
 
     public function pName(PHPParser_Node_Name $node) {
-        return implode('\\', $node->parts);
+        return (string) $node;
     }
 
     public function pName_FullyQualified(PHPParser_Node_Name_FullyQualified $node) {
-        return '\\' . implode('\\', $node->parts);
+        return '\\' . (string) $node;
     }
 
     public function pName_Relative(PHPParser_Node_Name_Relative $node) {
-        return 'namespace\\' . implode('\\', $node->parts);
+        return (string) $node;
     }
 
     // Magic Constants

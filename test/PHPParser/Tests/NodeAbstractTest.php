@@ -16,7 +16,7 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals('Dummy', $node->getType());
-        $this->assertEquals(array('subNode'), $node->getSubNodeNames());
+        $this->assertEquals(array('subNode', '__phpunit_mockObjectId'), $node->getSubNodeNames());
         $this->assertEquals(10, $node->getLine());
         foreach ($node->getIgnorables() as $ignorable) {
             if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {

@@ -49,25 +49,22 @@ class PHPParser_NodeTraverser
     }
 
     protected function traverseNode(PHPParser_Node $node) {
-        $node = clone $node;
-
         foreach ($node->getSubNodeNames() as $name) {
-            $subNode =& $node->$name;
 
-            if (is_array($subNode)) {
-                $subNode = $this->traverseArray($subNode);
-            } elseif ($subNode instanceof PHPParser_Node) {
+            if (is_array($node->$name)) {
+                $node->$name = $this->traverseArray($node->$name);
+            } elseif ($node->$name instanceof PHPParser_Node) {
                 foreach ($this->visitors as $visitor) {
-                    if (null !== $return = $visitor->enterNode($subNode)) {
-                        $subNode = $return;
+                    if (null !== $return = $visitor->enterNode($node->$name)) {
+                        $node->$name = $return;
                     }
                 }
 
-                $subNode = $this->traverseNode($subNode);
+                $node->$name = $this->traverseNode($node->$name);
 
                 foreach ($this->visitors as $visitor) {
-                    if (null !== $return = $visitor->leaveNode($subNode)) {
-                        $subNode = $return;
+                    if (null !== $return = $visitor->leaveNode($node->$name)) {
+                        $node->$name = $return;
                     }
                 }
             }

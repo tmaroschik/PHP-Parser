@@ -68,7 +68,7 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase
         $traverser->addVisitor($visitor1);
         $traverser->addVisitor($visitor2);
 
-        // as all operations are reversed we end where we start
+        // as all operationQueue are reversed we end where we start
         $this->assertEquals(array(), $traverser->traverse(array()));
     }
 

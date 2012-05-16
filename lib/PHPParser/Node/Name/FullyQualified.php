@@ -37,4 +37,15 @@ class PHPParser_Node_Name_FullyQualified extends PHPParser_Node_Name
     public function isRelative() {
         return false;
     }
+
+    /**
+      * Returns a string representation of the name by imploding the namespace parts with a separator.
+      *
+      * @param string $separator The separator to use (defaults to the namespace separator \)
+      *
+      * @return string String representation
+      */
+     public function toString($separator = '\\') {
+         return '\\' . implode($separator, $this->parts);
+     }
 }
