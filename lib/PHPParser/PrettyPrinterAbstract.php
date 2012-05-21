@@ -99,42 +99,42 @@ abstract class PHPParser_PrettyPrinterAbstract
      *
      * @return string Pretty printed statements
      */
-    protected function pStmts(array $nodes, $indent = true) {
-        $tempNodes = array();
-        foreach ($nodes as $node) {
-            $tempNodes = array_merge(
-                $tempNodes,
-                $node->getIgnorables() ?: array(),
-                array($node)
-            );
-        }
+    protected function pStmts(array $nodes, $indent = true, $singleLineCommentAllowed = false) {
+//        $tempNodes = array();
+//        foreach ($nodes as $node) {
+//            $tempNodes = array_merge(
+//                $tempNodes,
+//                $node->getIgnorables() ?: array(),
+//                array($node)
+//            );
+//        }
         $pNodes = array();
         $nodeKey = 0;
         $useStatements = array();
-        foreach ($tempNodes as $node) {
-            $value = NULL;
-            if ($node instanceof PHPParser_Node_Ignorable) {
-                $value = $this->pIgnorable(array($node));
-            } else {
-                $value = $this->p($node) . ($node instanceof PHPParser_Node_Expr ? ';' : '');
+        foreach ($nodes as $node) {
+	        $ignorableValue = $this->pIgnorable($node->getIgnorables() ?: array(), $singleLineCommentAllowed);
+            if (!empty($ignorableValue)) {
+                $pNodes[$nodeKey] = $ignorableValue;
+                $nodeKey++;
             }
-            if ($value) {
+            $value = $this->p($node) . ($node instanceof PHPParser_Node_Expr ? ';' : '');
+            if (!empty($value)) {
                 $pNodes[$nodeKey] = $value;
-                if ($node instanceof PHPParser_Node_Stmt_Use || $node instanceof PHPParser_Node_Stmt_UseUse) {
-                    $useStatements[] = $nodeKey;
-                } elseif (!$node instanceof PHPParser_Node_Ignorable && !empty($useStatements)) {
-                    if (count($useStatements > 0)) {
-                        reset($useStatements);
-                        $firstOccurence = current($useStatements);
-                        end($useStatements);
-                        $lastOccurence = current($useStatements);
-                        if ($firstOccurence && $lastOccurence) {
-                            $pNodes[$firstOccurence] = PHP_EOL . $pNodes[$firstOccurence];
-                            $pNodes[$lastOccurence] .= PHP_EOL;
-                        }
-                    }
-                    $useStatements = array();
-                }
+//                if ($node instanceof PHPParser_Node_Stmt_Use || $node instanceof PHPParser_Node_Stmt_UseUse) {
+//                    $useStatements[] = $nodeKey;
+//                } elseif (!$node instanceof PHPParser_Node_Ignorable && !empty($useStatements)) {
+//                    if (count($useStatements > 0)) {
+//                        reset($useStatements);
+//                        $firstOccurence = current($useStatements);
+//                        end($useStatements);
+//                        $lastOccurence = current($useStatements);
+//                        if ($firstOccurence && $lastOccurence) {
+//                            $pNodes[$firstOccurence] = PHP_EOL . $pNodes[$firstOccurence];
+//                            $pNodes[$lastOccurence] .= PHP_EOL;
+//                        }
+//                    }
+//                    $useStatements = array();
+//                }
                 $nodeKey++;
             }
         }
@@ -151,9 +151,10 @@ abstract class PHPParser_PrettyPrinterAbstract
 
     /**
      * @param array $ignorables
+     * @param bool $singleLineCommentAllowed
      * @return string
      */
-    protected function pIgnorable(array $ignorables) {
+    protected function pIgnorable(array $ignorables, $singleLineCommentAllowed = false) {
         $pNodes = array();
         if (null !== $ignorables && !empty($ignorables)) {
            foreach ($ignorables as $ignorable) {
@@ -164,7 +165,7 @@ abstract class PHPParser_PrettyPrinterAbstract
                        $pNodes[] = preg_replace('~^\s+\/\*+~m', '/*', $value);
                        break;
                    case 'PHPParser_Node_Ignorable_DocComment':
-                       $pNodes[] = preg_replace('~^\s+\*~m', ' *', trim($ignorable->value));
+                       $pNodes[] = $ignorable->toString($singleLineCommentAllowed);
                        break;
                }
            }

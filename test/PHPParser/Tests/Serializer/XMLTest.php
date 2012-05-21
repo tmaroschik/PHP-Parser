@@ -17,7 +17,7 @@ CODE;
 <?xml version="1.0" encoding="UTF-8"?>
 <AST xmlns:node="http://nikic.github.com/PHPParser/XML/node" xmlns:subNode="http://nikic.github.com/PHPParser/XML/subNode" xmlns:scalar="http://nikic.github.com/PHPParser/XML/scalar">
   <scalar:array>
-    <node:Stmt_Function line="3" docComment="/** doc comment */">
+    <node:Stmt_Function line="3" docComment="">
       <subNode:byRef>
         <scalar:false/>
       </subNode:byRef>

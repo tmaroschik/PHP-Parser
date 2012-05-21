@@ -10,66 +10,66 @@ class PHPParser_Tests_NodeVisitor_NameResolverTest extends PHPUnit_Framework_Tes
 <?php
 
 namespace Foo {
-    use Hallo as Hi;
+	use Hallo as Hi;
 
-    new Bar();
-    new Hi();
-    new Hi\\Bar();
-    new \\Bar();
-    new namespace\\Bar();
+	new Bar();
+	new Hi();
+	new Hi\\Bar();
+	new \\Bar();
+	new namespace\\Bar();
 
-    bar();
-    hi();
-    Hi\\bar();
-    foo\\bar();
-    \\bar();
-    namespace\\bar();
+	bar();
+	hi();
+	Hi\\bar();
+	foo\\bar();
+	\\bar();
+	namespace\\bar();
 }
 namespace {
-    use Hallo as Hi;
+	use Hallo as Hi;
 
-    new Bar();
-    new Hi();
-    new Hi\\Bar();
-    new \\Bar();
-    new namespace\\Bar();
+	new Bar();
+	new Hi();
+	new Hi\\Bar();
+	new \\Bar();
+	new namespace\\Bar();
 
-    bar();
-    hi();
-    Hi\\bar();
-    foo\\bar();
-    \\bar();
-    namespace\\bar();
+	bar();
+	hi();
+	Hi\\bar();
+	foo\\bar();
+	\\bar();
+	namespace\\bar();
 }
 EOC;
         $expectedCode = <<<EOC
 namespace Foo {
-    use Hallo as Hi;
-    new \\Foo\\Bar();
-    new \\Hallo();
-    new \\Hallo\\Bar();
-    new \\Bar();
-    new \\Foo\\Bar();
-    bar();
-    hi();
-    \\Hallo\\bar();
-    \\Foo\\foo\\bar();
-    \\bar();
-    \\Foo\\bar();
+	use Hallo as Hi;
+	new \\Foo\\Bar();
+	new \\Hallo();
+	new \\Hallo\\Bar();
+	new \\Bar();
+	new \\Foo\\Bar();
+	bar();
+	hi();
+	\\Hallo\\bar();
+	\\Foo\\foo\\bar();
+	\\bar();
+	\\Foo\\bar();
 }
 namespace {
-    use Hallo as Hi;
-    new \\Bar();
-    new \\Hallo();
-    new \\Hallo\\Bar();
-    new \\Bar();
-    new \\Bar();
-    bar();
-    hi();
-    \\Hallo\\bar();
-    \\foo\\bar();
-    \\bar();
-    \\bar();
+	use Hallo as Hi;
+	new \\Bar();
+	new \\Hallo();
+	new \\Hallo\\Bar();
+	new \\Bar();
+	new \\Bar();
+	bar();
+	hi();
+	\\Hallo\\bar();
+	\\foo\\bar();
+	\\bar();
+	\\bar();
 }
 EOC;
 
@@ -91,41 +91,41 @@ EOC;
         $code = <<<EOC
 <?php
 namespace NS {
-    class A extends B implements C {
-        use A;
-    }
+	class A extends B implements C {
+		use A;
+	}
 
-    interface A extends C {
-        public function a(A \$a);
-    }
+	interface A extends C {
+		public function a(A \$a);
+	}
 
-    A::b();
-    A::\$b;
-    A::B;
-    new A;
-    \$a instanceof A;
+	A::b();
+	A::\$b;
+	A::B;
+	new A;
+	\$a instanceof A;
 
-    namespace\a();
-    namespace\A;
+	namespace\a();
+	namespace\A;
 }
 EOC;
         $expectedCode = <<<EOC
 namespace NS {
-    class A extends \\NS\\B implements \\NS\\C
-    {
-        use \\NS\\A;
-    }
-    interface A extends \\NS\\C
-    {
-        public function a(\\NS\\A \$a);
-    }
-    \\NS\\A::b();
-    \\NS\\A::\$b;
-    \\NS\\A::B;
-    new \\NS\\A();
-    \$a instanceof \\NS\\A;
-    \\NS\\a();
-    \\NS\\A;
+	class A extends \\NS\\B implements \\NS\\C
+	{
+		use \\NS\\A;
+	}
+	interface A extends \\NS\\C
+	{
+		public function a(\\NS\\A \$a);
+	}
+	\\NS\\A::b();
+	\\NS\\A::\$b;
+	\\NS\\A::B;
+	new \\NS\\A();
+	\$a instanceof \\NS\\A;
+	\\NS\\a();
+	\\NS\\A;
 }
 EOC;
 

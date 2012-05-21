@@ -19,4 +19,23 @@ class PHPParser_Node_Ignorable extends PHPParser_NodeAbstract {
 		);
 	}
 
+	/**
+	 * Returns a string representation of the ignorable.
+	 *
+	 * @return string String representation
+	 */
+	public function toString() {
+		return $this->value;
+	}
+
+	/**
+	 * Returns a string representation of the ignorable.
+	 * namespace separator.
+	 *
+	 * @return string String representation
+	 */
+	public function __toString() {
+		return $this->toString();
+	}
+
 }

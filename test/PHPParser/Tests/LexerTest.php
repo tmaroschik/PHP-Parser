@@ -40,7 +40,7 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase
             $docComment = null;
             foreach ($ignorables as $ignorable) {
                 if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
-                    $docComment = ($docComment === null) ? $ignorable->value : $docComment . $ignorable->value;
+                    $docComment = ($docComment === null) ? $ignorable->toString(true) : $docComment . $ignorable->toString(true);
                 }
             }
             $this->assertEquals($token[3], $docComment);

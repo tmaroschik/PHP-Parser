@@ -532,7 +532,7 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
              . 'function ' . ($node->byRef ? '&' : '') . $node->name
              . '(' . $this->pCommaSeparated($node->params) . ')'
              . (null !== $node->stmts
-                ? ' {' . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}'
+                ? ' {' . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}'
                 : ';') . PHP_EOL;
     }
 
@@ -543,7 +543,7 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
     public function pStmt_Function(PHPParser_Node_Stmt_Function $node) {
         return 'function ' . ($node->byRef ? '&' : '') . $node->name
              . '(' . $this->pCommaSeparated($node->params) . ')'
-             . PHP_EOL . '{' . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+             . PHP_EOL . '{' . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_Const(PHPParser_Node_Stmt_Const $node) {
@@ -563,18 +563,18 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
 
     public function pStmt_If(PHPParser_Node_Stmt_If $node) {
         return 'if (' . $this->p($node->cond) . ') {'
-             . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}'
+             . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}'
              . $this->pImplode($node->elseifs)
              . (null !== $node->else ? $this->p($node->else) : '');
     }
 
     public function pStmt_Elseif(PHPParser_Node_Stmt_Elseif $node) {
         return ' elseif (' . $this->p($node->cond) . ') {'
-             . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+             . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_Else(PHPParser_Node_Stmt_Else $node) {
-        return ' else {' . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+        return ' else {' . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_For(PHPParser_Node_Stmt_For $node) {
@@ -582,23 +582,23 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
              . $this->pCommaSeparated($node->init) . ';' . (!empty($node->cond) ? ' ' : '')
              . $this->pCommaSeparated($node->cond) . ';' . (!empty($node->loop) ? ' ' : '')
              . $this->pCommaSeparated($node->loop)
-             . ') {' . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+             . ') {' . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_Foreach(PHPParser_Node_Stmt_Foreach $node) {
         return 'foreach (' . $this->p($node->expr) . ' as '
              . (null !== $node->keyVar ? $this->p($node->keyVar) . ' => ' : '')
              . ($node->byRef ? '&' : '') . $this->p($node->valueVar) . ') {'
-             . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+             . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_While(PHPParser_Node_Stmt_While $node) {
         return 'while (' . $this->p($node->cond) . ') {'
-             . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+             . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_Do(PHPParser_Node_Stmt_Do $node) {
-        return 'do {' . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL
+        return 'do {' . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL
              . '} while (' . $this->p($node->cond) . ');';
     }
 
@@ -608,18 +608,18 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract
     }
 
     public function pStmt_TryCatch(PHPParser_Node_Stmt_TryCatch $node) {
-        return 'try {' . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}'
+        return 'try {' . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}'
              . $this->pImplode($node->catches);
     }
 
     public function pStmt_Catch(PHPParser_Node_Stmt_Catch $node) {
         return ' catch (' . $this->p($node->type) . ' $' . $node->var . ') {'
-             . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL . '}';
+             . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL . '}';
     }
 
     public function pStmt_Case(PHPParser_Node_Stmt_Case $node) {
         return (null !== $node->cond ? 'case ' . $this->p($node->cond) : 'default') . ':'
-             . PHP_EOL . $this->pStmts($node->stmts) . PHP_EOL;
+             . PHP_EOL . $this->pStmts($node->stmts, true, true) . PHP_EOL;
     }
 
     public function pStmt_Break(PHPParser_Node_Stmt_Break $node) {
