@@ -3,22 +3,30 @@
 class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 
 	/**
+	 * Contains description
+	 *
+	 * @var string
+	 */
+	protected $description;
+
+	/**
+	 * Contains tags
+	 *
+	 * @var array
+	 */
+	protected $tags = array();
+
+	/**
 	 * Constructs a const node for use in class const and const statements.
 	 *
-	 * @param string              $name       Name
-	 * @param PHPParser_Node_Expr $value      Value
-	 * @param int                 $line       Line
-	 * @param null|array          $ignorables All Ignorables
+	 * @param string $name Name
+	 * @param PHPParser_Node_Expr $value Value
+	 * @param int $line Line
+	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
 	public function __construct($value, $line = -1) {
-		$this->parseDocComment($value);
-		PHPParser_NodeAbstract::__construct(
-			array(
-				'description' => $this->getDescription(),
-				'tags' => $this->getTagsValues(),
-			),
-			$line
-		);
+		$this->setValue($value);
+		PHPParser_NodeAbstract::__construct($line);
 	}
 
 	/**
@@ -31,17 +39,21 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 */
 	protected function parseDocComment($docComment) {
 		$this->description = '';
-		$this->tags = array();
+		$this->tags        = array();
 
 		$lines = explode(chr(10), $docComment);
 		foreach ($lines as $line) {
 			$line = preg_replace('/(\s*\*\/\s*)?$/', '', $line);
 			$line = trim($line);
-			if ($line === '*/') break;
+			if ($line === '*/') {
+				break;
+			}
 			if (strlen($line) > 0 && strpos($line, '* @') !== FALSE) {
 				$this->parseTag(substr($line, strpos($line, '@')));
-			} else if (count($this->tags) === 0) {
-				$this->description .= preg_replace('/\s*\\/?[\\\\*]*\s?(.*)$/', '$1', $line) . chr(10);
+			} else {
+				if (count($this->tags) === 0) {
+					$this->description .= preg_replace('/\s*\\/?[\\\\*]*\s?(.*)$/', '$1', $line) . chr(10);
+				}
 			}
 		}
 		$this->description = trim($this->description);
@@ -52,7 +64,7 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 *
 	 * @return array Array of tag names and their (multiple) values
 	 */
-	protected function getTagsValues() {
+	public function &getTagsValues() {
 		return $this->tags;
 	}
 
@@ -64,8 +76,10 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 * @param string $tagName The tag name to retrieve the values for
 	 * @return array The tag's values
 	 */
-	protected function getTagValues($tagName) {
-		if (!$this->isTaggedWith($tagName)) throw new \TYPO3\FLOW3\Reflection\Exception('Tag "' . $tagName . '" does not exist.', 1169128255);
+	public function &getTagValues($tagName) {
+		if (!$this->isTaggedWith($tagName)) {
+			throw new \InvalidArgumentException('Tag "' . $tagName . '" does not exist.', 1337645712);
+		}
 		return $this->tags[$tagName];
 	}
 
@@ -75,17 +89,8 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 * @param string $tagName The tag name to check for
 	 * @return boolean TRUE the tag exists, otherwise FALSE
 	 */
-	protected function isTaggedWith($tagName) {
+	public function isTaggedWith($tagName) {
 		return (isset($this->tags[$tagName]));
-	}
-
-	/**
-	 * Returns the description which has been previously parsed
-	 *
-	 * @return string The description which has been parsed
-	 */
-	protected function getDescription() {
-		return $this->description;
 	}
 
 	/**
@@ -113,8 +118,7 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	/**
 	 * Returns a string representation of the ignorable.
 	 *
-	 * @param bool $singleLineCommentAllowed
-	 * @return string String representation
+	 * @param bool $singleLineCommentAllowed * @return string String representation
 	 */
 	public function toString($singleLineCommentAllowed = false) {
 		$docComment = array();
@@ -144,4 +148,42 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 		}
 	}
 
+	/**
+	 * @param string $description */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @param array $tags */
+	public function setTags($tags) {
+		$this->tags = $tags;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+
+	/**
+	 * @param string $value */
+	public function setValue($value) {
+		$this->parseDocComment($value);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getValue() {
+		return $this->toString(true);
+	}
 }

@@ -4,23 +4,61 @@
  * @property null|PHPParser_Node_Expr $cond  Condition (null for default)
  * @property PHPParser_Node[]         $stmts Statements
  */
-class PHPParser_Node_Stmt_Case extends PHPParser_Node_Stmt
-{
-    /**
-     * Constructs a case node.
-     *
-     * @param null|PHPParser_Node_Expr $cond       Condition (null for default)
-     * @param PHPParser_Node[]         $stmts      Statements
-     * @param int                      $line       Line
-     * @param null|array               $ignorables Ignorables
-     */
-    public function __construct($cond, array $stmts = array(), $line = -1, $ignorables = null) {
-        parent::__construct(
-            array(
-                'stmts' => $stmts,
-                'cond'  => $cond,
-            ),
-            $line, $ignorables
-        );
-    }
+class PHPParser_Node_Stmt_Case extends PHPParser_Node_Stmt {
+
+	/**
+	 * Contains stmts
+	 *
+	 * @var PHPParser_Node[]
+	 */
+	protected $stmts;
+
+	/**
+	 * Contains cond
+	 *
+	 * @var PHPParser_Node_Expr
+	 */
+	protected $cond;
+
+	/**
+	 * Constructs a case node.
+	 *
+	 * @param null|PHPParser_Node_Expr $cond Condition (null for default)
+	 * @param PHPParser_Node[] $stmts Statements
+	 * @param int $line Line
+	 * @param PHPParser_Node_Ignorable[] $ignorables Ignorables
+	 */
+	public function __construct($cond, array $stmts = array(), $line = -1, $ignorables = array()) {
+		if (NULL !== $cond) {
+			$this->setCond($cond);
+		}
+		$this->setStmts($stmts);
+		parent::__construct($line, $ignorables);
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr $cond */
+	public function setCond(PHPParser_Node_Expr $cond) {
+		$this->cond = $cond;
+	}
+
+	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getCond() {
+		return $this->cond;
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts */
+	public function setStmts(array $stmts) {
+		$this->stmts = $stmts;
+	}
+
+	/**
+	 * @return PHPParser_Node[]
+	 */
+	public function getStmts() {
+		return $this->stmts;
+	}
 }

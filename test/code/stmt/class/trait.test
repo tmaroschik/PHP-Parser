@@ -71,14 +71,14 @@ array(
                     1: Stmt_TraitUseAdaptation_Alias(
                         trait: null
                         method: c
-                        newModifier: null
+                        newModifier: 0
                         newName: d
                     )
                     2: Stmt_TraitUseAdaptation_Alias(
                         trait: null
                         method: e
                         newModifier: 4
-                        newName: null
+                        newName:
                     )
                 )
             )
@@ -138,7 +138,7 @@ array(
                             )
                         )
                         method: d
-                        newModifier: null
+                        newModifier: 0
                         newName: e
                     )
                     3: Stmt_TraitUseAdaptation_Alias(
@@ -149,7 +149,7 @@ array(
                         )
                         method: f
                         newModifier: 4
-                        newName: null
+                        newName:
                     )
                 )
             )

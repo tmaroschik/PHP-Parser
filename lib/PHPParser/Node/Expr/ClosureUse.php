@@ -1,26 +1,58 @@
 <?php
 
-/**
- * @property string $var   Name of variable
- * @property bool   $byRef Whether to use by reference
- */
-class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr
-{
-    /**
-     * Constructs a closure use node.
-     *
-     * @param string      $var        Name of variable
-     * @param bool        $byRef      Whether to use by reference
-     * @param int         $line       Line
-     * @param null|array  $ignorables All Ignorables
-     */
-    public function __construct($var, $byRef = false, $line = -1, $ignorables = null) {
-        parent::__construct(
-            array(
-                'var'   => $var,
-                'byRef' => $byRef
-            ),
-            $line, $ignorables
-        );
-    }
+class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
+
+	/**
+	 * Contains Name of variable
+	 *
+	 * @var string
+	 */
+	protected $var;
+
+	/**
+	 * Whether to use by reference
+	 *
+	 * @var bool
+	 */
+	protected $byRef = false;
+
+	/**
+	 * Constructs a closure use node.
+	 *
+	 * @param string $var Name of variable
+	 * @param bool $byRef Whether to use by reference
+	 * @param int $line Line
+	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
+	 */
+	public function __construct($var, $byRef = false, $line = -1, $ignorables = array()) {
+		$this->setVar($var);
+		$this->setByRef($byRef);
+		parent::__construct($line, $ignorables);
+	}
+
+	/**
+	 * @param boolean $byRef */
+	public function setByRef($byRef) {
+		$this->byRef = (bool)$byRef;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getByRef() {
+		return $this->byRef;
+	}
+
+	/**
+	 * @param string $var */
+	public function setVar($var) {
+		$this->var = (string)$var;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVar() {
+		return $this->var;
+	}
 }

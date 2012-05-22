@@ -1,80 +1,77 @@
 <?php
 
-interface PHPParser_Node
-{
-    /**
-     * Gets the type of the node.
-     *
-     * @return string Type of the node
-     */
-    public function getType();
+interface PHPParser_Node {
 
-    /**
-     * Gets the names of the sub nodes.
-     *
-     * @return array Names of sub nodes
-     */
-    public function getSubNodeNames();
+	/**
+	 * Gets the type of the node.
+	 *
+	 * @return string Type of the node
+	 */
+	public function getNodeType();
 
-    /**
-     * Gets line the node started in.
-     *
-     * @return int Line
-     */
-    public function getLine();
+	/**
+	 * Gets the names of the sub nodes.
+	 *
+	 * @return array Names of sub nodes
+	 */
+	public function getSubNodeNames();
 
-    /**
-     * Sets line the node started in.
-     *
-     * @param int $line Line
-     */
-    public function setLine($line);
+	/**
+	 * Gets line the node started in.
+	 *
+	 * @return int Line
+	 */
+	public function getLine();
 
-    /**
-     * Gets the nearest doc comment.
-     *
-     * @return null|array $ignorables All Ignorables
-     */
-    public function getIgnorables();
+	/**
+	 * Sets line the node started in.
+	 *
+	 * @param int $line Line
+	 */
+	public function setLine($line);
 
-    /**
-     * Sets the nearest doc comment.
-     *
-     * @param null|array $ignorables All Ignorables
-     */
-    public function setIgnorables($ignorables);
+	/**
+	 * Gets the nearest doc comment.
+	 *
+	 * @return array $ignorables All Ignorables
+	 */
+	public function getIgnorables();
 
-    /**
-     * Sets an attribute on a node.
-     *
-     * @param string $key
-     * @param mixed $value
-     */
-    public function setAttribute($key, $value);
+	/**
+	 * Sets the nearest doc comment.
+	 *
+	 * @param array $ignorables All Ignorables
+	 */
+	public function setIgnorables(array $ignorables);
 
-    /**
-     * Returns whether an attribute exists.
-     *
-     * @param string $key
-     *
-     * @return Boolean
-     */
-    public function hasAttribute($key);
+	/**
+	 * Sets an attribute on a node.
+	 *
+	 * @param string $key * @param mixed $value
+	 */
+	public function setAttribute($key, $value);
 
-    /**
-     * Returns the value of an attribute.
-     *
-     * @param string $key
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    public function getAttribute($key, $default = null);
+	/**
+	 * Returns whether an attribute exists.
+	 *
+	 * @param string $key *
+	 * @return Boolean
+	 */
+	public function hasAttribute($key);
 
-    /**
-     * Returns all attributes for the given node.
-     *
-     * @return array
-     */
-    public function getAttributes();
+	/**
+	 * Returns the value of an attribute.
+	 *
+	 * @param string $key * @param mixed $default
+	 *
+	 * @return mixed
+	 */
+	public function getAttribute($key, $default = null);
+
+	/**
+	 * Returns all attributes for the given node.
+	 *
+	 * @return array
+	 */
+	public function getAttributes();
 }

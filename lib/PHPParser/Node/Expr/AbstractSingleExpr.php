@@ -1,16 +1,16 @@
 <?php
 
-class PHPParser_Node_Expr_UnaryMinus extends PHPParser_Node_Expr {
+abstract class PHPParser_Node_Expr_AbstractSingleExpr extends PHPParser_Node_Expr {
 
 	/**
-	 * Contains expr
+	 * Expression
 	 *
 	 * @var PHPParser_Node_Expr
 	 */
 	protected $expr;
 
 	/**
-	 * Constructs a unary minus node.
+	 * Constructs a abstract expression containing node.
 	 *
 	 * @param PHPParser_Node_Expr $expr Expression
 	 * @param int $line Line
@@ -22,13 +22,13 @@ class PHPParser_Node_Expr_UnaryMinus extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $expr */
+	 * @param \PHPParser_Node_Expr $expr */
 	public function setExpr(PHPParser_Node_Expr $expr) {
 		$this->expr = $expr;
 	}
 
 	/**
-	 * @return PHPParser_Node_Expr
+	 * @return \PHPParser_Node_Expr
 	 */
 	public function getExpr() {
 		return $this->expr;

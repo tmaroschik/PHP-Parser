@@ -1,13 +1,13 @@
 <?php
 
-class PHPParser_Node_Expr_AssignList extends PHPParser_Node_Expr {
+abstract class PHPParser_Node_Expr_AbstractAssign extends PHPParser_Node_Expr {
 
 	/**
-	 * List of variables to assign to
+	 * Variable
 	 *
-	 * @var array
+	 * @var PHPParser_Node_Expr
 	 */
-	protected $vars;
+	protected $var;
 
 	/**
 	 * Expression
@@ -17,15 +17,15 @@ class PHPParser_Node_Expr_AssignList extends PHPParser_Node_Expr {
 	protected $expr;
 
 	/**
-	 * Constructs a list() assignment node.
+	 * Constructs an assignment node.
 	 *
-	 * @param array $vars List of variables to assign to
+	 * @param PHPParser_Node_Expr $var Variable
 	 * @param PHPParser_Node_Expr $expr Expression
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct(array $vars, PHPParser_Node_Expr $expr, $line = -1, $ignorables = array()) {
-		$this->setVars($vars);
+	public function __construct(PHPParser_Node_Expr $var, PHPParser_Node_Expr $expr, $line = -1, $ignorables = array()) {
+		$this->setVar($var);
 		$this->setExpr($expr);
 		parent::__construct($line, $ignorables);
 	}
@@ -44,15 +44,15 @@ class PHPParser_Node_Expr_AssignList extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param array $vars */
-	public function setVars(array $vars) {
-		$this->vars = $vars;
+	 * @param \PHPParser_Node_Expr $var */
+	public function setVar(PHPParser_Node_Expr $var) {
+		$this->var = $var;
 	}
 
 	/**
-	 * @return array
+	 * @return \PHPParser_Node_Expr
 	 */
-	public function getVars() {
-		return $this->vars;
+	public function getVar() {
+		return $this->var;
 	}
 }

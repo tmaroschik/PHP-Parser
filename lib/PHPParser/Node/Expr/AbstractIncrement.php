@@ -1,6 +1,6 @@
 <?php
 
-class PHPParser_Node_Expr_Empty extends PHPParser_Node_Expr {
+abstract class PHPParser_Node_Expr_AbstractIncrement extends PHPParser_Node_Expr {
 
 	/**
 	 * Variable
@@ -10,7 +10,7 @@ class PHPParser_Node_Expr_Empty extends PHPParser_Node_Expr {
 	protected $var;
 
 	/**
-	 * Constructs an empty() node.
+	 * Constructs a abstract increment node.
 	 *
 	 * @param PHPParser_Node_Expr $var Variable
 	 * @param int $line Line

@@ -1,23 +1,36 @@
 <?php
 
-/**
- * @property PHPParser_Node_Expr $expr Expression
- */
-class PHPParser_Node_Expr_UnaryPlus extends PHPParser_Node_Expr
-{
-    /**
-     * Constructs a unary plus node.
-     *
-     * @param PHPParser_Node_Expr $expr       Expression
-     * @param int                 $line       Line
-     * @param null|array          $ignorables All Ignorables
-     */
-    public function __construct(PHPParser_Node_Expr $expr, $line = -1, $ignorables = null) {
-        parent::__construct(
-            array(
-                'expr' => $expr
-            ),
-            $line, $ignorables
-        );
-    }
+class PHPParser_Node_Expr_UnaryPlus extends PHPParser_Node_Expr {
+
+	/**
+	 * Contains expr
+	 *
+	 * @var PHPParser_Node_Expr
+	 */
+	protected $expr;
+
+	/**
+	 * Constructs a unary plus node.
+	 *
+	 * @param PHPParser_Node_Expr $expr Expression
+	 * @param int $line Line
+	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
+	 */
+	public function __construct(PHPParser_Node_Expr $expr, $line = -1, $ignorables = array()) {
+		$this->setExpr($expr);
+		parent::__construct($line, $ignorables);
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr $expr */
+	public function setExpr(PHPParser_Node_Expr $expr) {
+		$this->expr = $expr;
+	}
+
+	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getExpr() {
+		return $this->expr;
+	}
 }
