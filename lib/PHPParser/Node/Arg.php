@@ -36,9 +36,11 @@ class PHPParser_Node_Arg extends PHPParser_NodeAbstract {
 
 	/**
 	 * @param $byRef
+	 * @return \PHPParser_Node_Arg
 	 */
 	public function setByRef($byRef) {
 		$this->byRef = (bool)$byRef;
+		return $this;
 	}
 
 	/**
@@ -49,9 +51,13 @@ class PHPParser_Node_Arg extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $value */
-	public function setValue(PHPParser_Node_Expr $value) {
+	 * @param PHPParser_Node_Expr $value
+	 * @return \PHPParser_Node_Arg
+	 */
+	public function setValue(PHPParser_Node_Expr $value = NULL) {
 		$this->value = $value;
+		$this->setSelfAsSubNodeParent($value, 'value');
+		return $this;
 	}
 
 	/**

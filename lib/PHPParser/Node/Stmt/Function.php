@@ -62,9 +62,12 @@ class PHPParser_Node_Stmt_Function extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param bool $byRef */
+	 * @param bool $byRef
+	 * @return \PHPParser_Node_Stmt_Function
+	 */
 	public function setByRef($byRef) {
 		$this->byRef = (bool)$byRef;
+		return $this;
 	}
 
 	/**
@@ -75,9 +78,12 @@ class PHPParser_Node_Stmt_Function extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Stmt_Function
+	 */
 	public function setName($name) {
 		$this->name = (string)$name;
+		return $this;
 	}
 
 	/**
@@ -88,9 +94,55 @@ class PHPParser_Node_Stmt_Function extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Param[] $params */
+	 * @param PHPParser_Node_Param $param
+	 */
+	public function appendParam(PHPParser_Node_Param $param) {
+		if (NULL != $this->params) {
+			$this->params = array();
+		}
+		$this->params[] = $param;
+		$this->setSelfAsSubNodeParent($param, 'params');
+	}
+
+	/**
+	 * @param PHPParser_Node_Param $param
+	 */
+	public function removeParam(PHPParser_Node_Param $param) {
+		if (NULL !== $this->params) {
+			foreach ($this->params as $key => $existingParam) {
+				if ($param === $existingParam) {
+					unset($this->params[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Param $paramNew
+	 * @param PHPParser_Node_Param $paramOld
+	 */
+	public function replaceParam(PHPParser_Node_Param $paramNew, PHPParser_Node_Param $paramOld) {
+		if (NULL !== $this->params) {
+			foreach ($this->params as $key => $existingParam) {
+				if ($paramOld === $existingParam) {
+					$this->params[$key] = $paramNew;
+					$existingParam->setParent();
+					$this->setSelfAsSubNodeParent($paramNew, 'params');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Param[] $params
+	 * @return \PHPParser_Node_Stmt_Function
+	 */
 	public function setParams(array $params) {
 		$this->params = $params;
+		$this->setSelfAsSubNodeParent($params, 'params');
+		return $this;
 	}
 
 	/**
@@ -101,9 +153,55 @@ class PHPParser_Node_Stmt_Function extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_Function
+	 */
 	public function setStmts(array $stmts) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**

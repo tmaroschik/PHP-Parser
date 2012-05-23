@@ -35,9 +35,12 @@ class PHPParser_Node_Const extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Const
+	 */
 	public function setName($name) {
 		$this->name = $name;
+		return $this;
 	}
 
 	/**
@@ -48,9 +51,13 @@ class PHPParser_Node_Const extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $value */
-	public function setValue(PHPParser_Node_Expr $value) {
+	 * @param PHPParser_Node_Expr $value
+	 * @return \PHPParser_Node_Const
+	 */
+	public function setValue(PHPParser_Node_Expr $value = NULL) {
 		$this->value = $value;
+		$this->setSelfAsSubNodeParent($value, 'value');
+		return $this;
 	}
 
 	/**

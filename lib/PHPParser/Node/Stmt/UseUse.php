@@ -38,7 +38,9 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $alias */
+	 * @param string $alias
+	 * @return \PHPParser_Node_Stmt_UseUse
+	 */
 	public function setAlias($alias) {
 		if ('self' == $alias || 'parent' == $alias) {
 			throw new PHPParser_Error(sprintf(
@@ -47,6 +49,7 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt {
 			));
 		}
 		$this->alias = $alias;
+		return $this;
 	}
 
 	/**
@@ -57,9 +60,13 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Name $name */
-	public function setName(PHPParser_Node_Name $name) {
+	 * @param PHPParser_Node_Name $name
+	 * @return \PHPParser_Node_Stmt_UseUse
+	 */
+	public function setName(PHPParser_Node_Name $name = NULL) {
 		$this->name = $name;
+		$this->setSelfAsSubNodeParent($name, 'name');
+		return $this;
 	}
 
 	/**

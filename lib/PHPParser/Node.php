@@ -27,6 +27,7 @@ interface PHPParser_Node {
 	 * Sets line the node started in.
 	 *
 	 * @param int $line Line
+	 * @return \PHPParser_Node
 	 */
 	public function setLine($line);
 
@@ -41,6 +42,7 @@ interface PHPParser_Node {
 	 * Sets the nearest doc comment.
 	 *
 	 * @param array $ignorables All Ignorables
+	 * @return \PHPParser_Node
 	 */
 	public function setIgnorables(array $ignorables);
 
@@ -48,6 +50,7 @@ interface PHPParser_Node {
 	 * Sets an attribute on a node.
 	 *
 	 * @param string $key * @param mixed $value
+	 * @return \PHPParser_Node
 	 */
 	public function setAttribute($key, $value);
 
@@ -62,8 +65,8 @@ interface PHPParser_Node {
 	/**
 	 * Returns the value of an attribute.
 	 *
-	 * @param string $key * @param mixed $default
-	 *
+	 * @param string $key
+	 * @param mixed $default
 	 * @return mixed
 	 */
 	public function getAttribute($key, $default = null);
@@ -74,4 +77,22 @@ interface PHPParser_Node {
 	 * @return array
 	 */
 	public function getAttributes();
+
+	/**
+	 * @param \PHPParser_Node $parent
+	 * @param string $parentSubNodeName
+	 * @return \PHPParser_Node
+	 */
+	public function setParent(\PHPParser_Node $parent = NULL, $parentSubNodeName = NULL);
+
+	/**
+	 * @return \PHPParser_Node
+	 */
+	public function getParent();
+
+	/**
+	 * @return string
+	 */
+	public function getParentSubNodeName();
+
 }

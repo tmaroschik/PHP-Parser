@@ -59,9 +59,12 @@ class PHPParser_Node_Param extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param bool $byRef */
+	 * @param bool $byRef
+	 * @return \PHPParser_Node_Param
+	 */
 	public function setByRef($byRef) {
 		$this->byRef = (bool)$byRef;
+		return $this;
 	}
 
 	/**
@@ -72,9 +75,13 @@ class PHPParser_Node_Param extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $default */
-	public function setDefault($default) {
+	 * @param PHPParser_Node_Expr $default
+	 * @return \PHPParser_Node_Param
+	 */
+	public function setDefault(\PHPParser_Node_Expr $default) {
 		$this->default = $default;
+		$this->setSelfAsSubNodeParent($default, 'default');
+		return $this;
 	}
 
 	/**
@@ -85,9 +92,12 @@ class PHPParser_Node_Param extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Param
+	 */
 	public function setName($name) {
 		$this->name = $name;
+		return $this;
 	}
 
 	/**
@@ -98,12 +108,16 @@ class PHPParser_Node_Param extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param string|PHPParser_Node_Name $type */
-	public function setType($type) {
-		if (!is_string($type) && !$type instanceof PHPParser_Node_Name) {
+	 * @param string|PHPParser_Node_Name $type
+	 * @return \PHPParser_Node_Param
+	 */
+	public function setType($type = NULL) {
+		if (NULL !== $type && !is_string($type) && !$type instanceof PHPParser_Node_Name) {
 			throw new InvalidArgumentException(__CLASS__ . '::' . __METHOD__ . ' expects $type to be either string or PHPParser_Node_Name. ' . gettype($type) . ' given.', 1337618982);
 		}
 		$this->type = $type;
+		$this->setSelfAsSubNodeParent($type, 'type');
+		return $this;
 	}
 
 	/**

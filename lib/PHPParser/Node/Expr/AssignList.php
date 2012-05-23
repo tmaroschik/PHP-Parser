@@ -31,9 +31,13 @@ class PHPParser_Node_Expr_AssignList extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $expr */
-	public function setExpr(PHPParser_Node_Expr $expr) {
+	 * @param \PHPParser_Node_Expr $expr
+	 * @return \PHPParser_Node_Expr_AssignList
+	 */
+	public function setExpr(PHPParser_Node_Expr $expr = NULL) {
 		$this->expr = $expr;
+		$this->setSelfAsSubNodeParent($expr, 'expr');
+		return $this;
 	}
 
 	/**
@@ -44,9 +48,13 @@ class PHPParser_Node_Expr_AssignList extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param array $vars */
+	 * @param array $vars
+	 * @return \PHPParser_Node_Expr_AssignList
+	 */
 	public function setVars(array $vars) {
 		$this->vars = $vars;
+		$this->setSelfAsSubNodeParent($vars, 'vars');
+		return $this;
 	}
 
 	/**

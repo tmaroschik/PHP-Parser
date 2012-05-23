@@ -26,7 +26,7 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt {
 	 *
 	 * @var PHPParser_Node[]
 	 */
-	protected $stmts = array();
+	protected $stmts;
 
 	/**
 	 * Constructs a catch node.
@@ -45,9 +45,55 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
-	public function setStmts(array $stmts) {
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_Catch
+	 */
+	public function setStmts(array $stmts = NULL) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**
@@ -58,9 +104,13 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Name $type */
-	public function setType(PHPParser_Node_Name $type) {
+	 * @param PHPParser_Node_Name $type
+	 * @return \PHPParser_Node_Stmt_Catch
+	 */
+	public function setType(PHPParser_Node_Name $type = NULL) {
 		$this->type = $type;
+		$this->setSelfAsSubNodeParent($type, 'type');
+		return $this;
 	}
 
 	/**
@@ -71,9 +121,12 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $var */
+	 * @param string $var
+	 * @return \PHPParser_Node_Stmt_Catch
+	 */
 	public function setVar($var) {
-		$this->var = (string)$var;
+		$this->var = (string) $var;
+		return $this;
 	}
 
 	/**

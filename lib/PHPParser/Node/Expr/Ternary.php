@@ -42,9 +42,13 @@ class PHPParser_Node_Expr_Ternary extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $cond */
-	public function setCond(PHPParser_Node_Expr $cond) {
+	 * @param PHPParser_Node_Expr $cond
+	 * @return \PHPParser_Node_Expr_Ternary
+	 */
+	public function setCond(PHPParser_Node_Expr $cond = NULL) {
 		$this->cond = $cond;
+		$this->setSelfAsSubNodeParent($cond, 'cond');
+		return $this;
 	}
 
 	/**
@@ -55,9 +59,13 @@ class PHPParser_Node_Expr_Ternary extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $else */
-	public function setElse(PHPParser_Node_Expr $else) {
+	 * @param PHPParser_Node_Expr $else
+	 * @return \PHPParser_Node_Expr_Ternary
+	 */
+	public function setElse(PHPParser_Node_Expr $else = NULL) {
 		$this->else = $else;
+		$this->setSelfAsSubNodeParent($else, 'else');
+		return $this;
 	}
 
 	/**
@@ -68,9 +76,13 @@ class PHPParser_Node_Expr_Ternary extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $if */
-	public function setIf(PHPParser_Node_Expr $if) {
+	 * @param PHPParser_Node_Expr $if
+	 * @return \PHPParser_Node_Expr_Ternary
+	 */
+	public function setIf(PHPParser_Node_Expr $if = NULL) {
 		$this->if = $if;
+		$this->setSelfAsSubNodeParent($if, 'if');
+		return $this;
 	}
 
 	/**

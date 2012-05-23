@@ -10,12 +10,10 @@ class PHPParser_Node_Ignorable extends PHPParser_NodeAbstract {
 	protected $value;
 
 	/**
-	 * Constructs a const node for use in class const and const statements.
+	 * Constructs a ignorable
 	 *
-	 * @param string $name Name
 	 * @param PHPParser_Node_Expr $value Value
 	 * @param int $line Line
-	 * @param array $ignorables All Ignorables
 	 */
 	public function __construct($value, $line = -1) {
 		$this->setValue($value);
@@ -42,9 +40,12 @@ class PHPParser_Node_Ignorable extends PHPParser_NodeAbstract {
 	}
 
 	/**
-	 * @param string $value */
+	 * @param string $value
+	 * @return \PHPParser_Node_Ignorable
+	 */
 	public function setValue($value) {
 		$this->value = $value;
+		return $this;
 	}
 
 	/**

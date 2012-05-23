@@ -31,12 +31,16 @@ class PHPParser_Node_Expr_ClassConstFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr|\PHPParser_Node_Name $class */
-	public function setClass($class) {
-		if (!$class instanceof PHPParser_Node_Expr && !$class instanceof PHPParser_Node_Name) {
+	 * @param \PHPParser_Node_Expr|\PHPParser_Node_Name $class
+	 * @return \PHPParser_Node_Expr_ClassConstFetch
+	 */
+	public function setClass($class = NULL) {
+		if (NULL !== $class && !$class instanceof PHPParser_Node_Expr && !$class instanceof PHPParser_Node_Name) {
 			throw new InvalidArgumentException(__CLASS__ . '::' . __METHOD__ . ' expects $type to be either PHPParser_Node_Expr or PHPParser_Node_Name. ' . gettype($class) . ' given.', 1337628264);
 		}
 		$this->class = $class;
+		$this->setSelfAsSubNodeParent($class, 'class');
+		return $this;
 	}
 
 	/**
@@ -47,9 +51,12 @@ class PHPParser_Node_Expr_ClassConstFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Expr_ClassConstFetch
+	 */
 	public function setName($name) {
-		$this->name = (string)$name;
+		$this->name = (string) $name;
+		return $this;
 	}
 
 	/**

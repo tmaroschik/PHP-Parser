@@ -22,9 +22,13 @@ class PHPParser_Node_Expr_ShellExec extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param array $parts */
+	 * @param array $parts
+	 * @return \PHPParser_Node_Expr_ShellExec
+	 */
 	public function setParts(array $parts) {
 		$this->parts = $parts;
+		$this->setSelfAsSubNodeParent($parts, 'parts');
+		return $this;
 	}
 
 	/**

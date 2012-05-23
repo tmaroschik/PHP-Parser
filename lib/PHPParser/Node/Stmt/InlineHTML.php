@@ -25,9 +25,12 @@ class PHPParser_Node_Stmt_InlineHTML extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $value */
+	 * @param string $value
+	 * @return \PHPParser_Node_Stmt_InlineHTML
+	 */
 	public function setValue($value) {
 		$this->value = $value;
+		return $this;
 	}
 
 	/**

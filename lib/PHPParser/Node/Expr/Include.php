@@ -36,9 +36,13 @@ class PHPParser_Node_Expr_Include extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $expr */
-	public function setExpr(PHPParser_Node_Expr $expr) {
+	 * @param \PHPParser_Node_Expr $expr
+	 * @return \PHPParser_Node_Expr_Include
+	 */
+	public function setExpr(PHPParser_Node_Expr $expr = NULL) {
 		$this->expr = $expr;
+		$this->setSelfAsSubNodeParent($expr, 'expr');
+		return $this;
 	}
 
 	/**
@@ -49,9 +53,12 @@ class PHPParser_Node_Expr_Include extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param int $type */
+	 * @param int $type
+	 * @return \PHPParser_Node_Expr_Include
+	 */
 	public function setType($type) {
 		$this->type = (int)$type;
+		return $this;
 	}
 
 	/**

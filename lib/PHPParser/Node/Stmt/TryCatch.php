@@ -35,9 +35,55 @@ class PHPParser_Node_Stmt_TryCatch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_TryCatch
+	 */
 	public function setStmts(array $stmts) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**
@@ -48,9 +94,55 @@ class PHPParser_Node_Stmt_TryCatch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Stmt_Catch[] $catches */
+	 * @param PHPParser_Node_Stmt_Catch $catch
+	 */
+	public function appendCatch(PHPParser_Node_Stmt_Catch $catch) {
+		if (NULL != $this->catches) {
+			$this->catches = array();
+		}
+		$this->catches[] = $catch;
+		$this->setSelfAsSubNodeParent($catch, 'catches');
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_Catch $catch
+	 */
+	public function removeCatch(PHPParser_Node_Stmt_Catch $catch) {
+		if (NULL !== $this->catches) {
+			foreach ($this->catches as $key => $existingCatche) {
+				if ($catch === $existingCatche) {
+					unset($this->catches[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_Catch $catchNew
+	 * @param PHPParser_Node_Stmt_Catch $catchOld
+	 */
+	public function replaceCatch(PHPParser_Node_Stmt_Catch $catchNew, PHPParser_Node_Stmt_Catch $catchOld) {
+		if (NULL !== $this->catches) {
+			foreach ($this->catches as $key => $existingCatche) {
+				if ($catchOld === $existingCatche) {
+					$this->catches[$key] = $catchNew;
+					$existingCatche->setParent();
+					$this->setSelfAsSubNodeParent($catchNew, 'catches');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_Catch[] $catches
+	 * @return \PHPParser_Node_Stmt_TryCatch
+	 */
 	public function setCatches(array $catches) {
 		$this->catches = $catches;
+		$this->setSelfAsSubNodeParent($catches, 'catches');
+		return $this;
 	}
 
 	/**

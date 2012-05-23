@@ -10,7 +10,7 @@ class PHPParser_Node_Scalar_Encapsed extends PHPParser_Node_Scalar {
 	 *
 	 * @var array
 	 */
-	protected $parts = array();
+	protected $parts;
 
 	/**
 	 * Constructs an encapsed string node.
@@ -25,9 +25,11 @@ class PHPParser_Node_Scalar_Encapsed extends PHPParser_Node_Scalar {
 	}
 
 	/**
-	 * @param array $parts */
-	public function setParts(array $parts) {
+	 * @param array $parts
+	 */
+	public function setParts(array $parts = NULL) {
 		$this->parts = $parts;
+		return $this;
 	}
 
 	/**

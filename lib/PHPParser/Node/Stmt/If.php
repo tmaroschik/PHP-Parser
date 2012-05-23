@@ -62,9 +62,13 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $cond */
-	public function setCond(PHPParser_Node_Expr $cond) {
+	 * @param PHPParser_Node_Expr $cond
+	 * @return \PHPParser_Node_Stmt_If
+	 */
+	public function setCond(PHPParser_Node_Expr $cond = NULL) {
 		$this->cond = $cond;
+		$this->setSelfAsSubNodeParent($cond, 'cond');
+		return $this;
 	}
 
 	/**
@@ -75,9 +79,13 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Stmt_Else $else */
-	public function setElse(PHPParser_Node_Stmt_Else $else) {
+	 * @param PHPParser_Node_Stmt_Else $else
+	 * @return \PHPParser_Node_Stmt_If
+	 */
+	public function setElse(PHPParser_Node_Stmt_Else $else = NULL) {
 		$this->else = $else;
+		$this->setSelfAsSubNodeParent($else, 'else');
+		return $this;
 	}
 
 	/**
@@ -88,9 +96,55 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Stmt_ElseIf[] $elseifs */
+	 * @param PHPParser_Node_Stmt_ElseIf $elseif
+	 */
+	public function appendElseif(PHPParser_Node_Stmt_ElseIf $elseif) {
+		if (NULL != $this->elseifs) {
+			$this->elseifs = array();
+		}
+		$this->elseifs[] = $elseif;
+		$this->setSelfAsSubNodeParent($elseif, 'elseifs');
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_ElseIf $elseif
+	 */
+	public function removeElseif(PHPParser_Node_Stmt_ElseIf $elseif) {
+		if (NULL !== $this->elseifs) {
+			foreach ($this->elseifs as $key => $existingElseif) {
+				if ($elseif === $existingElseif) {
+					unset($this->elseifs[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_ElseIf $elseifNew
+	 * @param PHPParser_Node_Stmt_ElseIf $elseifOld
+	 */
+	public function replaceElseif(PHPParser_Node_Stmt_ElseIf $elseifNew, PHPParser_Node_Stmt_ElseIf $elseifOld) {
+		if (NULL !== $this->elseifs) {
+			foreach ($this->elseifs as $key => $existingElseif) {
+				if ($elseifOld === $existingElseif) {
+					$this->elseifs[$key] = $elseifNew;
+					$existingElseif->setParent();
+					$this->setSelfAsSubNodeParent($elseifNew, 'elseifs');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_ElseIf[] $elseifs
+	 * @return \PHPParser_Node_Stmt_If
+	 */
 	public function setElseifs(array $elseifs) {
 		$this->elseifs = $elseifs;
+		$this->setSelfAsSubNodeParent($elseifs, 'else');
+		return $this;
 	}
 
 	/**
@@ -98,6 +152,48 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 	 */
 	public function getElseifs() {
 		return $this->elseifs;
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
 	}
 
 	/**

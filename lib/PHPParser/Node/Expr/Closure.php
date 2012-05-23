@@ -19,23 +19,23 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	/**
 	 * Parameters
 	 *
-	 * @var PHPParser_Node_Stmt_FuncParam[]
+	 * @var PHPParser_Node_Param[]
 	 */
-	protected $params = array();
+	protected $params;
 
 	/**
 	 * use()s
 	 *
 	 * @var PHPParser_Node_Expr_ClosureUse[]
 	 */
-	protected $uses = array();
+	protected $uses;
 
 	/**
 	 * Statements
 	 *
 	 * @var PHPParser_Node[]
 	 */
-	protected $stmts = array();
+	protected $stmts;
 
 	/**
 	 * Constructs a lambda function node.
@@ -69,9 +69,12 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param boolean $byRef */
+	 * @param boolean $byRef
+	 * @return \PHPParser_Node_Expr_Closure
+	 */
 	public function setByRef($byRef) {
 		$this->byRef = (bool)$byRef;
+		return $this;
 	}
 
 	/**
@@ -82,22 +85,71 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Stmt_FuncParam[] $params */
-	public function setParams(array $params) {
-		$this->params = $params;
+	 * @param PHPParser_Node_Param $param
+	 */
+	public function appendParam(PHPParser_Node_Param $param) {
+		if (NULL != $this->params) {
+			$this->params = array();
+		}
+		$this->params[] = $param;
+		$this->setSelfAsSubNodeParent($param, 'params');
 	}
 
 	/**
-	 * @return PHPParser_Node_Stmt_FuncParam[]
+	 * @param PHPParser_Node_Param $param
+	 */
+	public function removeParam(PHPParser_Node_Param $param) {
+		if (NULL !== $this->params) {
+			foreach ($this->params as $key => $existingParam) {
+				if ($param === $existingParam) {
+					unset($this->params[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Param $paramNew
+	 * @param PHPParser_Node_Param $paramOld
+	 */
+	public function replaceParam(PHPParser_Node_Param $paramNew, PHPParser_Node_Param $paramOld) {
+		if (NULL !== $this->params) {
+			foreach ($this->params as $key => $existingParam) {
+				if ($paramOld === $existingParam) {
+					$this->params[$key] = $paramNew;
+					$existingParam->setParent();
+					$this->setSelfAsSubNodeParent($paramNew, 'params');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Param[] $params
+	 * @return \PHPParser_Node_Expr_Closure
+	 */
+	public function setParams(array $params = NULL) {
+		$this->params = $params;
+		$this->setSelfAsSubNodeParent($params, 'params');
+		return $this;
+	}
+
+	/**
+	 * @return PHPParser_Node_Param[]
 	 */
 	public function getParams() {
 		return $this->params;
 	}
 
 	/**
-	 * @param boolean $static */
+	 * @param boolean $static
+	 * @return \PHPParser_Node_Expr_Closure
+	 */
 	public function setStatic($static) {
-		$this->static = (bool)$static;
+		$this->static = (bool) $static;
+		return $this;
 	}
 
 	/**
@@ -108,9 +160,13 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
-	public function setStmts(array$stmts) {
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Expr_Closure
+	 */
+	public function setStmts(array $stmts = NULL) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**
@@ -121,9 +177,55 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr_ClosureUse[] $uses */
-	public function setUses(array $uses) {
+	 * @param PHPParser_Node_Expr_ClosureUse $use
+	 */
+	public function appendUse(PHPParser_Node_Expr_ClosureUse $use) {
+		if (NULL != $this->uses) {
+			$this->uses = array();
+		}
+		$this->uses[] = $use;
+		$this->setSelfAsSubNodeParent($use, 'uses');
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr_ClosureUse $use
+	 */
+	public function removeUse(PHPParser_Node_Expr_ClosureUse $use) {
+		if (NULL !== $this->uses) {
+			foreach ($this->uses as $key => $existingUse) {
+				if ($use === $existingUse) {
+					unset($this->uses[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr_ClosureUse $useNew
+	 * @param PHPParser_Node_Expr_ClosureUse $useOld
+	 */
+	public function replaceUse(PHPParser_Node_Expr_ClosureUse $useNew, PHPParser_Node_Expr_ClosureUse $useOld) {
+		if (NULL !== $this->uses) {
+			foreach ($this->uses as $key => $existingUse) {
+				if ($useOld === $existingUse) {
+					$this->uses[$key] = $useNew;
+					$existingUse->setParent();
+					$this->setSelfAsSubNodeParent($useNew, 'uses');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr_ClosureUse[] $uses
+	 * @return \PHPParser_Node_Expr_Closure
+	 */
+	public function setUses(array $uses = NULL) {
 		$this->uses = $uses;
+		$this->setSelfAsSubNodeParent($uses, 'uses');
+		return $this;
 	}
 
 	/**

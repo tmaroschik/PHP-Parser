@@ -33,9 +33,13 @@ class PHPParser_Node_Expr_ArrayDimFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $dim */
-	public function setDim(PHPParser_Node_Expr $dim) {
+	 * @param PHPParser_Node_Expr $dim
+	 * @return \PHPParser_Node_Expr_ArrayDimFetch
+	 */
+	public function setDim(PHPParser_Node_Expr $dim = NULL) {
 		$this->dim = $dim;
+		$this->setSelfAsSubNodeParent($dim, 'dim');
+		return $this;
 	}
 
 	/**
@@ -46,9 +50,13 @@ class PHPParser_Node_Expr_ArrayDimFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $var */
-	public function setVar(PHPParser_Node_Expr $var) {
+	 * @param PHPParser_Node_Expr $var
+	 * @return \PHPParser_Node_Expr_ArrayDimFetch
+	 */
+	public function setVar(PHPParser_Node_Expr $var = NULL) {
 		$this->var = $var;
+		$this->setSelfAsSubNodeParent($var, 'var');
+		return $this;
 	}
 
 	/**

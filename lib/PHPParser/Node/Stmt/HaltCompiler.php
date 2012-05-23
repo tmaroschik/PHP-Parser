@@ -25,9 +25,12 @@ class PHPParser_Node_Stmt_HaltCompiler extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $remaining */
+	 * @param string $remaining
+	 * @return \PHPParser_Node_Stmt_HaltCompiler
+	 */
 	public function setRemaining($remaining) {
 		$this->remaining = $remaining;
+		return $this;
 	}
 
 	/**

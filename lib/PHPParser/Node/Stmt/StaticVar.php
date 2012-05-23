@@ -37,9 +37,13 @@ class PHPParser_Node_Stmt_StaticVar extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $default */
-	public function setDefault(PHPParser_Node_Expr $default) {
+	 * @param PHPParser_Node_Expr $default
+	 * @return \PHPParser_Node_Stmt_StaticVar
+	 */
+	public function setDefault(PHPParser_Node_Expr $default = NULL) {
 		$this->default = $default;
+		$this->setSelfAsSubNodeParent($default, 'default');
+		return $this;
 	}
 
 	/**
@@ -50,9 +54,12 @@ class PHPParser_Node_Stmt_StaticVar extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Stmt_StaticVar
+	 */
 	public function setName($name) {
 		$this->name = $name;
+		return $this;
 	}
 
 	/**

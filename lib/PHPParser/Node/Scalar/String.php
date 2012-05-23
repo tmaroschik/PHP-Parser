@@ -124,9 +124,12 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar {
 	}
 
 	/**
-	 * @param string $value */
+	 * @param string $value
+	 * @return \PHPParser_Node_Scalar_String
+	 */
 	public function setValue($value) {
 		$this->value = (string) $value;
+		return $this;
 	}
 
 	/**

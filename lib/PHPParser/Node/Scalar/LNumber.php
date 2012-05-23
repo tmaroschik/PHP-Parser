@@ -58,9 +58,12 @@ class PHPParser_Node_Scalar_LNumber extends PHPParser_Node_Scalar {
 	}
 
 	/**
-	 * @param int $value */
+	 * @param int $value
+	 * @return \PHPParser_Node_Scalar_LNumber
+	 */
 	public function setValue($value) {
 		$this->value = (int)$value;
+		return $this;
 	}
 
 	/**

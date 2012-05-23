@@ -27,9 +27,13 @@ class PHPParser_Node_Stmt_Continue extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $num */
-	public function setNum(PHPParser_Node_Expr $num) {
+	 * @param PHPParser_Node_Expr $num
+	 * @return \PHPParser_Node_Stmt_Continue
+	 */
+	public function setNum(PHPParser_Node_Expr $num = NULL) {
 		$this->num = $num;
+		$this->setSelfAsSubNodeParent($num, 'num');
+		return $this;
 	}
 
 	/**

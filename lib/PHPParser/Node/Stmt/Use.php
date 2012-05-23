@@ -25,9 +25,55 @@ class PHPParser_Node_Stmt_Use extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Stmt_UseUse[] $uses */
+	 * @param PHPParser_Node_Stmt_UseUse $use
+	 */
+	public function appendUse(PHPParser_Node_Stmt_UseUse $use) {
+		if (NULL != $this->uses) {
+			$this->uses = array();
+		}
+		$this->uses[] = $use;
+		$this->setSelfAsSubNodeParent($use, 'uses');
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_UseUse $use
+	 */
+	public function removeUse(PHPParser_Node_Stmt_UseUse $use) {
+		if (NULL !== $this->uses) {
+			foreach ($this->uses as $key => $existingUse) {
+				if ($use === $existingUse) {
+					unset($this->uses[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_UseUse $useNew
+	 * @param PHPParser_Node_Stmt_UseUse $useOld
+	 */
+	public function replaceUse(PHPParser_Node_Stmt_UseUse $useNew, PHPParser_Node_Stmt_UseUse $useOld) {
+		if (NULL !== $this->uses) {
+			foreach ($this->uses as $key => $existingUse) {
+				if ($useOld === $existingUse) {
+					$this->uses[$key] = $useNew;
+					$existingUse->setParent();
+					$this->setSelfAsSubNodeParent($useNew, 'uses');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_UseUse[] $uses
+	 * @return \PHPParser_Node_Stmt_Use
+	 */
 	public function setUses(array $uses) {
 		$this->uses = $uses;
+		$this->setSelfAsSubNodeParent($uses, 'uses');
+		return $this;
 	}
 
 	/**

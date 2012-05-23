@@ -7,7 +7,7 @@ class PHPParser_Node_Expr_Array extends PHPParser_Node_Expr {
 	 *
 	 * @var PHPParser_Node_Expr_ArrayItem[]
 	 */
-	protected $items = array();
+	protected $items;
 
 	/**
 	 * Constructs an array node.
@@ -29,8 +29,8 @@ class PHPParser_Node_Expr_Array extends PHPParser_Node_Expr {
 			foreach ($this->items as $item) {
 				if ($item->hasLineBreaks()) {
 					return true;
-				} elseif ($item->value instanceof PHPParser_Node_Expr_Array) {
-					return $item->value->itemsHaveLineBreaks();
+				} elseif ($item->getValue() instanceof PHPParser_Node_Expr_Array) {
+					return $item->getValue()->itemsHaveLineBreaks();
 				}
 			}
 		}
@@ -38,9 +38,55 @@ class PHPParser_Node_Expr_Array extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr_ArrayItem[] $items */
-	public function setItems(array $items) {
+	 * @item PHPParser_Node_Expr_ArrayItem $item
+	 */
+	public function appendItem(PHPParser_Node_Expr_ArrayItem $item) {
+		if (NULL != $this->items) {
+			$this->items = array();
+		}
+		$this->items[] = $item;
+		$this->setSelfAsSubNodeParent($item, 'items');
+	}
+
+	/**
+	 * @item PHPParser_Node_Expr_ArrayItem $item
+	 */
+	public function removeItem(PHPParser_Node_Expr_ArrayItem $item) {
+		if (NULL !== $this->items) {
+			foreach ($this->items as $key => $existingItem) {
+				if ($item === $existingItem) {
+					unset($this->items[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @item PHPParser_Node_Expr_ArrayItem $itemNew
+	 * @item PHPParser_Node_Expr_ArrayItem $itemOld
+	 */
+	public function replaceItem(PHPParser_Node_Expr_ArrayItem $itemNew, PHPParser_Node_Expr_ArrayItem $itemOld) {
+		if (NULL !== $this->items) {
+			foreach ($this->items as $key => $existingItem) {
+				if ($itemOld === $existingItem) {
+					$this->items[$key] = $itemNew;
+					$existingItem->setParent();
+					$this->setSelfAsSubNodeParent($itemNew, 'items');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr_ArrayItem[] $items
+	 * @return \PHPParser_Node_Expr_Array
+	 */
+	public function setItems(array $items = NULL) {
 		$this->items = $items;
+		$this->setSelfAsSubNodeParent($items, 'items');
+		return $this;
 	}
 
 	/**

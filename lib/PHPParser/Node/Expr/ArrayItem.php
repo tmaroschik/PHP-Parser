@@ -46,7 +46,7 @@ class PHPParser_Node_Expr_ArrayItem extends PHPParser_Node_Expr {
 	/**
 	 * @param boolean $byRef */
 	public function setByRef($byRef) {
-		$this->byRef = (bool)$byRef;
+		$this->byRef = (bool) $byRef;
 	}
 
 	/**
@@ -57,9 +57,13 @@ class PHPParser_Node_Expr_ArrayItem extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $key */
-	public function setKey(PHPParser_Node_Expr $key) {
+	 * @param \PHPParser_Node_Expr $key
+	 * @return \PHPParser_Node_Expr_ArrayItem
+	 */
+	public function setKey(PHPParser_Node_Expr $key = NULL) {
 		$this->key = $key;
+		$this->setSelfAsSubNodeParent($key, 'key');
+		return $this;
 	}
 
 	/**
@@ -70,9 +74,13 @@ class PHPParser_Node_Expr_ArrayItem extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $value */
-	public function setValue(PHPParser_Node_Expr $value) {
+	 * @param \PHPParser_Node_Expr $value
+	 * @return \PHPParser_Node_Expr_ArrayItem
+	 */
+	public function setValue(PHPParser_Node_Expr $value = NULL) {
 		$this->value = $value;
+		$this->setSelfAsSubNodeParent($value, 'value');
+		return $this;
 	}
 
 	/**

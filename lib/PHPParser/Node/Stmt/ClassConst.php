@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_ClassConst extends PHPParser_Node_Stmt {
 	 *
 	 * @var PHPParser_Node_Const[]
 	 */
-	protected $consts = array();
+	protected $consts;
 
 	/**
 	 * Constructs a class const list node.
@@ -25,9 +25,55 @@ class PHPParser_Node_Stmt_ClassConst extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Const[] $consts */
-	public function setConsts(array $consts) {
+	 * @param PHPParser_Node_Const $const
+	 */
+	public function appendConst(PHPParser_Node_Const $const) {
+		if (NULL != $this->consts) {
+			$this->consts = array();
+		}
+		$this->consts[] = $const;
+		$this->setSelfAsSubNodeParent($const, 'consts');
+	}
+
+	/**
+	 * @param PHPParser_Node_Const $const
+	 */
+	public function removeConst(PHPParser_Node_Const $const) {
+		if (NULL !== $this->consts) {
+			foreach ($this->consts as $key => $existingConst) {
+				if ($const === $existingConst) {
+					unset($this->consts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Const $constNew
+	 * @param PHPParser_Node_Const $constOld
+	 */
+	public function replaceConst(PHPParser_Node_Const $constNew, PHPParser_Node_Const $constOld) {
+		if (NULL !== $this->consts) {
+			foreach ($this->consts as $key => $existingConst) {
+				if ($constOld === $existingConst) {
+					$this->consts[$key] = $constNew;
+					$existingConst->setParent();
+					$this->setSelfAsSubNodeParent($constNew, 'consts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Const[] $consts
+	 * @return \PHPParser_Node_Stmt_ClassConst
+	 */
+	public function setConsts(array $consts = NULL) {
 		$this->consts = $consts;
+		$this->setSelfAsSubNodeParent($consts, 'consts');
+		return $this;
 	}
 
 	/**

@@ -11,7 +11,9 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 		'attribute' => true,
 		'attributes' => true,
 		'subNodeNames'  => true,
-		'nodeType' => true
+		'nodeType' => true,
+		'parent' => true,
+		'parentSubNodeName' => true
 	);
 
 	/**
@@ -28,6 +30,16 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 	 * @var array
 	 */
 	protected $attributes = array();
+
+	/**
+	 * @var PHPParser_Node
+	 */
+	protected $parent;
+
+	/**
+	 * @var string
+	 */
+	protected $parentSubNodeName;
 
 	/**
 	 * Contains subNodeNames
@@ -47,6 +59,21 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 		$this->setLine($line);
 		$this->setIgnorables($ignorables);
 		$this->initalizeSubNodeNames();
+	}
+
+	/**
+	 * @param mixed $nodes
+	 * @param string $subNodeName
+	 */
+	protected function setSelfAsSubNodeParent($nodes, $subNodeName) {
+		if ($nodes instanceof \PHPParser_Node) {
+			/** @var $nodes \PHPParser_Node */
+			$nodes->setParent($this, $subNodeName);
+		} else if (is_array($nodes)) {
+			foreach ($nodes as $node) {
+				$this->setSelfAsSubNodeParent($node, $subNodeName);
+			}
+		}
 	}
 
 	/**
@@ -131,7 +158,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 	public function hasLineBreaks() {
 		if (null !== $this->ignorables) {
 			foreach ($this->ignorables as $ignorable) {
-				if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->value, PHP_EOL) !== false) {
+				if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->getValue(), PHP_EOL) !== false) {
 					return true;
 				}
 			}
@@ -289,5 +316,43 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 
 	public function __wakeup() {
 		$this->initalizeSubNodeNames();
+	}
+
+	/**
+	 * @param \PHPParser_Node $parent
+	 */
+	final public function setParent(\PHPParser_Node $parent = NULL, $parentSubNodeName = NULL) {
+		if (NULL !== $this->parent && ($parent !== $this->parent || (!empty($this->parentSubNodeName) && $parentSubNodeName !== $this->parentSubNodeName))) {
+			// remove from existing parent
+			$childNode = $this->parent->{'get' . ucfirst($this->parentSubNodeName)}();
+			if (is_array($childNode)) {
+				foreach ($childNode as $key=>$node) {
+					if ($this === $node) {
+						unset($childNode[$key]);
+						break;
+					}
+				}
+				$this->parent->{'set' . ucfirst($this->parentSubNodeName)}($childNode);
+			} else if ($childNode === $this) {
+				$this->parent->{'set' . ucfirst($this->parentSubNodeName)}();
+			}
+		}
+		$this->parent = $parent;
+		$this->parentSubNodeName = (string) $parentSubNodeName;
+		return $this;
+	}
+
+	/**
+	 * @return \PHPParser_Node
+	 */
+	final public function getParent() {
+		return $this->parent;
+	}
+
+	/**
+	 * @return string
+	 */
+	final public function getParentSubNodeName() {
+		return $this->parentSubNodeName;
 	}
 }

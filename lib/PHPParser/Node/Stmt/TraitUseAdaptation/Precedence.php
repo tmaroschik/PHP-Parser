@@ -26,7 +26,7 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
 	 *
 	 * @var PHPParser_Node_Name[]
 	 */
-	protected $insteadof = array();
+	protected $insteadof;
 
 	/**
 	 * Constructs a trait use precedence adaptation node.
@@ -45,9 +45,13 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
 	}
 
 	/**
-	 * @param PHPParser_Node_Name[] $insteadof */
-	public function setInsteadof(array $insteadof) {
+	 * @param PHPParser_Node_Name[] $insteadof
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Precedence
+	 */
+	public function setInsteadof(array $insteadof = NULL) {
 		$this->insteadof = $insteadof;
+		$this->setSelfAsSubNodeParent($insteadof, 'insteadof');
+		return $this;
 	}
 
 	/**
@@ -58,9 +62,12 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
 	}
 
 	/**
-	 * @param string $method */
+	 * @param string $method
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Precedence
+	 */
 	public function setMethod($method) {
-		$this->method = (string)$method;
+		$this->method = (string) $method;
+		return $this;
 	}
 
 	/**
@@ -71,9 +78,13 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
 	}
 
 	/**
-	 * @param PHPParser_Node_Name $trait */
-	public function setTrait(PHPParser_Node_Name $trait) {
+	 * @param PHPParser_Node_Name $trait
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Precedence
+	 */
+	public function setTrait(PHPParser_Node_Name $trait = NULL) {
 		$this->trait = $trait;
+		$this->setSelfAsSubNodeParent($trait, 'trait');
+		return $this;
 	}
 
 	/**

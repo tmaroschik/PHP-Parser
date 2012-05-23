@@ -14,15 +14,13 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 *
 	 * @var array
 	 */
-	protected $tags = array();
+	protected $tags;
 
 	/**
-	 * Constructs a const node for use in class const and const statements.
+	 * Constructs a doc comment
 	 *
-	 * @param string $name Name
-	 * @param PHPParser_Node_Expr $value Value
+	 * @param string $value Value
 	 * @param int $line Line
-	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
 	public function __construct($value, $line = -1) {
 		$this->setValue($value);
@@ -119,6 +117,7 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 * Returns a string representation of the ignorable.
 	 *
 	 * @param bool $singleLineCommentAllowed * @return string String representation
+	 * @return string
 	 */
 	public function toString($singleLineCommentAllowed = false) {
 		$docComment = array();

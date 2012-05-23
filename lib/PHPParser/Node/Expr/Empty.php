@@ -22,9 +22,13 @@ class PHPParser_Node_Expr_Empty extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $var */
-	public function setVar(PHPParser_Node_Expr $var) {
+	 * @param \PHPParser_Node_Expr $var
+	 * @return \PHPParser_Node_Expr_Empty
+	 */
+	public function setVar(PHPParser_Node_Expr $var = NULL) {
 		$this->var = $var;
+		$this->setSelfAsSubNodeParent($var, 'var');
+		return $this;
 	}
 
 	/**

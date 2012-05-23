@@ -31,12 +31,16 @@ class PHPParser_Node_Expr_PropertyFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr|string $name */
-	public function setName($name) {
-		if (!is_string($name) && !$name instanceof PHPParser_Node_Expr) {
+	 * @param \PHPParser_Node_Expr|string $name
+	 * @return \PHPParser_Node_Expr_PropertyFetch
+	 */
+	public function setName($name = NULL) {
+		if (NULL !== $name && !is_string($name) && !$name instanceof PHPParser_Node_Expr) {
 			throw new InvalidArgumentException(__CLASS__ . '::' . __METHOD__ . ' expects $type to be either string or PHPParser_Node_Expr. ' . gettype($name) . ' given.', 1337629848);
 		}
 		$this->name = $name;
+		$this->setSelfAsSubNodeParent($name, 'name');
+		return $this;
 	}
 
 	/**
@@ -47,9 +51,13 @@ class PHPParser_Node_Expr_PropertyFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $var */
-	public function setVar(PHPParser_Node_Expr $var) {
+	 * @param \PHPParser_Node_Expr $var
+	 * @return \PHPParser_Node_Expr_PropertyFetch
+	 */
+	public function setVar(PHPParser_Node_Expr $var = NULL) {
 		$this->var = $var;
+		$this->setSelfAsSubNodeParent($var, 'var');
+		return $this;
 	}
 
 	/**

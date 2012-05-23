@@ -57,9 +57,12 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Alias extends PHPParser_Node_Stmt_T
 	}
 
 	/**
-	 * @param string $method */
+	 * @param string $method
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Alias
+	 */
 	public function setMethod($method) {
 		$this->method = (string)$method;
+		return $this;
 	}
 
 	/**
@@ -70,9 +73,12 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Alias extends PHPParser_Node_Stmt_T
 	}
 
 	/**
-	 * @param int $newModifier */
+	 * @param int $newModifier
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Alias
+	 */
 	public function setNewModifier($newModifier) {
 		$this->newModifier = (int) $newModifier;
+		return $this;
 	}
 
 	/**
@@ -83,9 +89,12 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Alias extends PHPParser_Node_Stmt_T
 	}
 
 	/**
-	 * @param string $newName */
+	 * @param string $newName
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Alias
+	 */
 	public function setNewName($newName) {
 		$this->newName = (string)$newName;
+		return $this;
 	}
 
 	/**
@@ -96,9 +105,13 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Alias extends PHPParser_Node_Stmt_T
 	}
 
 	/**
-	 * @param PHPParser_Node_Name $trait */
-	public function setTrait(PHPParser_Node_Name $trait) {
+	 * @param PHPParser_Node_Name $trait
+	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Alias
+	 */
+	public function setTrait(PHPParser_Node_Name $trait = NULL) {
 		$this->trait = $trait;
+		$this->setSelfAsSubNodeParent($trait, 'trait');
+		return $this;
 	}
 
 	/**

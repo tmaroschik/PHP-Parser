@@ -35,9 +35,12 @@ class PHPParser_Node_Stmt_DeclareDeclare extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $key */
+	 * @param string $key
+	 * @return \PHPParser_Node_Stmt_DeclareDeclare
+	 */
 	public function setKey($key) {
-		$this->key = (string)$key;
+		$this->key = (string) $key;
+		return $this;
 	}
 
 	/**
@@ -48,9 +51,13 @@ class PHPParser_Node_Stmt_DeclareDeclare extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $value */
-	public function setValue(PHPParser_Node_Expr $value) {
+	 * @param PHPParser_Node_Expr $value
+	 * @return \PHPParser_Node_Stmt_DeclareDeclare
+	 */
+	public function setValue(PHPParser_Node_Expr $value = NULL) {
 		$this->value = $value;
+		$this->setSelfAsSubNodeParent($value, 'value');
+		return $this;
 	}
 
 	/**

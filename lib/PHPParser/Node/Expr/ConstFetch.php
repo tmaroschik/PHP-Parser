@@ -25,9 +25,13 @@ class PHPParser_Node_Expr_ConstFetch extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param \PHPParser_Node_Name $name */
-	public function setName(PHPParser_Node_Name $name) {
+	 * @param \PHPParser_Node_Name $name
+	 * @return \PHPParser_Node_Expr_ConstFetch
+	 */
+	public function setName(PHPParser_Node_Name $name = NULL) {
 		$this->name = $name;
+		$this->setSelfAsSubNodeParent($name, 'name');
+		return $this;
 	}
 
 	/**

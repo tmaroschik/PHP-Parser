@@ -31,9 +31,13 @@ abstract class PHPParser_Node_Expr_AbstractLeftRight extends PHPParser_Node_Expr
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $left */
-	public function setLeft(PHPParser_Node_Expr $left) {
+	 * @param \PHPParser_Node_Expr $left
+	 * @return \PHPParser_Node_Expr_AbstractLeftRight
+	 */
+	public function setLeft(PHPParser_Node_Expr $left = NULL) {
 		$this->left = $left;
+		$this->setSelfAsSubNodeParent($left, 'left');
+		return $this;
 	}
 
 	/**
@@ -44,9 +48,13 @@ abstract class PHPParser_Node_Expr_AbstractLeftRight extends PHPParser_Node_Expr
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $right */
-	public function setRight(PHPParser_Node_Expr $right) {
+	 * @param \PHPParser_Node_Expr $right
+	 * @return \PHPParser_Node_Expr_AbstractLeftRight
+	 */
+	public function setRight(PHPParser_Node_Expr $right = NULL) {
 		$this->right = $right;
+		$this->setSelfAsSubNodeParent($right, 'right');
+		return $this;
 	}
 
 	/**

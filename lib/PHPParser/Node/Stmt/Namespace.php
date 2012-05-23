@@ -50,6 +50,7 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 	/**
 	 * @static
 	 * @param array $stmts * @return array
+	 * @return array
 	 * @throws PHPParser_Error
 	 */
 	public static function postprocess(array $stmts) {
@@ -132,12 +133,16 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Name $name */
-	public function setName(PHPParser_Node_Name $name) {
+	 * @param PHPParser_Node_Name $name
+	 * @return \PHPParser_Node_Stmt_Namespace
+	 */
+	public function setName(PHPParser_Node_Name $name = NULL) {
 		if (isset(self::$specialNames[(string)$name])) {
 			throw new PHPParser_Error(sprintf('Cannot use "%s" as namespace name as it is reserved', $name));
 		}
 		$this->name = $name;
+		$this->setSelfAsSubNodeParent($name, 'name');
+		return $this;
 	}
 
 	/**
@@ -148,7 +153,51 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_Namespace
+	 */
 	public function setStmts(array $stmts) {
 		foreach ($stmts as $stmt) {
 			if ($stmt instanceof PHPParser_Node_Stmt_Namespace) {
@@ -156,6 +205,8 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 			}
 		}
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**

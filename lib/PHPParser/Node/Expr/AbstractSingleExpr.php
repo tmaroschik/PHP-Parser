@@ -22,9 +22,13 @@ abstract class PHPParser_Node_Expr_AbstractSingleExpr extends PHPParser_Node_Exp
 	}
 
 	/**
-	 * @param \PHPParser_Node_Expr $expr */
-	public function setExpr(PHPParser_Node_Expr $expr) {
+	 * @param \PHPParser_Node_Expr $expr
+	 * @return \PHPParser_Node_Expr_AbstractSingleExpr
+	 */
+	public function setExpr(PHPParser_Node_Expr $expr = NULL) {
 		$this->expr = $expr;
+		$this->setSelfAsSubNodeParent($expr, 'expr');
+		return $this;
 	}
 
 	/**

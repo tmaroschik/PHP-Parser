@@ -31,24 +31,28 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 					$node->getLine()
 				);
 			}
-
+			$this->resolveClassName($node->getName());
 			$this->aliases[$node->getAlias()] = $node->getName();
 		} elseif ($node instanceof PHPParser_Node_Stmt_Class) {
-			if (null !== $node->getExtends()) {
+			if (NULL !== $node->getExtends()) {
 				$node->setExtends($this->resolveClassName($node->getExtends()));
 			}
 			$interfaces = $node->getImplements();
-			foreach ($interfaces as &$interface) {
-				$interface = $this->resolveClassName($interface);
+			if (NULL !== $interfaces) {
+				foreach ($interfaces as &$interface) {
+					$interface = $this->resolveClassName($interface);
+				}
+				$node->setImplements($interfaces);
 			}
-			$node->setImplements($interfaces);
 			$this->addNamespacedName($node);
 		} elseif ($node instanceof PHPParser_Node_Stmt_Interface) {
 			$interfaces = $node->getExtends();
-			foreach ($interfaces as &$interface) {
-				$interface = $this->resolveClassName($interface);
+			if (NULL !== $interfaces) {
+				foreach ($interfaces as &$interface) {
+					$interface = $this->resolveClassName($interface);
+				}
+				$node->setExtends($interfaces);
 			}
-			$node->setExtends($interfaces);
 			$this->addNamespacedName($node);
 		} elseif ($node instanceof PHPParser_Node_Stmt_Trait) {
 			$this->addNamespacedName($node);
@@ -75,10 +79,12 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 			}
 		} elseif ($node instanceof PHPParser_Node_Stmt_TraitUse) {
 			$traits = $node->getTraits();
-			foreach ($traits as &$trait) {
-				$trait = $this->resolveClassName($trait);
+			if (NULL !== $traits) {
+				foreach ($traits as $trait) {
+					$trait = $this->resolveClassName($trait);
+				}
+				$node->setTraits($traits);
 			}
-			$node->setTraits($traits);
 		} elseif ($node instanceof PHPParser_Node_Param
 				&& $node->getType() instanceof PHPParser_Node_Name
 		) {

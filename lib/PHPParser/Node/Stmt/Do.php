@@ -18,7 +18,7 @@ class PHPParser_Node_Stmt_Do extends PHPParser_Node_Stmt {
 	 *
 	 * @var PHPParser_Node[]
 	 */
-	protected $stmts = array();
+	protected $stmts;
 
 	/**
 	 * Constructs a do while node.
@@ -35,9 +35,13 @@ class PHPParser_Node_Stmt_Do extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $cond */
-	public function setCond(PHPParser_Node_Expr $cond) {
+	 * @param PHPParser_Node_Expr $cond
+	 * @return \PHPParser_Node_Stmt_Do
+	 */
+	public function setCond(PHPParser_Node_Expr $cond = NULL) {
 		$this->cond = $cond;
+		$this->setSelfAsSubNodeParent($cond, 'cond');
+		return $this;
 	}
 
 	/**
@@ -48,9 +52,55 @@ class PHPParser_Node_Stmt_Do extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
-	public function setStmts(array $stmts) {
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_Do
+	 */
+	public function setStmts(array $stmts = NULL) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**

@@ -10,7 +10,7 @@ class PHPParser_Node_Stmt_Echo extends PHPParser_Node_Stmt {
 	 *
 	 * @var PHPParser_Node_Expr[]
 	 */
-	protected $exprs = array();
+	protected $exprs;
 
 	/**
 	 * Constructs an echo node.
@@ -25,9 +25,55 @@ class PHPParser_Node_Stmt_Echo extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr[] $exprs */
-	public function setExprs(array $exprs) {
+	 * @param PHPParser_Node_Expr $expr
+	 */
+	public function appendExpr(PHPParser_Node_Expr $expr) {
+		if (NULL != $this->exprs) {
+			$this->exprs = array();
+		}
+		$this->exprs[] = $expr;
+		$this->setSelfAsSubNodeParent($expr, 'exprs');
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr $expr
+	 */
+	public function removeExpr(PHPParser_Node_Expr $expr) {
+		if (NULL !== $this->exprs) {
+			foreach ($this->exprs as $key => $existingExpr) {
+				if ($expr === $existingExpr) {
+					unset($this->exprs[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr $exprNew
+	 * @param PHPParser_Node_Expr $exprOld
+	 */
+	public function replaceExpr(PHPParser_Node_Expr $exprNew, PHPParser_Node_Expr $exprOld) {
+		if (NULL !== $this->exprs) {
+			foreach ($this->exprs as $key => $existingExpr) {
+				if ($exprOld === $existingExpr) {
+					$this->exprs[$key] = $exprNew;
+					$existingExpr->setParent();
+					$this->setSelfAsSubNodeParent($exprNew, 'exprs');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Expr[] $exprs
+	 * @return \PHPParser_Node_Stmt_Echo
+	 */
+	public function setExprs(array $exprs = NULL) {
 		$this->exprs = $exprs;
+		$this->setSelfAsSubNodeParent($exprs, 'exprs');
+		return $this;
 	}
 
 	/**

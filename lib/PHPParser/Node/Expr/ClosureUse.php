@@ -31,9 +31,12 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param boolean $byRef */
+	 * @param boolean $byRef
+	 * @return \PHPParser_Node_Expr_ClosureUse
+	 */
 	public function setByRef($byRef) {
-		$this->byRef = (bool)$byRef;
+		$this->byRef = (bool) $byRef;
+		return $this;
 	}
 
 	/**
@@ -44,9 +47,12 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
 	}
 
 	/**
-	 * @param string $var */
+	 * @param string $var
+	 * @return \PHPParser_Node_Expr_ClosureUse
+	 */
 	public function setVar($var) {
-		$this->var = (string)$var;
+		$this->var = (string) $var;
+		return $this;
 	}
 
 	/**

@@ -72,9 +72,12 @@ class PHPParser_Node_Stmt_Foreach extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param bool $byRef */
+	 * @param bool $byRef
+	 * @return \PHPParser_Node_Stmt_Foreach
+	 */
 	public function setByRef($byRef) {
 		$this->byRef = (bool)$byRef;
+		return $this;
 	}
 
 	/**
@@ -85,9 +88,13 @@ class PHPParser_Node_Stmt_Foreach extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $expr */
-	public function setExpr(PHPParser_Node_Expr $expr) {
+	 * @param PHPParser_Node_Expr $expr
+	 * @return \PHPParser_Node_Stmt_Foreach
+	 */
+	public function setExpr(PHPParser_Node_Expr $expr = NULL) {
 		$this->expr = $expr;
+		$this->setSelfAsSubNodeParent($expr, 'expr');
+		return $this;
 	}
 
 	/**
@@ -98,9 +105,13 @@ class PHPParser_Node_Stmt_Foreach extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $keyVar */
-	public function setKeyVar(PHPParser_Node_Expr $keyVar) {
+	 * @param PHPParser_Node_Expr $keyVar
+	 * @return \PHPParser_Node_Stmt_Foreach
+	 */
+	public function setKeyVar(PHPParser_Node_Expr $keyVar = NULL) {
 		$this->keyVar = $keyVar;
+		$this->setSelfAsSubNodeParent($keyVar, 'keyVar');
+		return $this;
 	}
 
 	/**
@@ -111,9 +122,55 @@ class PHPParser_Node_Stmt_Foreach extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_Foreach
+	 */
 	public function setStmts(array $stmts) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**
@@ -124,9 +181,13 @@ class PHPParser_Node_Stmt_Foreach extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $valueVar */
-	public function setValueVar(PHPParser_Node_Expr $valueVar) {
+	 * @param PHPParser_Node_Expr $valueVar
+	 * @return \PHPParser_Node_Stmt_Foreach
+	 */
+	public function setValueVar(PHPParser_Node_Expr $valueVar = NULL) {
 		$this->valueVar = $valueVar;
+		$this->setSelfAsSubNodeParent($valueVar, 'valueVar');
+		return $this;
 	}
 
 	/**

@@ -12,14 +12,14 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	 *
 	 * @var PHPParser_Node_Name[]
 	 */
-	protected $extends = array();
+	protected $extends;
 
 	/**
 	 * Contains stmts
 	 *
 	 * @var PHPParser_Node[]
 	 */
-	protected $stmts = array();
+	protected $stmts;
 
 	/**
 	 * Contains name
@@ -59,15 +59,63 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Name[] $extends */
-	public function setExtends(array $extends) {
-		foreach ($extends as $interface) {
-			$interfaceString = (string) $interface;
-			if (isset(self::$specialNames[strtolower($interfaceString)])) {
-				throw new PHPParser_Error('Cannot use "' . $interfaceString . '" as interface name as it is reserved', $interface->getLine());
+	 * @param PHPParser_Node_Name $extend
+	 */
+	public function appendExtend(PHPParser_Node_Name $extend) {
+		if (NULL != $this->extends) {
+			$this->extends = array();
+		}
+		$this->extends[] = $extend;
+		$this->setSelfAsSubNodeParent($extend, 'extends');
+	}
+
+	/**
+	 * @param PHPParser_Node_Name $extend
+	 */
+	public function removeExtend(PHPParser_Node_Name $extend) {
+		if (NULL !== $this->extends) {
+			foreach ($this->extends as $key => $existingExtend) {
+				if ($extend === $existingExtend) {
+					unset($this->extends[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Name $extendNew
+	 * @param PHPParser_Node_Name $extendOld
+	 */
+	public function replaceExtend(PHPParser_Node_Name $extendNew, PHPParser_Node_Name $extendOld) {
+		if (NULL !== $this->extends) {
+			foreach ($this->extends as $key => $existingExtend) {
+				if ($extendOld === $existingExtend) {
+					$this->extends[$key] = $extendNew;
+					$existingExtend->setParent();
+					$this->setSelfAsSubNodeParent($extendNew, 'extends');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Name[] $extends
+	 * @return \PHPParser_Node_Stmt_Interface
+	 */
+	public function setExtends(array $extends = NULL) {
+		if (NULL !== $extends) {
+			foreach ($extends as $interface) {
+				$interfaceString = (string) $interface;
+				if (isset(self::$specialNames[strtolower($interfaceString)])) {
+					throw new PHPParser_Error('Cannot use "' . $interfaceString . '" as interface name as it is reserved', $interface->getLine());
+				}
 			}
 		}
 		$this->extends = $extends;
+		$this->setSelfAsSubNodeParent($extends, 'extends');
+		return $this;
 	}
 
 	/**
@@ -78,13 +126,17 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Stmt_Interface
+	 */
 	public function setName($name) {
 		$name = (string) $name;
 		if (isset(self::$specialNames[strtolower($name)])) {
 			throw new PHPParser_Error('Cannot use "' . $name . '" as interface name as it is reserved', $this->getLine());
 		}
 		$this->name = $name;
+		$this->setSelfAsSubNodeParent($name, 'name');
+		return $this;
 	}
 
 	/**
@@ -95,9 +147,55 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node[] $stmts */
-	public function setStmts(array $stmts) {
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function appendStmt(PHPParser_Node $stmt) {
+		if (NULL != $this->stmts) {
+			$this->stmts = array();
+		}
+		$this->stmts[] = $stmt;
+		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmt
+	 */
+	public function removeStmt(PHPParser_Node $stmt) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmt === $existingStmt) {
+					unset($this->stmts[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @stmt PHPParser_Node $stmtNew
+	 * @stmt PHPParser_Node $stmtOld
+	 */
+	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
+		if (NULL !== $this->stmts) {
+			foreach ($this->stmts as $key => $existingStmt) {
+				if ($stmtOld === $existingStmt) {
+					$this->stmts[$key] = $stmtNew;
+					$existingStmt->setParent();
+					$this->setSelfAsSubNodeParent($stmtNew, 'stmts');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node[] $stmts
+	 * @return \PHPParser_Node_Stmt_Interface
+	 */
+	public function setStmts(array $stmts = NULL) {
 		$this->stmts = $stmts;
+		$this->setSelfAsSubNodeParent($stmts, 'stmts');
+		return $this;
 	}
 
 	/**

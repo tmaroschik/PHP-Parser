@@ -25,9 +25,12 @@ class PHPParser_Node_Stmt_Label extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param string $name */
+	 * @param string $name
+	 * @return \PHPParser_Node_Stmt_Label
+	 */
 	public function setName($name) {
 		$this->name = $name;
+		return $this;
 	}
 
 	/**

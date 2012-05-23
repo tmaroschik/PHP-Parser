@@ -35,9 +35,55 @@ class PHPParser_Node_Stmt_Switch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Stmt_Case[] $cases */
+	 * @param PHPParser_Node_Stmt_Case $case
+	 */
+	public function appendCase(PHPParser_Node_Stmt_Case $case) {
+		if (NULL != $this->cases) {
+			$this->cases = array();
+		}
+		$this->cases[] = $case;
+		$this->setSelfAsSubNodeParent($case, 'cases');
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_Case $case
+	 */
+	public function removeCase(PHPParser_Node_Stmt_Case $case) {
+		if (NULL !== $this->cases) {
+			foreach ($this->cases as $key => $existingCase) {
+				if ($case === $existingCase) {
+					unset($this->cases[$key]);
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_Case $caseNew
+	 * @param PHPParser_Node_Stmt_Case $caseOld
+	 */
+	public function replaceCase(PHPParser_Node_Stmt_Case $caseNew, PHPParser_Node_Stmt_Case $caseOld) {
+		if (NULL !== $this->cases) {
+			foreach ($this->cases as $key => $existingCase) {
+				if ($caseOld === $existingCase) {
+					$this->cases[$key] = $caseNew;
+					$existingCase->setParent();
+					$this->setSelfAsSubNodeParent($caseNew, 'cases');
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param PHPParser_Node_Stmt_Case[] $cases
+	 * @return \PHPParser_Node_Stmt_Switch
+	 */
 	public function setCases(array $cases) {
 		$this->cases = $cases;
+		$this->setSelfAsSubNodeParent($cases, 'cases');
+		return $this;
 	}
 
 	/**
@@ -48,9 +94,13 @@ class PHPParser_Node_Stmt_Switch extends PHPParser_Node_Stmt {
 	}
 
 	/**
-	 * @param PHPParser_Node_Expr $cond */
-	public function setCond(PHPParser_Node_Expr $cond) {
+	 * @param PHPParser_Node_Expr $cond
+	 * @return \PHPParser_Node_Stmt_Switch
+	 */
+	public function setCond(PHPParser_Node_Expr $cond = NULL) {
 		$this->cond = $cond;
+		$this->setSelfAsSubNodeParent($cond, 'cond');
+		return $this;
 	}
 
 	/**

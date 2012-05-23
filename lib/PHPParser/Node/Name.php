@@ -10,7 +10,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract {
 	 *
 	 * @var array
 	 */
-	protected $parts;
+	protected $parts = array();
 
 	/**
 	 * Constructs a name node.

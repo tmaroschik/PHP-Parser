@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @property double $value Number value
- */
 class PHPParser_Node_Scalar_DNumber extends PHPParser_Node_Scalar {
 
 	/**
@@ -61,9 +58,12 @@ class PHPParser_Node_Scalar_DNumber extends PHPParser_Node_Scalar {
 	}
 
 	/**
-	 * @param float $value */
+	 * @param float $value
+	 * @return \PHPParser_Node_Scalar_DNumber
+	 */
 	public function setValue($value) {
 		$this->value = (float)$value;
+		return $this;
 	}
 
 	/**
