@@ -74,6 +74,14 @@ class PHPParser_Tests_codeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function canonicalize($str) {
+
+		// evaluate @@{expr}@@ expressions
+		$str = preg_replace_callback(
+			'/@@\{(.*?)\}@@/',
+			array($this, 'evalCallback'),
+			$str
+		);
+
 		// trim from both sides
 		$str = trim($str);
 

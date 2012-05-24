@@ -21,10 +21,10 @@ array(
         value: 1
     )
     2: Scalar_LNumber(
-        value: 9223372036854775807
+        value: @@{ PHP_INT_MAX     }@@
     )
     3: Scalar_DNumber(
-        value: 9.2233720368548E+18
+        value: @@{ PHP_INT_MAX + 1 }@@
     )
     4: Scalar_LNumber(
         value: 4095
