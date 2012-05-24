@@ -1,18 +1,23 @@
 {
-    "name": "nikic/php-parser",
-    "description": "A PHP parser written in PHP",
-    "keywords": ["php", "parser"],
-    "type": "library",
-    "license": "BSD",
-    "authors": [
-        {
-            "name": "Nikita Popov"
-        }
-    ],
-    "require": {
-        "php": ">=5.2"
-    },
-    "autoload": {
-        "psr-0": { "PHPParser": "lib/" }
-    }
+	"name":"tmaroschik/php-parser",
+	"description":"A PHP parser written in PHP",
+	"keywords":["php", "parser"],
+	"type":"library",
+	"license":"BSD",
+	"authors":[
+		{
+			"name":"Thomas Maroschik"
+		},
+		{
+			"name":"Nikita Popov"
+		}
+	],
+	"require":{
+		"php":">=5.3"
+	},
+	"autoload":{
+		"psr-0":{
+			"PHPParser":"lib/"
+		}
+	}
 }
