@@ -76,6 +76,17 @@ class PHPParser_Node_Stmt_Static extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_StaticVar
+	 */
+	public function getVarAtIndex($index = NULL) {
+		if (isset($this->vars[$index])) {
+			return $this->vars[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_StaticVar[]
 	 */

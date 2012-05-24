@@ -99,6 +99,17 @@ class PHPParser_Node_Stmt_ElseIf extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node[]
 	 */

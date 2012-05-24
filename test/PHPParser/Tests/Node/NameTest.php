@@ -4,10 +4,10 @@ class PHPParser_Tests_Node_NameTest extends PHPUnit_Framework_TestCase {
 
 	public function testConstruct() {
 		$name = new PHPParser_Node_Name(array('foo', 'bar'));
-		$this->assertEquals(array('foo', 'bar'), $name->parts);
+		$this->assertEquals(array('foo', 'bar'), $name->getParts());
 
 		$name = new PHPParser_Node_Name('foo\bar');
-		$this->assertEquals(array('foo', 'bar'), $name->parts);
+		$this->assertEquals(array('foo', 'bar'), $name->getParts());
 	}
 
 	public function testGet() {

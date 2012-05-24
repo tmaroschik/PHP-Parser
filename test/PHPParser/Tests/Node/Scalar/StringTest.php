@@ -18,7 +18,7 @@ class PHPParser_Tests_Node_Scalar_StringTest extends PHPUnit_Framework_TestCase 
 	public function testCreate($expected, $string) {
 		$this->assertEquals(
 			$expected,
-			PHPParser_Node_Scalar_String::create($string)->value
+			PHPParser_Node_Scalar_String::create($string)->getValue()
 		);
 	}
 

@@ -86,6 +86,17 @@ class PHPParser_Node_Stmt_TryCatch extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node[]
 	 */
@@ -143,6 +154,17 @@ class PHPParser_Node_Stmt_TryCatch extends PHPParser_Node_Stmt {
 		$this->catches = $catches;
 		$this->setSelfAsSubNodeParent($catches, 'catches');
 		return $this;
+	}
+
+
+	/**
+	 * @return PHPParser_Node_Stmt_Catch
+	 */
+	public function getCatcheAtIndex($index = NULL) {
+		if (isset($this->catches[$index])) {
+			return $this->catches[$index];
+		}
+		return NULL;
 	}
 
 	/**

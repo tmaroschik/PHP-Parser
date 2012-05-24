@@ -171,14 +171,14 @@ EOC;
 
 		$stmts = $traverser->traverse($stmts);
 
-		$this->assertEquals('NS\\A', (string)$stmts[0]->stmts[0]->getAttribute('namespacedName'));
-		$this->assertEquals('NS\\B', (string)$stmts[0]->stmts[1]->getAttribute('namespacedName'));
-		$this->assertEquals('NS\\C', (string)$stmts[0]->stmts[2]->getAttribute('namespacedName'));
-		$this->assertEquals('NS\\D', (string)$stmts[0]->stmts[3]->consts[0]->getAttribute('namespacedName'));
-		$this->assertEquals('A', (string)$stmts[1]->stmts[0]->getAttribute('namespacedName'));
-		$this->assertEquals('B', (string)$stmts[1]->stmts[1]->getAttribute('namespacedName'));
-		$this->assertEquals('C', (string)$stmts[1]->stmts[2]->getAttribute('namespacedName'));
-		$this->assertEquals('D', (string)$stmts[1]->stmts[3]->consts[0]->getAttribute('namespacedName'));
+		$this->assertEquals('NS\\A', (string)$stmts[0]->getStmtAtIndex(0)->getAttribute('namespacedName'));
+		$this->assertEquals('NS\\B', (string)$stmts[0]->getStmtAtIndex(1)->getAttribute('namespacedName'));
+		$this->assertEquals('NS\\C', (string)$stmts[0]->getStmtAtIndex(2)->getAttribute('namespacedName'));
+		$this->assertEquals('NS\\D', (string)$stmts[0]->getStmtAtIndex(3)->getConstAtIndex(0)->getAttribute('namespacedName'));
+		$this->assertEquals('A', (string)$stmts[1]->getStmtAtIndex(0)->getAttribute('namespacedName'));
+		$this->assertEquals('B', (string)$stmts[1]->getStmtAtIndex(1)->getAttribute('namespacedName'));
+		$this->assertEquals('C', (string)$stmts[1]->getStmtAtIndex(2)->getAttribute('namespacedName'));
+		$this->assertEquals('D', (string)$stmts[1]->getStmtAtIndex(3)->getConstAtIndex(0)->getAttribute('namespacedName'));
 	}
 
 	public function testAddTraitNamespacedName() {
@@ -191,8 +191,8 @@ EOC;
 
 		$stmts = $traverser->traverse($stmts);
 
-		$this->assertEquals('NS\\A', (string)$stmts[0]->stmts[0]->getAttribute('namespacedName'));
-		$this->assertEquals('A', (string)$stmts[1]->stmts[0]->getAttribute('namespacedName'));
+		$this->assertEquals('NS\\A', (string)$stmts[0]->getStmtAtIndex(0)->getAttribute('namespacedName'));
+		$this->assertEquals('A', (string)$stmts[1]->getStmtAtIndex(0)->getAttribute('namespacedName'));
 	}
 
 	/**

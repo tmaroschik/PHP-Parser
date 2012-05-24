@@ -19,7 +19,7 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(10, $node->getLine());
 		foreach ($node->getIgnorables() as $ignorable) {
 			if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
-				$this->assertEquals('/** doc comment */', $ignorable->value);
+				$this->assertEquals('/** doc comment */', $ignorable->getValue());
 			}
 		}
 		return $node;

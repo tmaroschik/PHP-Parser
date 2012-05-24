@@ -89,6 +89,17 @@ class PHPParser_Node_Expr_Array extends PHPParser_Node_Expr {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Expr_ArrayItem
+	 */
+	public function getItemAtIndex($index = NULL) {
+		if (isset($this->items[$index])) {
+			return $this->items[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Expr_ArrayItem[]
 	 */

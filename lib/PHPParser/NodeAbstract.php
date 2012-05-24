@@ -1,6 +1,6 @@
 <?php
 
-abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, ArrayAccess, Countable {
+abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 
 	/**
 	 * @var array
@@ -92,7 +92,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 		if (empty($this->subNodeNames)) {
 			foreach (array_keys(get_class_vars(get_class($this))) as $propertyName) {
 				if (!isset(static::$reservedProperties[$propertyName]) && method_exists($this, 'get' .ucfirst($propertyName))) {
-						$this->subNodeNames[] = $propertyName;
+						$this->subNodeNames['get' .ucfirst($propertyName)] = $propertyName;
 				}
 			}
 		}
@@ -194,125 +194,6 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node, Iterator, Array
 		return $this->attributes;
 	}
 
-	/* Magic interfaces */
-
-	/**
-	 * @param string $name
-	 * @return mixed
-	 */
-	public function __get($name) {
-		return $this->offsetGet($name);
-	}
-
-	/**
-	 * @param string $name
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function __set($name, $value) {
-		$this->offsetSet($name, $value);
-	}
-
-	/**
-	 * @param $name
-	 * @return bool
-	 */
-	public function __isset($name) {
-		return $this->offsetExists($name);
-	}
-
-	/**
-	 * @param string $name
-	 */
-	public function __unset($name) {
-		$unsetMethod = 'unset' . ucfirst($name);
-		if (method_exists($this, $unsetMethod)) {
-			$this->$unsetMethod();
-		}
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function current() {
-		if (FALSE !== $currentSubNode = current($this->subNodeNames)) {
-			return $this->{'get' . ucfirst($currentSubNode)}();
-		}
-		return $currentSubNode;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function next() {
-		if (FALSE !== $nextSubNode = next($this->subNodeNames)) {
-			return $this->{'get' . ucfirst($nextSubNode)}();
-		}
-		return $nextSubNode;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function key() {
-		return current($this->subNodeNames);
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function valid() {
-		return FALSE !== current($this->subNodeNames);
-	}
-
-	/**
-	 * @return void
-	 */
-	public function rewind() {
-		reset($this->subNodeNames);
-	}
-
-	/**
-	 * @param string $offset
-	 * @return bool
-	 */
-	public function offsetExists($offset) {
-		return in_array($offset, $this->getSubNodeNames());
-	}
-
-	/**
-	 * @param string $offset
-	 * @return mixed
-	 */
-	public function offsetGet($offset) {
-		return in_array($offset, $this->getSubNodeNames()) ? $this->{'get' . ucfirst($offset)}() : NULL;
-	}
-
-	/**
-	 * @param string $offset
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function offsetSet($offset, $value) {
-		in_array($offset, $this->getSubNodeNames()) ? $this->{'set' . ucfirst($offset)}($value) : NULL;
-	}
-
-	/**
-	 * @param string $offset
-	 */
-	public function offsetUnset($offset) {
-		$unsetMethod = 'unset' . ucfirst($offset);
-		if (method_exists($this, $unsetMethod)) {
-			$this->$unsetMethod();
-		}
-	}
-
-	/**
-	 * @return int
-	 */
-	public function count() {
-		return count($this->getSubNodeNames());
-	}
 
 	public function __wakeup() {
 		$this->initalizeSubNodeNames();

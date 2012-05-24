@@ -67,7 +67,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @cond PHPParser_Node_Expr $cond
 	 */
 	public function appendCond(PHPParser_Node_Expr $cond) {
-		if (NULL != $this->cond) {
+		if (!is_array($this->cond)) {
 			$this->cond = array();
 		}
 		$this->cond[] = $cond;
@@ -78,7 +78,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @cond PHPParser_Node_Expr $cond
 	 */
 	public function removeCond(PHPParser_Node_Expr $cond) {
-		if (NULL !== $this->cond) {
+		if (!is_array($this->cond)) {
 			foreach ($this->cond as $key => $existingCond) {
 				if ($cond === $existingCond) {
 					unset($this->cond[$key]);
@@ -93,7 +93,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @cond PHPParser_Node_Expr $condOld
 	 */
 	public function replaceCond(PHPParser_Node_Expr $condNew, PHPParser_Node_Expr $condOld) {
-		if (NULL !== $this->cond) {
+		if (!is_array($this->cond)) {
 			foreach ($this->cond as $key => $existingCond) {
 				if ($condOld === $existingCond) {
 					$this->cond[$key] = $condNew;
@@ -116,6 +116,16 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	}
 
 	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getCondExprAtIndex($index = NULL) {
+		if (isset($this->loop[$index])) {
+			return $this->loop[$index];
+		}
+		return NULL;
+	}
+
+	/**
 	 * @return PHPParser_Node_Expr[]
 	 */
 	public function getCond() {
@@ -126,7 +136,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @init PHPParser_Node_Expr $init
 	 */
 	public function appendInit(PHPParser_Node_Expr $init) {
-		if (NULL != $this->init) {
+		if (!is_array($this->init)) {
 			$this->init = array();
 		}
 		$this->init[] = $init;
@@ -137,7 +147,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @init PHPParser_Node_Expr $init
 	 */
 	public function removeInit(PHPParser_Node_Expr $init) {
-		if (NULL !== $this->init) {
+		if (!is_array($this->init)) {
 			foreach ($this->init as $key => $existingInit) {
 				if ($init === $existingInit) {
 					unset($this->init[$key]);
@@ -152,7 +162,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @init PHPParser_Node_Expr $initOld
 	 */
 	public function replaceInit(PHPParser_Node_Expr $initNew, PHPParser_Node_Expr $initOld) {
-		if (NULL !== $this->init) {
+		if (!is_array($this->init)) {
 			foreach ($this->init as $key => $existingInit) {
 				if ($initOld === $existingInit) {
 					$this->init[$key] = $initNew;
@@ -175,6 +185,16 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	}
 
 	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getInitExprAtIndex($index = NULL) {
+		if (isset($this->init[$index])) {
+			return $this->init[$index];
+		}
+		return NULL;
+	}
+
+	/**
 	 * @return PHPParser_Node_Expr[]
 	 */
 	public function getInit() {
@@ -185,7 +205,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @loop PHPParser_Node_Expr $loop
 	 */
 	public function appendLoop(PHPParser_Node_Expr $loop) {
-		if (NULL != $this->loop) {
+		if (!is_array($this->loop)) {
 			$this->loop = array();
 		}
 		$this->loop[] = $loop;
@@ -196,7 +216,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @loop PHPParser_Node_Expr $loop
 	 */
 	public function removeLoop(PHPParser_Node_Expr $loop) {
-		if (NULL !== $this->loop) {
+		if (!is_array($this->loop)) {
 			foreach ($this->loop as $key => $existingLoop) {
 				if ($loop === $existingLoop) {
 					unset($this->loop[$key]);
@@ -211,7 +231,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @loop PHPParser_Node_Expr $loopOld
 	 */
 	public function replaceLoop(PHPParser_Node_Expr $loopNew, PHPParser_Node_Expr $loopOld) {
-		if (NULL !== $this->loop) {
+		if (!is_array($this->loop)) {
 			foreach ($this->loop as $key => $existingLoop) {
 				if ($loopOld === $existingLoop) {
 					$this->loop[$key] = $loopNew;
@@ -234,6 +254,16 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	}
 
 	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getLoopExprAtIndex($index = NULL) {
+		if (isset($this->loop[$index])) {
+			return $this->loop[$index];
+		}
+		return NULL;
+	}
+
+	/**
 	 * @return PHPParser_Node_Expr[]
 	 */
 	public function getLoop() {
@@ -244,7 +274,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @stmt PHPParser_Node $stmt
 	 */
 	public function appendStmt(PHPParser_Node $stmt) {
-		if (NULL != $this->stmts) {
+		if (!is_array($this->stmts)) {
 			$this->stmts = array();
 		}
 		$this->stmts[] = $stmt;
@@ -255,7 +285,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @stmt PHPParser_Node $stmt
 	 */
 	public function removeStmt(PHPParser_Node $stmt) {
-		if (NULL !== $this->stmts) {
+		if (!is_array($this->stmts)) {
 			foreach ($this->stmts as $key => $existingStmt) {
 				if ($stmt === $existingStmt) {
 					unset($this->stmts[$key]);
@@ -270,7 +300,7 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 	 * @stmt PHPParser_Node $stmtOld
 	 */
 	public function replaceStmt(PHPParser_Node $stmtNew, PHPParser_Node $stmtOld) {
-		if (NULL !== $this->stmts) {
+		if (!is_array($this->stmts)) {
 			foreach ($this->stmts as $key => $existingStmt) {
 				if ($stmtOld === $existingStmt) {
 					$this->stmts[$key] = $stmtNew;
@@ -290,6 +320,16 @@ class PHPParser_Node_Stmt_For extends PHPParser_Node_Stmt {
 		$this->stmts = $stmts;
 		$this->setSelfAsSubNodeParent($stmts, 'stmts');
 		return $this;
+	}
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
 	}
 
 	/**

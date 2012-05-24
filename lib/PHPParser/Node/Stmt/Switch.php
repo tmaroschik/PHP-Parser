@@ -86,6 +86,17 @@ class PHPParser_Node_Stmt_Switch extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_Case
+	 */
+	public function getCaseAtIndex($index = NULL) {
+		if (isset($this->cases[$index])) {
+			return $this->cases[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_Case[]
 	 */

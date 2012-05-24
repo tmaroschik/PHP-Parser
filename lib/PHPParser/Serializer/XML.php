@@ -31,6 +31,7 @@ class PHPParser_Serializer_XML implements PHPParser_Serializer {
 
 	public function _serialize($node) {
 		if ($node instanceof PHPParser_Node) {
+			/** @var $node PHPParser_Node */
 			$this->writer->startElement('node:' . $node->getNodeType());
 
 			if (-1 !== $line = $node->getLine()) {
@@ -39,15 +40,17 @@ class PHPParser_Serializer_XML implements PHPParser_Serializer {
 
 			foreach ($node->getIgnorables() as $ignorable) {
 				if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
-					$this->writer->writeAttribute('docComment', $ignorable->value);
+					/** @var $ignorable PHPParser_Node_Ignorable_DocComment */
+					$this->writer->writeAttribute('docComment', $ignorable->getValue());
 				} elseif ($ignorable instanceof PHPParser_Node_Ignorable_Comment) {
-					$this->writer->writeAttribute('comment', $ignorable->value);
+					/** @var $ignorable PHPParser_Node_Ignorable_Comment */
+					$this->writer->writeAttribute('comment', $ignorable->getValue());
 				}
 			}
 
-			foreach ($node as $name => $subNode) {
+			foreach ($node->getSubNodeNames() as $getterMethod => $name) {
 				$this->writer->startElement('subNode:' . $name);
-				$this->_serialize($subNode);
+				$this->_serialize($node->$getterMethod());
 
 				$this->writer->endElement();
 			}

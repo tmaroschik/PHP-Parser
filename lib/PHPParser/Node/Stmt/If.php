@@ -147,6 +147,17 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_ElseIf
+	 */
+	public function getElseifAtIndex($index = NULL) {
+		if (isset($this->elseifs[$index])) {
+			return $this->elseifs[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_ElseIf[]
 	 */
@@ -200,6 +211,17 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 	 * @param PHPParser_Node[] $stmts */
 	public function setStmts(array $stmts) {
 		$this->stmts = $stmts;
+	}
+
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
 	}
 
 	/**

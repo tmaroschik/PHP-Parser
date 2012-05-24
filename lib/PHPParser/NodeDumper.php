@@ -18,7 +18,16 @@ class PHPParser_NodeDumper {
 			throw new InvalidArgumentException('Can only dump nodes and arrays.');
 		}
 
-		foreach ($node as $key => $value) {
+		if ($node instanceof PHPParser_Node) {
+			$array = array();
+			foreach ($node->getSubNodeNames() as $name) {
+				$array[$name] = $node->{'get' . ucfirst($name)}();
+			}
+		} else {
+			$array = $node;
+		}
+
+		foreach ($array as $key => $value) {
 			$r .= "\n" . '    ' . $key . ': ';
 
 			if (null === $value) {

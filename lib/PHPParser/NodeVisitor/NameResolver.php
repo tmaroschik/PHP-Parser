@@ -19,9 +19,11 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 
 	public function enterNode(PHPParser_Node $node) {
 		if ($node instanceof PHPParser_Node_Stmt_Namespace) {
+			/** @var $node PHPParser_Node_Stmt_Namespace */
 			$this->namespace = $node->getName();
 			$this->aliases   = array();
 		} elseif ($node instanceof PHPParser_Node_Stmt_UseUse) {
+			/** @var $node PHPParser_Node_Stmt_UseUse */
 			if (isset($this->aliases[$node->getAlias()])) {
 				throw new PHPParser_Error(
 					sprintf(
@@ -31,9 +33,9 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 					$node->getLine()
 				);
 			}
-			$this->resolveClassName($node->getName());
 			$this->aliases[$node->getAlias()] = $node->getName();
 		} elseif ($node instanceof PHPParser_Node_Stmt_Class) {
+			/** @var $node PHPParser_Node_Stmt_Class */
 			if (NULL !== $node->getExtends()) {
 				$node->setExtends($this->resolveClassName($node->getExtends()));
 			}
@@ -59,6 +61,7 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 		} elseif ($node instanceof PHPParser_Node_Stmt_Function) {
 			$this->addNamespacedName($node);
 		} elseif ($node instanceof PHPParser_Node_Stmt_Const) {
+			/** @var $node PHPParser_Node_Stmt_Const */
 			foreach ($node->getConsts() as $const) {
 				$this->addNamespacedName($const);
 			}
@@ -68,6 +71,7 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 				|| $node instanceof PHPParser_Node_Expr_New
 				|| $node instanceof PHPParser_Node_Expr_Instanceof
 		) {
+			/** @var $node PHPParser_Node_Expr_StaticCall */
 			if ($node->getClass() instanceof PHPParser_Node_Name) {
 				$node->setClass($this->resolveClassName($node->getClass()));
 			}
@@ -78,9 +82,10 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 				$node->setName($this->resolveOtherName($node->getName()));
 			}
 		} elseif ($node instanceof PHPParser_Node_Stmt_TraitUse) {
+			/** @var $node PHPParser_Node_Stmt_TraitUse */
 			$traits = $node->getTraits();
 			if (NULL !== $traits) {
-				foreach ($traits as $trait) {
+				foreach ($traits as &$trait) {
 					$trait = $this->resolveClassName($trait);
 				}
 				$node->setTraits($traits);

@@ -86,6 +86,17 @@ class PHPParser_Node_Stmt_TraitUse extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_TraitUseAdaptation
+	 */
+	public function getAdaptationAtIndex($index = NULL) {
+		if (isset($this->adaptations[$index])) {
+			return $this->adaptations[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_TraitUseAdaptation[]
 	 */
@@ -143,6 +154,17 @@ class PHPParser_Node_Stmt_TraitUse extends PHPParser_Node_Stmt {
 		$this->traits = $traits;
 		$this->setSelfAsSubNodeParent($traits, 'traits');
 		return $this;
+	}
+
+
+	/**
+	 * @return PHPParser_Node_Name
+	 */
+	public function getTraitAtIndex($index = NULL) {
+		if (isset($this->traits[$index])) {
+			return $this->traits[$index];
+		}
+		return NULL;
 	}
 
 	/**

@@ -76,6 +76,17 @@ class PHPParser_Node_Stmt_Echo extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getExprAtIndex($index = NULL) {
+		if (isset($this->exprs[$index])) {
+			return $this->exprs[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Expr[]
 	 */

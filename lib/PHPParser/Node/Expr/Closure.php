@@ -136,6 +136,17 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Param
+	 */
+	public function getParamAtIndex($index = NULL) {
+		if (isset($this->params[$index])) {
+			return $this->params[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Param[]
 	 */
@@ -167,6 +178,17 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 		$this->stmts = $stmts;
 		$this->setSelfAsSubNodeParent($stmts, 'stmts');
 		return $this;
+	}
+
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
 	}
 
 	/**
@@ -226,6 +248,16 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 		$this->uses = $uses;
 		$this->setSelfAsSubNodeParent($uses, 'uses');
 		return $this;
+	}
+
+	/**
+	 * @return PHPParser_Node_Expr_ClosureUse
+	 */
+	public function getUseAtIndex($index = NULL) {
+		if (isset($this->uses[$index])) {
+			return $this->uses[$index];
+		}
+		return NULL;
 	}
 
 	/**

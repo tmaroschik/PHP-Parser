@@ -76,6 +76,17 @@ class PHPParser_Node_Stmt_Use extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_UseUse
+	 */
+	public function getUseAtIndex($index = NULL) {
+		if (isset($this->uses[$index])) {
+			return $this->uses[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_UseUse[]
 	 */

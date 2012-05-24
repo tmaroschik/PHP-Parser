@@ -86,6 +86,17 @@ class PHPParser_Node_Stmt_Declare extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_DeclareDeclare
+	 */
+	public function getDeclareAtIndex($index = NULL) {
+		if (isset($this->declares[$index])) {
+			return $this->declares[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_DeclareDeclare[]
 	 */
@@ -143,6 +154,17 @@ class PHPParser_Node_Stmt_Declare extends PHPParser_Node_Stmt {
 		$this->stmts = $stmts;
 		$this->setSelfAsSubNodeParent($stmts, 'stmts');
 		return $this;
+	}
+
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
 	}
 
 	/**

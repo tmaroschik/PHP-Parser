@@ -82,6 +82,17 @@ class PHPParser_Node_Expr_FuncCall extends PHPParser_Node_Expr {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Arg
+	 */
+	public function getArgAtIndex($index = NULL) {
+		if (isset($this->args[$index])) {
+			return $this->args[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Arg[]
 	 */

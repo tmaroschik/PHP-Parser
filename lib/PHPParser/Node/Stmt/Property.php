@@ -86,6 +86,17 @@ class PHPParser_Node_Stmt_Property extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Stmt_PropertyProperty
+	 */
+	public function getPropAtIndex($index = NULL) {
+		if (isset($this->props[$index])) {
+			return $this->props[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Stmt_PropertyProperty[]
 	 */

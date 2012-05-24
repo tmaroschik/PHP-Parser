@@ -193,6 +193,17 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Name
+	 */
+	public function getImplementAtIndex($index = NULL) {
+		if (isset($this->implements[$index])) {
+			return $this->implements[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Name[]
 	 */
@@ -271,6 +282,17 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 		$this->stmts = $stmts;
 		$this->setSelfAsSubNodeParent($stmts, 'stmts');
 		return $this;
+	}
+
+
+	/**
+	 * @return PHPParser_Node
+	 */
+	public function getStmtAtIndex($index = NULL) {
+		if (isset($this->stmts[$index])) {
+			return $this->stmts[$index];
+		}
+		return NULL;
 	}
 
 	/**

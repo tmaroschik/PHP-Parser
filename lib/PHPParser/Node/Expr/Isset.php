@@ -73,6 +73,17 @@ class PHPParser_Node_Expr_Isset extends PHPParser_Node_Expr {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Expr
+	 */
+	public function getVarAtIndex($index = NULL) {
+		if (isset($this->vars[$index])) {
+			return $this->vars[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Expr[]
 	 */

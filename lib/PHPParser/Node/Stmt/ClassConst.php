@@ -76,6 +76,17 @@ class PHPParser_Node_Stmt_ClassConst extends PHPParser_Node_Stmt {
 		return $this;
 	}
 
+
+	/**
+	 * @return PHPParser_Node_Const
+	 */
+	public function getConstAtIndex($index = NULL) {
+		if (isset($this->consts[$index])) {
+			return $this->consts[$index];
+		}
+		return NULL;
+	}
+
 	/**
 	 * @return PHPParser_Node_Const[]
 	 */
