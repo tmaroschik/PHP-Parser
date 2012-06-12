@@ -159,7 +159,7 @@ abstract class PHPParser_PrettyPrinterAbstract {
 			foreach ($ignorables as $ignorable) {
 				switch (get_class($ignorable)) {
 					case 'PHPParser_Node_Ignorable_Comment':
-						$value    = trim($ignorable->value);
+						$value    = trim($ignorable->getValue());
 						$value    = preg_replace('~^\s*\/\/\s+~m', '// ', $value);
 						$pNodes[] = preg_replace('~^\s+\/\*+~m', '/*', $value);
 						break;

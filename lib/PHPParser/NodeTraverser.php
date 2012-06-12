@@ -8,12 +8,44 @@ class PHPParser_NodeTraverser {
 	protected $visitors = array();
 
 	/**
-	 * Adds a visitor.
-	 *
-	 * @param PHPParser_NodeVisitor $visitor Visitor to add
+	 * @param PHPParser_NodeVisitor[] $visitors
 	 */
-	public function addVisitor(PHPParser_NodeVisitor $visitor) {
+	public function setVisitors(array $visitors = null) {
+		$this->visitors = $visitors;
+		return $this;
+	}
+
+	/**
+	 * @return PHPParser_NodeVisitor[]
+	 */
+	public function getVisitors() {
+		return $this->visitors;
+	}
+
+	/**
+	 * @param PHPParser_NodeVisitor $visitor
+	 */
+	public function appendVisitor(PHPParser_NodeVisitor $visitor) {
+		if (!is_array($this->visitors)) {
+			$this->visitors = array();
+		}
 		$this->visitors[] = $visitor;
+		return $this;
+	}
+
+	/**
+	 * @param PHPParser_NodeVisitor $visitor
+	 */
+	public function removeVisitor(PHPParser_NodeVisitor $visitor) {
+		if (!is_array($this->visitors)) {
+			foreach ($this->visitors as $key => $existingVisitor) {
+				if ($visitor === $existingVisitor) {
+					unset($this->visitors[$key]);
+					break;
+				}
+			}
+		}
+		return $this;
 	}
 
 	/**

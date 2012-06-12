@@ -28,7 +28,7 @@ class PHPParser_Node_Stmt_Use extends PHPParser_Node_Stmt {
 	 * @param PHPParser_Node_Stmt_UseUse $use
 	 */
 	public function appendUse(PHPParser_Node_Stmt_UseUse $use) {
-		if (NULL != $this->uses) {
+		if (NULL === $this->uses) {
 			$this->uses = array();
 		}
 		$this->uses[] = $use;
@@ -92,5 +92,16 @@ class PHPParser_Node_Stmt_Use extends PHPParser_Node_Stmt {
 	 */
 	public function getUses() {
 		return $this->uses;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAliases() {
+		$aliases = array();
+		foreach ($this->uses as $use) {
+			$aliases[] = $use->getAlias() ?: $use->getName()->getLast();
+		}
+		return $aliases;
 	}
 }
