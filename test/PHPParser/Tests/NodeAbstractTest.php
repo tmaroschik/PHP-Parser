@@ -35,7 +35,7 @@ class PHPParser_Tests_NodeAbstractTest extends PHPUnit_Framework_TestCase {
 
 		// change of doc comment
 		$node->setIgnorables(array(new PHPParser_Node_Ignorable_DocComment('/** other doc comment */')));
-		$this->assertEquals('/** other doc comment */', current($node->getIgnorables())->toString(true));
+		$this->assertEquals('/** other doc comment */', current($node->getIgnorables())->toString(TRUE));
 
 		// TODO rebuild this test
 		// direct modification

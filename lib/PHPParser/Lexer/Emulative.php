@@ -21,7 +21,7 @@ class PHPParser_Lexer_Emulative extends PHPParser_Lexer {
 	protected $inObjectAccess;
 
 	public function __construct($code) {
-		$this->inObjectAccess = false;
+		$this->inObjectAccess = FALSE;
 
 		// on PHP 5.4 don't do anything
 		if (version_compare(PHP_VERSION, '5.4.0RC1', '>=')) {
@@ -111,7 +111,7 @@ class PHPParser_Lexer_Emulative extends PHPParser_Lexer {
 					list($start, $content, $end) = explode('x', $matches[2]);
 					list($start, $content, $end) = array(pack('H*', $start), pack('H*', $content), pack('H*', $end));
 
-					$replace   = array();
+					$replace = array();
 					$replace[] = array(T_START_HEREDOC, $start, $this->tokens[$i + 1][2]);
 					if ('' !== $content) {
 						$replace[] = array(T_ENCAPSED_AND_WHITESPACE, $content, -1);
@@ -155,7 +155,7 @@ class PHPParser_Lexer_Emulative extends PHPParser_Lexer {
 		}
 	}
 
-	public function lex(&$value = null, &$line = null, &$ignorables = null) {
+	public function lex(&$value = NULL, &$line = NULL, &$ignorables = NULL) {
 		$token = parent::lex($value, $line, $ignorables);
 
 		// replace new keywords by their respective tokens. This is not done
@@ -170,9 +170,9 @@ class PHPParser_Lexer_Emulative extends PHPParser_Lexer {
 			return PHPParser_Parser::T_NS_SEPARATOR;
 			// keep track of whether we currently are in an object access (after ->)
 		} elseif (PHPParser_Parser::T_OBJECT_OPERATOR === $token) {
-			$this->inObjectAccess = true;
+			$this->inObjectAccess = TRUE;
 		} else {
-			$this->inObjectAccess = false;
+			$this->inObjectAccess = FALSE;
 		}
 
 		return $token;

@@ -37,7 +37,7 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 */
 	protected function parseDocComment($docComment) {
 		$this->description = '';
-		$this->tags        = array();
+		$this->tags = array();
 
 		$lines = explode(chr(10), $docComment);
 		foreach ($lines as $line) {
@@ -119,7 +119,7 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 * @param bool $singleLineCommentAllowed * @return string String representation
 	 * @return string
 	 */
-	public function toString($singleLineCommentAllowed = false) {
+	public function toString($singleLineCommentAllowed = FALSE) {
 		$docComment = array();
 		foreach ($this->tags as $tagName => $tags) {
 			if (is_array($tags) && !empty($tags)) {
@@ -183,6 +183,6 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 * @return string
 	 */
 	public function getValue() {
-		return $this->toString(true);
+		return $this->toString(TRUE);
 	}
 }

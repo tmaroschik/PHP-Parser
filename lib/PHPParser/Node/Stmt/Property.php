@@ -109,7 +109,7 @@ class PHPParser_Node_Stmt_Property extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_Property
 	 */
 	public function setType($type) {
-		$this->type = (int) $type;
+		$this->type = (int)$type;
 		return $this;
 	}
 

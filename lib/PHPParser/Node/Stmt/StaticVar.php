@@ -28,7 +28,7 @@ class PHPParser_Node_Stmt_StaticVar extends PHPParser_Node_Stmt {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables Ignorables
 	 */
-	public function __construct($name, PHPParser_Node_Expr $default = null, $line = -1, $ignorables = array()) {
+	public function __construct($name, PHPParser_Node_Expr $default = NULL, $line = -1, $ignorables = array()) {
 		$this->setName($name);
 		if (NULL !== $default) {
 			$this->setDefault($default);

@@ -100,7 +100,7 @@ class PHPParser_Node_Stmt_Use extends PHPParser_Node_Stmt {
 	public function getAliases() {
 		$aliases = array();
 		foreach ($this->uses as $use) {
-			$aliases[] = $use->getAlias() ?: $use->getName()->getLast();
+			$aliases[] = $use->getAlias() ? : $use->getName()->getLast();
 		}
 		return $aliases;
 	}

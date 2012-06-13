@@ -25,16 +25,16 @@ class PHPParser_Node_Expr_Array extends PHPParser_Node_Expr {
 	 * @return bool
 	 */
 	public function itemsHaveLineBreaks() {
-		if (null !== $this->items) {
+		if (NULL !== $this->items) {
 			foreach ($this->items as $item) {
 				if ($item->hasLineBreaks()) {
-					return true;
+					return TRUE;
 				} elseif ($item->getValue() instanceof PHPParser_Node_Expr_Array) {
 					return $item->getValue()->itemsHaveLineBreaks();
 				}
 			}
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**

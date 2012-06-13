@@ -66,7 +66,7 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Precedence extends PHPParser_Node_S
 	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Precedence
 	 */
 	public function setMethod($method) {
-		$this->method = (string) $method;
+		$this->method = (string)$method;
 		return $this;
 	}
 

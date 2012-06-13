@@ -38,10 +38,10 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($token[0], $id);
 			$this->assertEquals($token[1], $value);
 			$this->assertEquals($token[2], $line);
-			$docComment = null;
+			$docComment = NULL;
 			foreach ($ignorables as $ignorable) {
 				if ($ignorable instanceof PHPParser_Node_Ignorable_DocComment) {
-					$docComment = ($docComment === null) ? $ignorable->toString(true) : $docComment . $ignorable->toString(true);
+					$docComment = ($docComment === NULL) ? $ignorable->toString(TRUE) : $docComment . $ignorable->toString(TRUE);
 				}
 			}
 			$this->assertEquals($token[3], $docComment);
@@ -54,17 +54,17 @@ class PHPParser_Tests_LexerTest extends PHPUnit_Framework_TestCase {
 			array(
 				'<?php tokens // ?>plaintext',
 				array(
-					array(PHPParser_Parser::T_STRING, 'tokens', 1, null),
-					array(ord(';'), '?>', 1, null),
-					array(PHPParser_Parser::T_INLINE_HTML, 'plaintext', 1, null),
+					array(PHPParser_Parser::T_STRING, 'tokens', 1, NULL),
+					array(ord(';'), '?>', 1, NULL),
+					array(PHPParser_Parser::T_INLINE_HTML, 'plaintext', 1, NULL),
 				)
 			),
 			// tests line numbers
 			array(
 				'<?php' . "\n" . '$ token /** doc' . "\n" . 'comment */ $',
 				array(
-					array(ord('$'), '$', 2, null),
-					array(PHPParser_Parser::T_STRING, 'token', 2, null),
+					array(ord('$'), '$', 2, NULL),
+					array(PHPParser_Parser::T_STRING, 'token', 2, NULL),
 					array(ord('$'), '$', 3, '/** doc' . "\n" . 'comment */')
 				)
 			),

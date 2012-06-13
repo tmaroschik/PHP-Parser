@@ -8,7 +8,7 @@ class PHPParser_Node_Name_Relative extends PHPParser_Node_Name {
 	 * @return bool Whether the name is unqualified
 	 */
 	public function isUnqualified() {
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -17,7 +17,7 @@ class PHPParser_Node_Name_Relative extends PHPParser_Node_Name {
 	 * @return bool Whether the name is qualified
 	 */
 	public function isQualified() {
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -26,7 +26,7 @@ class PHPParser_Node_Name_Relative extends PHPParser_Node_Name {
 	 * @return bool Whether the name is fully qualified
 	 */
 	public function isFullyQualified() {
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -35,6 +35,6 @@ class PHPParser_Node_Name_Relative extends PHPParser_Node_Name {
 	 * @return bool Whether the name is relative
 	 */
 	public function isRelative() {
-		return true;
+		return TRUE;
 	}
 }

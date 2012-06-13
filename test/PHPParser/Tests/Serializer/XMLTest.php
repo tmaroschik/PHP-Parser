@@ -13,7 +13,7 @@ function functionName(&\$a = 0, \$b = 1.0) {
     echo 'Foo';
 }
 CODE;
-		$xml  = <<<XML
+		$xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <AST xmlns:node="http://nikic.github.com/PHPParser/XML/node" xmlns:subNode="http://nikic.github.com/PHPParser/XML/subNode" xmlns:scalar="http://nikic.github.com/PHPParser/XML/scalar">
   <scalar:array>
@@ -84,7 +84,7 @@ CODE;
 </AST>
 XML;
 
-		$parser     = new PHPParser_Parser;
+		$parser = new PHPParser_Parser;
 		$serializer = new PHPParser_Serializer_XML;
 
 		$stmts = $parser->parse(new PHPParser_Lexer($code));

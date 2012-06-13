@@ -26,7 +26,7 @@ class PHPParser_Lexer {
 		$this->handleErrors();
 
 		$this->code = $code; // keep the code around for __halt_compiler() handling
-		$this->pos  = -1;
+		$this->pos = -1;
 		$this->line = 1;
 	}
 
@@ -72,7 +72,7 @@ class PHPParser_Lexer {
 	 *
 	 * @return int Token id
 	 */
-	public function lex(&$value = null, &$line = null, &$ignorables = null) {
+	public function lex(&$value = NULL, &$line = NULL, &$ignorables = NULL) {
 		$ignorables = array();
 
 		while (isset($this->tokens[++$this->pos])) {
@@ -100,7 +100,7 @@ class PHPParser_Lexer {
 					$ignorables[] = new PHPParser_Node_Ignorable_Whitespace($token[1], $token[2]);
 				} elseif (!isset(self::$dropTokens[$token[0]])) {
 					$value = $token[1];
-					$line  = $token[2];
+					$line = $token[2];
 					return self::$tokenMap[$token[0]];
 				}
 			}

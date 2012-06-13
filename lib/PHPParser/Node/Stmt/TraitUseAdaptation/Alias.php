@@ -77,7 +77,7 @@ class PHPParser_Node_Stmt_TraitUseAdaptation_Alias extends PHPParser_Node_Stmt_T
 	 * @return \PHPParser_Node_Stmt_TraitUseAdaptation_Alias
 	 */
 	public function setNewModifier($newModifier) {
-		$this->newModifier = (int) $newModifier;
+		$this->newModifier = (int)$newModifier;
 		return $this;
 	}
 

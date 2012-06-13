@@ -55,7 +55,7 @@ class PHPParser_Node_Expr_ClassConstFetch extends PHPParser_Node_Expr {
 	 * @return \PHPParser_Node_Expr_ClassConstFetch
 	 */
 	public function setName($name) {
-		$this->name = (string) $name;
+		$this->name = (string)$name;
 		return $this;
 	}
 

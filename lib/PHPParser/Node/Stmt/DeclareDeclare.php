@@ -39,7 +39,7 @@ class PHPParser_Node_Stmt_DeclareDeclare extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_DeclareDeclare
 	 */
 	public function setKey($key) {
-		$this->key = (string) $key;
+		$this->key = (string)$key;
 		return $this;
 	}
 

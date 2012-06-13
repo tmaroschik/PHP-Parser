@@ -13,15 +13,15 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 	protected $aliases;
 
 	public function beforeTraverse(array $nodes) {
-		$this->namespace = null;
-		$this->aliases   = array();
+		$this->namespace = NULL;
+		$this->aliases = array();
 	}
 
 	public function enterNode(PHPParser_Node $node) {
 		if ($node instanceof PHPParser_Node_Stmt_Namespace) {
 			/** @var $node PHPParser_Node_Stmt_Namespace */
 			$this->namespace = $node->getName();
-			$this->aliases   = array();
+			$this->aliases = array();
 		} elseif ($node instanceof PHPParser_Node_Stmt_UseUse) {
 			/** @var $node PHPParser_Node_Stmt_UseUse */
 			if (isset($this->aliases[$node->getAlias()])) {
@@ -112,7 +112,7 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 		if (!$name->isRelative() && isset($this->aliases[$name->getFirst()])) {
 			$name->setFirst($this->aliases[$name->getFirst()]);
 			// if no alias exists prepend current namespace
-		} elseif (null !== $this->namespace) {
+		} elseif (NULL !== $this->namespace) {
 			$name->prepend($this->namespace);
 		}
 
@@ -130,7 +130,7 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 		if ($name->isQualified() && isset($this->aliases[$name->getFirst()])) {
 			$name->setFirst($this->aliases[$name->getFirst()]);
 			// prepend namespace for relative names
-		} elseif (null !== $this->namespace) {
+		} elseif (NULL !== $this->namespace) {
 			$name->prepend($this->namespace);
 		}
 
@@ -138,7 +138,7 @@ class PHPParser_NodeVisitor_NameResolver extends PHPParser_NodeVisitorAbstract {
 	}
 
 	protected function addNamespacedName(PHPParser_Node $node) {
-		if (null !== $this->namespace) {
+		if (NULL !== $this->namespace) {
 			$namespacedName = clone $this->namespace;
 			$namespacedName->append($node->getName());
 			$node->setAttribute('namespacedName', $namespacedName);

@@ -24,7 +24,7 @@ class PHPParser_Node_Expr_ArrayDimFetch extends PHPParser_Node_Expr {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct(PHPParser_Node_Expr $var, PHPParser_Node_Expr $dim = null, $line = -1, $ignorables = array()) {
+	public function __construct(PHPParser_Node_Expr $var, PHPParser_Node_Expr $dim = NULL, $line = -1, $ignorables = array()) {
 		$this->setVar($var);
 		if (NULL !== $dim) {
 			$this->setDim($dim);

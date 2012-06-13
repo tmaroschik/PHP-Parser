@@ -136,7 +136,7 @@ class PHPParser_Node_Stmt_Catch extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_Catch
 	 */
 	public function setVar($var) {
-		$this->var = (string) $var;
+		$this->var = (string)$var;
 		return $this;
 	}
 

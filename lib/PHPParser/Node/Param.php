@@ -46,7 +46,7 @@ class PHPParser_Node_Param extends PHPParser_NodeAbstract {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct($name, $default = null, $type = null, $byRef = false, $line = -1, $ignorables = array()) {
+	public function __construct($name, $default = NULL, $type = NULL, $byRef = FALSE, $line = -1, $ignorables = array()) {
 		$this->name = $name;
 		if (NULL !== $default) {
 			$this->setDefault($default);

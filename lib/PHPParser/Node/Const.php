@@ -29,7 +29,7 @@ class PHPParser_Node_Const extends PHPParser_NodeAbstract {
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
 	public function __construct($name, PHPParser_Node_Expr $value, $line = -1, $ignorables = array()) {
-		$this->name  = $name;
+		$this->name = $name;
 		$this->value = $value;
 		parent::__construct($line, $ignorables);
 	}

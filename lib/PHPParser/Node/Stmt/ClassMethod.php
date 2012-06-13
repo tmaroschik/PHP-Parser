@@ -78,7 +78,7 @@ class PHPParser_Node_Stmt_ClassMethod extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_ClassMethod
 	 */
 	public function setByRef($byRef) {
-		$this->byRef = (bool) $byRef;
+		$this->byRef = (bool)$byRef;
 		return $this;
 	}
 
@@ -95,7 +95,7 @@ class PHPParser_Node_Stmt_ClassMethod extends PHPParser_Node_Stmt {
 	 */
 	public function setName($name) {
 		$this->checkTypeAndNameConstraint($this->type, $name);
-		$this->name = (string) $name;
+		$this->name = (string)$name;
 		return $this;
 	}
 

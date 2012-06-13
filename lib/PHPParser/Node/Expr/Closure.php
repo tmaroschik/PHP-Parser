@@ -7,14 +7,14 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	 *
 	 * @var bool
 	 */
-	protected $static = false;
+	protected $static = FALSE;
 
 	/**
 	 * Whether to return by reference
 	 *
 	 * @var bool
 	 */
-	protected $byRef = false;
+	protected $byRef = FALSE;
 
 	/**
 	 * Parameters
@@ -159,7 +159,7 @@ class PHPParser_Node_Expr_Closure extends PHPParser_Node_Expr {
 	 * @return \PHPParser_Node_Expr_Closure
 	 */
 	public function setStatic($static) {
-		$this->static = (bool) $static;
+		$this->static = (bool)$static;
 		return $this;
 	}
 

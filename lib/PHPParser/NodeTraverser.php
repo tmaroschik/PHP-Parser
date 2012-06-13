@@ -10,7 +10,7 @@ class PHPParser_NodeTraverser {
 	/**
 	 * @param PHPParser_NodeVisitor[] $visitors
 	 */
-	public function setVisitors(array $visitors = null) {
+	public function setVisitors(array $visitors = NULL) {
 		$this->visitors = $visitors;
 		return $this;
 	}
@@ -57,7 +57,7 @@ class PHPParser_NodeTraverser {
 	 */
 	public function traverse(array $nodes) {
 		foreach ($this->visitors as $visitor) {
-			if (null !== $return = $visitor->beforeTraverse($nodes)) {
+			if (NULL !== $return = $visitor->beforeTraverse($nodes)) {
 				$nodes = $return;
 			}
 		}
@@ -65,7 +65,7 @@ class PHPParser_NodeTraverser {
 		$nodes = $this->traverseArray($nodes);
 
 		foreach ($this->visitors as $visitor) {
-			if (null !== $return = $visitor->afterTraverse($nodes)) {
+			if (NULL !== $return = $visitor->afterTraverse($nodes)) {
 				$nodes = $return;
 			}
 		}
@@ -81,13 +81,13 @@ class PHPParser_NodeTraverser {
 				$node->$setterMethod($this->traverseArray($node->$getterMethod()));
 			} elseif ($node->$getterMethod() instanceof PHPParser_Node) {
 				foreach ($this->visitors as $visitor) {
-					if (null !== $return = $visitor->enterNode($node->$getterMethod())) {
+					if (NULL !== $return = $visitor->enterNode($node->$getterMethod())) {
 						$node->$setterMethod($return);
 					}
 				}
 				$node->$setterMethod($this->traverseNode($node->$getterMethod()));
 				foreach ($this->visitors as $visitor) {
-					if (null !== $return = $visitor->leaveNode($node->$getterMethod())) {
+					if (NULL !== $return = $visitor->leaveNode($node->$getterMethod())) {
 						$node->$setterMethod($return);
 					}
 				}
@@ -105,7 +105,7 @@ class PHPParser_NodeTraverser {
 				$node = $this->traverseArray($node);
 			} elseif ($node instanceof PHPParser_Node) {
 				foreach ($this->visitors as $visitor) {
-					if (null !== $return = $visitor->enterNode($node)) {
+					if (NULL !== $return = $visitor->enterNode($node)) {
 						$node = $return;
 					}
 				}
@@ -115,13 +115,13 @@ class PHPParser_NodeTraverser {
 				foreach ($this->visitors as $visitor) {
 					$return = $visitor->leaveNode($node);
 
-					if (false === $return) {
+					if (FALSE === $return) {
 						$doNodes[] = array($i, array());
 						break;
 					} elseif (is_array($return)) {
 						$doNodes[] = array($i, $return);
 						break;
-					} elseif (null !== $return) {
+					} elseif (NULL !== $return) {
 						$node = $return;
 					}
 				}

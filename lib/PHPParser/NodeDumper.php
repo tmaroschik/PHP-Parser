@@ -30,11 +30,11 @@ class PHPParser_NodeDumper {
 		foreach ($array as $key => $value) {
 			$r .= "\n" . '    ' . $key . ': ';
 
-			if (null === $value) {
+			if (NULL === $value) {
 				$r .= 'null';
-			} elseif (false === $value) {
+			} elseif (FALSE === $value) {
 				$r .= 'false';
-			} elseif (true === $value) {
+			} elseif (TRUE === $value) {
 				$r .= 'true';
 			} elseif (is_scalar($value)) {
 				$r .= $value;

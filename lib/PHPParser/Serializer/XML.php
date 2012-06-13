@@ -10,7 +10,7 @@ class PHPParser_Serializer_XML implements PHPParser_Serializer {
 	public function __construct() {
 		$this->writer = new XMLWriter;
 		$this->writer->openMemory();
-		$this->writer->setIndent(true);
+		$this->writer->setIndent(TRUE);
 	}
 
 	public function serialize(array $nodes) {
@@ -68,11 +68,11 @@ class PHPParser_Serializer_XML implements PHPParser_Serializer {
 			$this->writer->writeElement('scalar:int', $node);
 		} elseif (is_float($node)) {
 			$this->writer->writeElement('scalar:float', $node);
-		} elseif (true === $node) {
+		} elseif (TRUE === $node) {
 			$this->writer->writeElement('scalar:true');
-		} elseif (false === $node) {
+		} elseif (FALSE === $node) {
 			$this->writer->writeElement('scalar:false');
-		} elseif (null === $node) {
+		} elseif (NULL === $node) {
 			$this->writer->writeElement('scalar:null');
 		} else {
 			throw new InvalidArgumentException('Unexpected node type');

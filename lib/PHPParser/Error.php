@@ -13,7 +13,7 @@ class PHPParser_Error extends RuntimeException {
 	 */
 	public function __construct($message, $line = -1) {
 		$this->rawMessage = (string)$message;
-		$this->rawLine    = (int)$line;
+		$this->rawLine = (int)$line;
 		$this->updateMessage();
 	}
 

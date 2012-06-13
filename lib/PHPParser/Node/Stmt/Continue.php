@@ -19,7 +19,7 @@ class PHPParser_Node_Stmt_Continue extends PHPParser_Node_Stmt {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables Ignorables
 	 */
-	public function __construct(PHPParser_Node_Expr $num = null, $line = -1, $ignorables = array()) {
+	public function __construct(PHPParser_Node_Expr $num = NULL, $line = -1, $ignorables = array()) {
 		if (NULL !== $num) {
 			$this->setNum($num);
 		}

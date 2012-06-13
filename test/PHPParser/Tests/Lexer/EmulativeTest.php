@@ -55,7 +55,7 @@ class PHPParser_Tests_Lexer_EmulativeTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testLeaveStuffAloneInStrings($code) {
 		$stringifiedToken = '"' . addcslashes($code, '"\\') . '"';
-		$lexer            = new PHPParser_Lexer_Emulative('<?php ' . $stringifiedToken);
+		$lexer = new PHPParser_Lexer_Emulative('<?php ' . $stringifiedToken);
 
 		$this->assertEquals(PHPParser_Parser::T_CONSTANT_ENCAPSED_STRING, $lexer->lex($text));
 		$this->assertEquals($stringifiedToken, $text);

@@ -24,9 +24,9 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 	 * @var array
 	 */
 	protected static $specialNames = array(
-		'self' => true,
-		'parent' => true,
-		'static' => true,
+		'self' => TRUE,
+		'parent' => TRUE,
+		'static' => TRUE,
 	);
 
 	/**
@@ -37,7 +37,7 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables Ignorables
 	 */
-	public function __construct(PHPParser_Node_Name $name = null, $stmts = array(), $line = -1, $ignorables = array()) {
+	public function __construct(PHPParser_Node_Name $name = NULL, $stmts = array(), $line = -1, $ignorables = array()) {
 		parent::__construct($line, $ignorables);
 		if (NULL !== $name) {
 			$this->setName($name);
@@ -55,11 +55,11 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 	 */
 	public static function postprocess(array $stmts) {
 		// null = not in namespace, false = semicolon style, true = bracket style
-		$bracketed = null;
+		$bracketed = NULL;
 
 		// whether any statements that aren't allowed before a namespace declaration are encountered
 		// (the only valid statement currently is a declare)
-		$hasNotAllowedStmts = false;
+		$hasNotAllowedStmts = FALSE;
 
 		// offsets for semicolon style namespaces
 		// (required for transplanting the following statements into their ->stmts property)
@@ -93,17 +93,17 @@ class PHPParser_Node_Stmt_Namespace extends PHPParser_Node_Stmt {
 			} elseif (!$stmt instanceof PHPParser_Node_Stmt_Declare
 					&& !$stmt instanceof PHPParser_Node_Stmt_HaltCompiler
 			) {
-				if (true === $bracketed) {
+				if (TRUE === $bracketed) {
 					throw new PHPParser_Error('No code may exist outside of namespace {}', $stmt->getLine());
 				}
 
-				$hasNotAllowedStmts = true;
+				$hasNotAllowedStmts = TRUE;
 			}
 		}
 
 		// if bracketed namespaces were used or no namespaces were used at all just return the
 		// original statements
-		if (!isset($bracketed) || true === $bracketed) {
+		if (!isset($bracketed) || TRUE === $bracketed) {
 			return $stmts;
 			// for semicolon style transplant statements
 		} else {

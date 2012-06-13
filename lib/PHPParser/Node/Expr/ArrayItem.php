@@ -32,7 +32,7 @@ class PHPParser_Node_Expr_ArrayItem extends PHPParser_Node_Expr {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct(PHPParser_Node_Expr $value, PHPParser_Node_Expr $key = null, $byRef = false, $line = -1, $ignorables = array()) {
+	public function __construct(PHPParser_Node_Expr $value, PHPParser_Node_Expr $key = NULL, $byRef = FALSE, $line = -1, $ignorables = array()) {
 		$this->setValue($value);
 		if (NULL !== $key) {
 			$this->setKey($key);
@@ -46,7 +46,7 @@ class PHPParser_Node_Expr_ArrayItem extends PHPParser_Node_Expr {
 	/**
 	 * @param boolean $byRef */
 	public function setByRef($byRef) {
-		$this->byRef = (bool) $byRef;
+		$this->byRef = (bool)$byRef;
 	}
 
 	/**

@@ -6,14 +6,14 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	 * @var array
 	 */
 	static protected $reservedProperties = array(
-		'line' => true,
-		'ignorables' => true,
-		'attribute' => true,
-		'attributes' => true,
-		'subNodeNames'  => true,
-		'nodeType' => true,
-		'parent' => true,
-		'parentSubNodeName' => true
+		'line' => TRUE,
+		'ignorables' => TRUE,
+		'attribute' => TRUE,
+		'attributes' => TRUE,
+		'subNodeNames' => TRUE,
+		'nodeType' => TRUE,
+		'parent' => TRUE,
+		'parentSubNodeName' => TRUE
 	);
 
 	/**
@@ -69,9 +69,11 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 		if ($nodes instanceof \PHPParser_Node) {
 			/** @var $nodes \PHPParser_Node */
 			$nodes->setParent($this, $subNodeName);
-		} else if (is_array($nodes)) {
-			foreach ($nodes as $node) {
-				$this->setSelfAsSubNodeParent($node, $subNodeName);
+		} else {
+			if (is_array($nodes)) {
+				foreach ($nodes as $node) {
+					$this->setSelfAsSubNodeParent($node, $subNodeName);
+				}
 			}
 		}
 	}
@@ -91,8 +93,8 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	protected function initalizeSubNodeNames() {
 		if (empty($this->subNodeNames)) {
 			foreach (array_keys(get_class_vars(get_class($this))) as $propertyName) {
-				if (!isset(static::$reservedProperties[$propertyName]) && method_exists($this, 'get' .ucfirst($propertyName))) {
-						$this->subNodeNames['get' .ucfirst($propertyName)] = $propertyName;
+				if (!isset(static::$reservedProperties[$propertyName]) && method_exists($this, 'get' . ucfirst($propertyName))) {
+					$this->subNodeNames['get' . ucfirst($propertyName)] = $propertyName;
 				}
 			}
 		}
@@ -156,14 +158,14 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	 * @return bool
 	 */
 	public function hasLineBreaks() {
-		if (null !== $this->ignorables) {
+		if (NULL !== $this->ignorables) {
 			foreach ($this->ignorables as $ignorable) {
-				if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->getValue(), PHP_EOL) !== false) {
-					return true;
+				if ($ignorable instanceof PHPParser_Node_Ignorable_Whitespace && strpos($ignorable->getValue(), PHP_EOL) !== FALSE) {
+					return TRUE;
 				}
 			}
 		}
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -183,7 +185,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAttribute($key, $default = null) {
+	public function getAttribute($key, $default = NULL) {
 		return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
 	}
 
@@ -207,19 +209,21 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 			// remove from existing parent
 			$childNode = $this->parent->{'get' . ucfirst($this->parentSubNodeName)}();
 			if (is_array($childNode)) {
-				foreach ($childNode as $key=>$node) {
+				foreach ($childNode as $key => $node) {
 					if ($this === $node) {
 						unset($childNode[$key]);
 						break;
 					}
 				}
 				$this->parent->{'set' . ucfirst($this->parentSubNodeName)}($childNode);
-			} else if ($childNode === $this) {
-				$this->parent->{'set' . ucfirst($this->parentSubNodeName)}();
+			} else {
+				if ($childNode === $this) {
+					$this->parent->{'set' . ucfirst($this->parentSubNodeName)}();
+				}
 			}
 		}
 		$this->parent = $parent;
-		$this->parentSubNodeName = (string) $parentSubNodeName;
+		$this->parentSubNodeName = (string)$parentSubNodeName;
 		return $this;
 	}
 

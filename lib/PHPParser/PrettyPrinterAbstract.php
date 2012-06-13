@@ -66,7 +66,7 @@ abstract class PHPParser_PrettyPrinterAbstract {
 
 	public function __construct() {
 		$this->precedenceStack = array($this->precedenceStackPos = 0 => 19);
-		$this->noIndentToken   = uniqid('_NO_INDENT_');
+		$this->noIndentToken = uniqid('_NO_INDENT_');
 	}
 
 	/**
@@ -77,7 +77,7 @@ abstract class PHPParser_PrettyPrinterAbstract {
 	 * @return string Pretty printed nodes
 	 */
 	public function prettyPrint(array $nodes) {
-		return str_replace(PHP_EOL . $this->noIndentToken, PHP_EOL, $this->pStmts($nodes, false));
+		return str_replace(PHP_EOL . $this->noIndentToken, PHP_EOL, $this->pStmts($nodes, FALSE));
 	}
 
 	/**
@@ -99,7 +99,7 @@ abstract class PHPParser_PrettyPrinterAbstract {
 	 *
 	 * @return string Pretty printed statements
 	 */
-	protected function pStmts(array $nodes, $indent = true, $singleLineCommentAllowed = false) {
+	protected function pStmts(array $nodes, $indent = TRUE, $singleLineCommentAllowed = FALSE) {
 //        $tempNodes = array();
 //        foreach ($nodes as $node) {
 //            $tempNodes = array_merge(
@@ -108,8 +108,8 @@ abstract class PHPParser_PrettyPrinterAbstract {
 //                array($node)
 //            );
 //        }
-		$pNodes        = array();
-		$nodeKey       = 0;
+		$pNodes = array();
+		$nodeKey = 0;
 		$useStatements = array();
 		foreach ($nodes as $node) {
 			$ignorableValue = $this->pIgnorable($node->getIgnorables() ? : array(), $singleLineCommentAllowed);
@@ -153,17 +153,17 @@ abstract class PHPParser_PrettyPrinterAbstract {
 	 * @param array $ignorables * @param bool $singleLineCommentAllowed
 	 * @return string
 	 */
-	protected function pIgnorable(array $ignorables, $singleLineCommentAllowed = false) {
+	protected function pIgnorable(array $ignorables, $singleLineCommentAllowed = FALSE) {
 		$pNodes = array();
-		if (null !== $ignorables && !empty($ignorables)) {
+		if (NULL !== $ignorables && !empty($ignorables)) {
 			foreach ($ignorables as $ignorable) {
-				switch (get_class($ignorable)) {
-					case 'PHPParser_Node_Ignorable_Comment':
-						$value    = trim($ignorable->getValue());
-						$value    = preg_replace('~^\s*\/\/\s+~m', '// ', $value);
+				switch ($ignorable) {
+					case $ignorable instanceof PHPParser_Node_Ignorable_Comment:
+						$value = trim($ignorable->getValue());
+						$value = preg_replace('~^\s*\/\/\s+~m', '// ', $value);
 						$pNodes[] = preg_replace('~^\s+\/\*+~m', '/*', $value);
 						break;
-					case 'PHPParser_Node_Ignorable_DocComment':
+					case $ignorable instanceof PHPParser_Node_Ignorable_DocComment:
 						$pNodes[] = $ignorable->toString($singleLineCommentAllowed);
 						break;
 				}
@@ -187,11 +187,11 @@ abstract class PHPParser_PrettyPrinterAbstract {
 
 			if ($precedence >= $this->precedenceStack[$this->precedenceStackPos]) {
 				$this->precedenceStack[++$this->precedenceStackPos] = $precedence;
-				$return                                             = '(' . $this->{'p' . $type}($node) . ')';
+				$return = '(' . $this->{'p' . $type}($node) . ')';
 				--$this->precedenceStackPos;
 			} else {
 				$this->precedenceStack[++$this->precedenceStackPos] = $precedence;
-				$return                                             = $this->{'p' . $type}($node);
+				$return = $this->{'p' . $type}($node);
 				--$this->precedenceStackPos;
 			}
 
@@ -225,7 +225,7 @@ abstract class PHPParser_PrettyPrinterAbstract {
 	 *
 	 * @return string Comma separated pretty printed nodes
 	 */
-	protected function pCommaSeparated(array $nodes, $indent = false) {
+	protected function pCommaSeparated(array $nodes, $indent = FALSE) {
 		if ($indent) {
 			$pNodes = array();
 			foreach ($nodes as $node) {

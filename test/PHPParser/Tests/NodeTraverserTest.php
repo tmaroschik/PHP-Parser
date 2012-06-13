@@ -6,7 +6,7 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase {
 		$str1Node = new PHPParser_Node_Scalar_String('Foo');
 		$str2Node = new PHPParser_Node_Scalar_String('Bar');
 		$echoNode = new PHPParser_Node_Stmt_Echo(array($str1Node, $str2Node));
-		$stmts    = array($echoNode);
+		$stmts = array($echoNode);
 
 		$visitor = $this->getMock('PHPParser_NodeVisitor');
 
@@ -20,14 +20,14 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase {
 		$visitor->expects($this->at(7))->method('afterTraverse')->with($stmts);
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor($visitor);
+		$traverser->appendVisitor($visitor);
 
 		$this->assertEquals($stmts, $traverser->traverse($stmts));
 	}
 
 	public function testModifying() {
-		$str1Node  = new PHPParser_Node_Scalar_String('Foo');
-		$str2Node  = new PHPParser_Node_Scalar_String('Bar');
+		$str1Node = new PHPParser_Node_Scalar_String('Foo');
+		$str2Node = new PHPParser_Node_Scalar_String('Bar');
 		$printNode = new PHPParser_Node_Expr_Print($str1Node);
 
 		// first visitor changes the node, second verifies the change
@@ -65,8 +65,8 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase {
 		$visitor2->expects($this->at(5))->method('afterTraverse')->with(array());
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor($visitor1);
-		$traverser->addVisitor($visitor2);
+		$traverser->appendVisitor($visitor1);
+		$traverser->appendVisitor($visitor2);
 
 		// as all objectives are reversed we end where we start
 		$this->assertEquals(array(), $traverser->traverse(array()));
@@ -80,20 +80,20 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase {
 
 		// remove the string1 node, leave the string2 node
 		$visitor->expects($this->at(2))->method('leaveNode')->with($str1Node)
-				->will($this->returnValue(false));
+				->will($this->returnValue(FALSE));
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor($visitor);
+		$traverser->appendVisitor($visitor);
 
 		$this->assertEquals(array($str2Node), $traverser->traverse(array($str1Node, $str2Node)));
 	}
 
 	public function testMerge() {
-		$strStart  = new PHPParser_Node_Scalar_String('Start');
+		$strStart = new PHPParser_Node_Scalar_String('Start');
 		$strMiddle = new PHPParser_Node_Scalar_String('End');
-		$strEnd    = new PHPParser_Node_Scalar_String('Middle');
-		$strR1     = new PHPParser_Node_Scalar_String('Replacement 1');
-		$strR2     = new PHPParser_Node_Scalar_String('Replacement 2');
+		$strEnd = new PHPParser_Node_Scalar_String('Middle');
+		$strR1 = new PHPParser_Node_Scalar_String('Replacement 1');
+		$strR2 = new PHPParser_Node_Scalar_String('Replacement 2');
 
 		$visitor = $this->getMock('PHPParser_NodeVisitor');
 
@@ -102,7 +102,7 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase {
 				->will($this->returnValue(array($strR1, $strR2)));
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor($visitor);
+		$traverser->appendVisitor($visitor);
 
 		$this->assertEquals(
 			array($strStart, $strR1, $strR2, $strEnd),
@@ -112,13 +112,13 @@ class PHPParser_Tests_NodeTraverserTest extends PHPUnit_Framework_TestCase {
 
 	public function testDeepArray() {
 		$strNode = new PHPParser_Node_Scalar_String('Foo');
-		$stmts   = array(array(array($strNode)));
+		$stmts = array(array(array($strNode)));
 
 		$visitor = $this->getMock('PHPParser_NodeVisitor');
 		$visitor->expects($this->at(1))->method('enterNode')->with($strNode);
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor($visitor);
+		$traverser->appendVisitor($visitor);
 
 		$this->assertEquals($stmts, $traverser->traverse($stmts));
 	}

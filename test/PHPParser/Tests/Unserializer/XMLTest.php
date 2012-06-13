@@ -37,7 +37,7 @@ XML;
 	}
 
 	public function testScalars() {
-		$xml    = <<<XML
+		$xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <AST xmlns:scalar="http://nikic.github.com/PHPParser/XML/scalar">
  <scalar:array>
@@ -60,7 +60,7 @@ XML;
 			'test', '', '',
 			1,
 			1, 1.5,
-			true, false, null
+			TRUE, FALSE, NULL
 		);
 
 		$unserializer = new PHPParser_Unserializer_XML;

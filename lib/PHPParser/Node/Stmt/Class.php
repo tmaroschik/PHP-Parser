@@ -9,12 +9,12 @@
  */
 class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 
-	const MODIFIER_PUBLIC    = 1;
+	const MODIFIER_PUBLIC = 1;
 	const MODIFIER_PROTECTED = 2;
-	const MODIFIER_PRIVATE   = 4;
-	const MODIFIER_STATIC    = 8;
-	const MODIFIER_ABSTRACT  = 16;
-	const MODIFIER_FINAL     = 32;
+	const MODIFIER_PRIVATE = 4;
+	const MODIFIER_STATIC = 8;
+	const MODIFIER_ABSTRACT = 16;
+	const MODIFIER_FINAL = 32;
 
 	/**
 	 * Contains type
@@ -55,9 +55,9 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 	 * @var array
 	 */
 	protected static $specialNames = array(
-		'self' => true,
-		'parent' => true,
-		'static' => true,
+		'self' => TRUE,
+		'parent' => TRUE,
+		'static' => TRUE,
 	);
 
 	/**
@@ -182,7 +182,7 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 	public function setImplements(array $implements = NULL) {
 		if (NULL !== $implements) {
 			foreach ($implements as $interface) {
-				$interfaceString = (string) $interface;
+				$interfaceString = (string)$interface;
 				if (isset(static::$specialNames[strtolower($interfaceString)])) {
 					throw new PHPParser_Error('Cannot use "' . $interfaceString . '" as interface name as it is reserved', $interface->getLine());
 				}
@@ -216,7 +216,7 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_Class
 	 */
 	public function setName($name) {
-		$name = (string) $name;
+		$name = (string)$name;
 		if (isset(self::$specialNames[strtolower($name)])) {
 			throw new PHPParser_Error('Cannot use "' . $name . '" as class name as it is reserved', $this->getLine());
 		}
@@ -307,7 +307,7 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_Class
 	 */
 	public function setType($type) {
-		$this->type = (int) $type;
+		$this->type = (int)$type;
 		return $this;
 	}
 

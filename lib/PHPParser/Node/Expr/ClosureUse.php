@@ -14,7 +14,7 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
 	 *
 	 * @var bool
 	 */
-	protected $byRef = false;
+	protected $byRef = FALSE;
 
 	/**
 	 * Constructs a closure use node.
@@ -24,7 +24,7 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct($var, $byRef = false, $line = -1, $ignorables = array()) {
+	public function __construct($var, $byRef = FALSE, $line = -1, $ignorables = array()) {
 		$this->setVar($var);
 		$this->setByRef($byRef);
 		parent::__construct($line, $ignorables);
@@ -35,7 +35,7 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
 	 * @return \PHPParser_Node_Expr_ClosureUse
 	 */
 	public function setByRef($byRef) {
-		$this->byRef = (bool) $byRef;
+		$this->byRef = (bool)$byRef;
 		return $this;
 	}
 
@@ -51,7 +51,7 @@ class PHPParser_Node_Expr_ClosureUse extends PHPParser_Node_Expr {
 	 * @return \PHPParser_Node_Expr_ClosureUse
 	 */
 	public function setVar($var) {
-		$this->var = (string) $var;
+		$this->var = (string)$var;
 		return $this;
 	}
 

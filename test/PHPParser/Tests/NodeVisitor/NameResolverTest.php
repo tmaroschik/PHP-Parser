@@ -6,7 +6,7 @@ class PHPParser_Tests_NodeVisitor_NameResolverTest extends PHPUnit_Framework_Tes
 	 * @covers PHPParser_NodeVisitor_NameResolver
 	 */
 	public function testResolveNames() {
-		$code         = <<<EOC
+		$code = <<<EOC
 <?php
 
 namespace Foo {
@@ -73,10 +73,10 @@ namespace {
 }
 EOC;
 
-		$parser        = new PHPParser_Parser;
+		$parser = new PHPParser_Parser;
 		$prettyPrinter = new PHPParser_PrettyPrinter_Zend;
-		$traverser     = new PHPParser_NodeTraverser;
-		$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+		$traverser = new PHPParser_NodeTraverser;
+		$traverser->appendVisitor(new PHPParser_NodeVisitor_NameResolver);
 
 		$stmts = $parser->parse(new PHPParser_Lexer_Emulative($code));
 		$stmts = $traverser->traverse($stmts);
@@ -88,7 +88,7 @@ EOC;
 	 * @covers PHPParser_NodeVisitor_NameResolver
 	 */
 	public function testResolveLocations() {
-		$code         = <<<EOC
+		$code = <<<EOC
 <?php
 namespace NS {
 	class A extends B implements C {
@@ -129,10 +129,10 @@ namespace NS {
 }
 EOC;
 
-		$parser        = new PHPParser_Parser;
+		$parser = new PHPParser_Parser;
 		$prettyPrinter = new PHPParser_PrettyPrinter_Zend;
-		$traverser     = new PHPParser_NodeTraverser;
-		$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+		$traverser = new PHPParser_NodeTraverser;
+		$traverser->appendVisitor(new PHPParser_NodeVisitor_NameResolver);
 
 		$stmts = $parser->parse(new PHPParser_Lexer_Emulative($code));
 		$stmts = $traverser->traverse($stmts);
@@ -144,7 +144,7 @@ EOC;
 		$stmts = array(new PHPParser_Node_Expr_New(new PHPParser_Node_Name('self')));
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+		$traverser->appendVisitor(new PHPParser_NodeVisitor_NameResolver);
 
 		$this->assertEquals($stmts, $traverser->traverse($stmts));
 	}
@@ -152,7 +152,7 @@ EOC;
 	protected function createNamespacedAndNonNamespaced(array $stmts) {
 		return array(
 			new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name('NS'), $stmts),
-			new PHPParser_Node_Stmt_Namespace(null, unserialize(serialize($stmts))),
+			new PHPParser_Node_Stmt_Namespace(NULL, unserialize(serialize($stmts))),
 		);
 	}
 
@@ -167,18 +167,20 @@ EOC;
 		));
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+		$traverser->appendVisitor(new PHPParser_NodeVisitor_NameResolver);
 
 		$stmts = $traverser->traverse($stmts);
 
 		$this->assertEquals('NS\\A', (string)$stmts[0]->getStmtAtIndex(0)->getAttribute('namespacedName'));
 		$this->assertEquals('NS\\B', (string)$stmts[0]->getStmtAtIndex(1)->getAttribute('namespacedName'));
 		$this->assertEquals('NS\\C', (string)$stmts[0]->getStmtAtIndex(2)->getAttribute('namespacedName'));
-		$this->assertEquals('NS\\D', (string)$stmts[0]->getStmtAtIndex(3)->getConstAtIndex(0)->getAttribute('namespacedName'));
+		$this->assertEquals('NS\\D', (string)$stmts[0]->getStmtAtIndex(3)->getConstAtIndex(0)
+				->getAttribute('namespacedName'));
 		$this->assertEquals('A', (string)$stmts[1]->getStmtAtIndex(0)->getAttribute('namespacedName'));
 		$this->assertEquals('B', (string)$stmts[1]->getStmtAtIndex(1)->getAttribute('namespacedName'));
 		$this->assertEquals('C', (string)$stmts[1]->getStmtAtIndex(2)->getAttribute('namespacedName'));
-		$this->assertEquals('D', (string)$stmts[1]->getStmtAtIndex(3)->getConstAtIndex(0)->getAttribute('namespacedName'));
+		$this->assertEquals('D', (string)$stmts[1]->getStmtAtIndex(3)->getConstAtIndex(0)
+				->getAttribute('namespacedName'));
 	}
 
 	public function testAddTraitNamespacedName() {
@@ -187,7 +189,7 @@ EOC;
 		));
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+		$traverser->appendVisitor(new PHPParser_NodeVisitor_NameResolver);
 
 		$stmts = $traverser->traverse($stmts);
 
@@ -208,7 +210,7 @@ EOC;
 		);
 
 		$traverser = new PHPParser_NodeTraverser;
-		$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver);
+		$traverser->appendVisitor(new PHPParser_NodeVisitor_NameResolver);
 		$traverser->traverse($stmts);
 	}
 }

@@ -30,7 +30,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 	}
 
 	public function pName_Relative(PHPParser_Node_Name_Relative $node) {
-		return (string) $node;
+		return (string)$node;
 	}
 
 	// Magic Constants
@@ -380,13 +380,13 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 	}
 
 	public function pExpr_ArrayItem(PHPParser_Node_Expr_ArrayItem $node) {
-		return (null !== $node->getKey() ? $this->p($node->getKey()) . ' => ' : '')
+		return (NULL !== $node->getKey() ? $this->p($node->getKey()) . ' => ' : '')
 				. ($node->getByRef() ? '&' : '') . $this->p($node->getValue());
 	}
 
 	public function pExpr_ArrayDimFetch(PHPParser_Node_Expr_ArrayDimFetch $node) {
 		return $this->pVarOrNewExpr($node->getVar())
-				. '[' . (null !== $node->getDim() ? $this->p($node->getDim()) : '') . ']';
+				. '[' . (NULL !== $node->getDim() ? $this->p($node->getDim()) : '') . ']';
 	}
 
 	public function pExpr_ConstFetch(PHPParser_Node_Expr_ConstFetch $node) {
@@ -432,18 +432,18 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 
 	public function pExpr_Ternary(PHPParser_Node_Expr_Ternary $node) {
 		return $this->p($node->getCond()) . ' ?'
-				. (null !== $node->getIf() ? ' ' . $this->p($node->getIf()) . ' ' : '')
+				. (NULL !== $node->getIf() ? ' ' . $this->p($node->getIf()) . ' ' : '')
 				. ': ' . $this->p($node->getElse());
 	}
 
 	public function pExpr_Exit(PHPParser_Node_Expr_Exit $node) {
-		return 'die' . (null !== $node->getExpr() ? '(' . $this->p($node->getExpr()) . ')' : '');
+		return 'die' . (NULL !== $node->getExpr() ? '(' . $this->p($node->getExpr()) . ')' : '');
 	}
 
 	// Declarations
 
 	public function pStmt_Namespace(PHPParser_Node_Stmt_Namespace $node) {
-		return 'namespace' . (null !== $node->getName() ? ' ' . $this->p($node->getName()) : '')
+		return 'namespace' . (NULL !== $node->getName() ? ' ' . $this->p($node->getName()) : '')
 				. ' {' . "\n" . $this->pStmts($node->getStmts()) . "\n" . '}';
 	}
 
@@ -467,7 +467,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 		$implements = $node->getImplements();
 		return $this->pModifiers($node->getType())
 				. 'class ' . $node->getName()
-				. (null !== $node->getExtends() ? ' extends ' . $this->p($node->getExtends()) : '')
+				. (NULL !== $node->getExtends() ? ' extends ' . $this->p($node->getExtends()) : '')
 				. (!empty($implements) ? ' implements ' . $this->pCommaSeparated($node->getImplements()) : '')
 				. "\n" . '{' . "\n" . $this->pStmts($node->getStmts()) . "\n" . '}';
 	}
@@ -491,10 +491,10 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 	}
 
 	public function pStmt_TraitUseAdaptation_Alias(PHPParser_Node_Stmt_TraitUseAdaptation_Alias $node) {
-		return (null !== $node->getTrait() ? $this->p($node->getTrait()) . '::' : '')
+		return (NULL !== $node->getTrait() ? $this->p($node->getTrait()) . '::' : '')
 				. $node->getMethod() . ' as'
-				. (null !== $node->getNewModifier() ? ' ' . $this->pModifiers($node->getNewModifier()) : '')
-				. (null !== $node->getNewName() ? ' ' . $node->getNewName() : '')
+				. (NULL !== $node->getNewModifier() ? ' ' . $this->pModifiers($node->getNewModifier()) : '')
+				. (NULL !== $node->getNewName() ? ' ' . $node->getNewName() : '')
 				. ';';
 	}
 
@@ -504,14 +504,14 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 
 	public function pStmt_PropertyProperty(PHPParser_Node_Stmt_PropertyProperty $node) {
 		return '$' . $node->getName()
-				. (null !== $node->getDefault() ? ' = ' . $this->p($node->getDefault()) : '');
+				. (NULL !== $node->getDefault() ? ' = ' . $this->p($node->getDefault()) : '');
 	}
 
 	public function pStmt_ClassMethod(PHPParser_Node_Stmt_ClassMethod $node) {
 		return $this->pModifiers($node->getType())
 				. 'function ' . ($node->getByRef() ? '&' : '') . $node->getName()
 				. '(' . $this->pCommaSeparated($node->getParams()) . ')'
-				. (null !== $node->getStmts()
+				. (NULL !== $node->getStmts()
 						? "\n" . '{' . "\n" . $this->pStmts($node->getStmts()) . "\n" . '}'
 						: ';');
 	}
@@ -545,7 +545,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 		return 'if (' . $this->p($node->getCond()) . ') {'
 				. "\n" . $this->pStmts($node->getStmts()) . "\n" . '}'
 				. $this->pImplode($node->getElseIfs())
-				. (null !== $node->getElse() ? $this->p($node->getElse()) : '');
+				. (NULL !== $node->getElse() ? $this->p($node->getElse()) : '');
 	}
 
 	public function pStmt_Elseif(PHPParser_Node_Stmt_Elseif $node) {
@@ -558,7 +558,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 	}
 
 	public function pStmt_For(PHPParser_Node_Stmt_For $node) {
-		$cond = $node->getCond() ;
+		$cond = $node->getCond();
 		$loop = $node->getLoop();
 		return 'for ('
 				. $this->pCommaSeparated($node->getInit()) . ';' . (!empty($cond) ? ' ' : '')
@@ -569,7 +569,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 
 	public function pStmt_Foreach(PHPParser_Node_Stmt_Foreach $node) {
 		return 'foreach (' . $this->p($node->getExpr()) . ' as '
-				. (null !== $node->getKeyVar() ? $this->p($node->getKeyVar()) . ' => ' : '')
+				. (NULL !== $node->getKeyVar() ? $this->p($node->getKeyVar()) . ' => ' : '')
 				. ($node->getByRef() ? '&' : '') . $this->p($node->getValueVar()) . ') {'
 				. "\n" . $this->pStmts($node->getStmts()) . "\n" . '}';
 	}
@@ -600,20 +600,20 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 	}
 
 	public function pStmt_Case(PHPParser_Node_Stmt_Case $node) {
-		return (null !== $node->getCond() ? 'case ' . $this->p($node->getCond()) : 'default') . ':'
+		return (NULL !== $node->getCond() ? 'case ' . $this->p($node->getCond()) : 'default') . ':'
 				. "\n" . $this->pStmts($node->getStmts()) . "\n";
 	}
 
 	public function pStmt_Break(PHPParser_Node_Stmt_Break $node) {
-		return 'break' . ($node->getNum() !== null ? ' ' . $this->p($node->getNum()) : '') . ';';
+		return 'break' . ($node->getNum() !== NULL ? ' ' . $this->p($node->getNum()) : '') . ';';
 	}
 
 	public function pStmt_Continue(PHPParser_Node_Stmt_Continue $node) {
-		return 'continue' . ($node->getNum() !== null ? ' ' . $this->p($node->getNum()) : '') . ';';
+		return 'continue' . ($node->getNum() !== NULL ? ' ' . $this->p($node->getNum()) : '') . ';';
 	}
 
 	public function pStmt_Return(PHPParser_Node_Stmt_Return $node) {
-		return 'return' . (null !== $node->getExpr() ? ' ' . $this->p($node->getExpr()) : '') . ';';
+		return 'return' . (NULL !== $node->getExpr() ? ' ' . $this->p($node->getExpr()) : '') . ';';
 	}
 
 	public function pStmt_Throw(PHPParser_Node_Stmt_Throw $node) {
@@ -644,7 +644,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 
 	public function pStmt_StaticVar(PHPParser_Node_Stmt_StaticVar $node) {
 		return '$' . $node->getName()
-				. (null !== $node->getDefault() ? ' = ' . $this->p($node->getDefault()) : '');
+				. (NULL !== $node->getDefault() ? ' = ' . $this->p($node->getDefault()) : '');
 	}
 
 	public function pStmt_Unset(PHPParser_Node_Stmt_Unset $node) {
@@ -698,7 +698,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 	public function pAssignList(array $elements) {
 		$pAssignList = array();
 		foreach ($elements as $element) {
-			if (null === $element) {
+			if (NULL === $element) {
 				$pAssignList[] = '';
 			} elseif (is_array($element)) {
 				$pAssignList[] = $this->pAssignList($element);

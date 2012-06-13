@@ -28,8 +28,8 @@ class PHPParser_Node_Stmt_UseUse extends PHPParser_Node_Stmt {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct(PHPParser_Node_Name $name, $alias = null, $line = -1, $ignorables = array()) {
-		if (null === $alias) {
+	public function __construct(PHPParser_Node_Name $name, $alias = NULL, $line = -1, $ignorables = array()) {
+		if (NULL === $alias) {
 			$alias = $name->getLast();
 		}
 		$this->setName($name);

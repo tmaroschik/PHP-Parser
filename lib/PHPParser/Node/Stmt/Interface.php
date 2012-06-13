@@ -32,9 +32,9 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	 * @var array
 	 */
 	protected static $specialNames = array(
-		'self' => true,
-		'parent' => true,
-		'static' => true,
+		'self' => TRUE,
+		'parent' => TRUE,
+		'static' => TRUE,
 	);
 
 	/**
@@ -107,7 +107,7 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	public function setExtends(array $extends = NULL) {
 		if (NULL !== $extends) {
 			foreach ($extends as $interface) {
-				$interfaceString = (string) $interface;
+				$interfaceString = (string)$interface;
 				if (isset(self::$specialNames[strtolower($interfaceString)])) {
 					throw new PHPParser_Error('Cannot use "' . $interfaceString . '" as interface name as it is reserved', $interface->getLine());
 				}
@@ -141,7 +141,7 @@ class PHPParser_Node_Stmt_Interface extends PHPParser_Node_Stmt {
 	 * @return \PHPParser_Node_Stmt_Interface
 	 */
 	public function setName($name) {
-		$name = (string) $name;
+		$name = (string)$name;
 		if (isset(self::$specialNames[strtolower($name)])) {
 			throw new PHPParser_Error('Cannot use "' . $name . '" as interface name as it is reserved', $this->getLine());
 		}

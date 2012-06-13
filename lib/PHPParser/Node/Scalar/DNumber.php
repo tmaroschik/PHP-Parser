@@ -30,7 +30,7 @@ class PHPParser_Node_Scalar_DNumber extends PHPParser_Node_Scalar {
 	 */
 	public static function parse($str) {
 		// if string contains any of .eE just cast it to float
-		if (false !== strpbrk($str, '.eE')) {
+		if (FALSE !== strpbrk($str, '.eE')) {
 			return (float)$str;
 		}
 

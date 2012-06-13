@@ -33,7 +33,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct($value = null, $line = -1, $ignorables = array()) {
+	public function __construct($value = NULL, $line = -1, $ignorables = array()) {
 		$this->setValue($value);
 		parent::__construct($line, $ignorables);
 	}
@@ -75,7 +75,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar {
 	 * @return string String with escape sequences parsed
 	 */
 	public static function parseEscapeSequences($str, $quote) {
-		if (null !== $quote) {
+		if (NULL !== $quote) {
 			$str = str_replace('\\' . $quote, $quote, $str);
 		}
 
@@ -116,11 +116,11 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar {
 		$str = preg_replace('~(\r\n|\n|\r)$~', '', $str);
 
 		// nowdoc string
-		if (false !== strpos($startToken, '\'')) {
+		if (FALSE !== strpos($startToken, '\'')) {
 			return $str;
 		}
 
-		return self::parseEscapeSequences($str, null);
+		return self::parseEscapeSequences($str, NULL);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class PHPParser_Node_Scalar_String extends PHPParser_Node_Scalar {
 	 * @return \PHPParser_Node_Scalar_String
 	 */
 	public function setValue($value) {
-		$this->value = (string) $value;
+		$this->value = (string)$value;
 		return $this;
 	}
 

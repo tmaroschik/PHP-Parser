@@ -19,8 +19,8 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer {
 		return $this->read($this->reader->depth);
 	}
 
-	protected function read($depthLimit, $throw = true, &$nodeFound = null) {
-		$nodeFound = true;
+	protected function read($depthLimit, $throw = TRUE, &$nodeFound = NULL) {
+		$nodeFound = TRUE;
 		while ($this->reader->read() && $depthLimit < $this->reader->depth) {
 			if (XMLReader::ELEMENT !== $this->reader->nodeType) {
 				continue;
@@ -35,7 +35,7 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer {
 			}
 		}
 
-		$nodeFound = false;
+		$nodeFound = FALSE;
 		if ($throw) {
 			throw new DomainException('Expected node or scalar');
 		}
@@ -48,10 +48,10 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer {
 		$node = unserialize(sprintf('O:%d:"%s":0:{}', strlen($className), $className));
 
 		$line = $this->reader->getAttribute('line');
-		$node->setLine(null !== $line ? $line : -1);
+		$node->setLine(NULL !== $line ? $line : -1);
 
 		$docComment = $this->reader->getAttribute('docComment');
-		if (null !== $docComment) {
+		if (NULL !== $docComment) {
 			$node->addIgnorable(new PHPParser_Node_Ignorable_DocComment($docComment));
 		}
 
@@ -67,7 +67,7 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer {
 				);
 			}
 
-			$subNodeName    = $this->reader->localName;
+			$subNodeName = $this->reader->localName;
 			$subNodeContent = $this->read($this->reader->depth);
 
 			$node->{'set' . ucfirst($subNodeName)}($subNodeContent);
@@ -81,8 +81,8 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer {
 			case 'array':
 				$depth = $this->reader->depth;
 				$array = array();
-				while (true) {
-					$node = $this->read($depth, false, $nodeFound);
+				while (TRUE) {
+					$node = $this->read($depth, FALSE, $nodeFound);
 					if (!$nodeFound) {
 						break;
 					}
@@ -93,13 +93,13 @@ class PHPParser_Unserializer_XML implements PHPParser_Unserializer {
 				return $this->reader->readString();
 			case 'int':
 				$text = $this->reader->readString();
-				if (false === $int = filter_var($text, FILTER_VALIDATE_INT)) {
+				if (FALSE === $int = filter_var($text, FILTER_VALIDATE_INT)) {
 					throw new DomainException(sprintf('"%s" is not a valid integer', $text));
 				}
 				return $int;
 			case 'float':
 				$text = $this->reader->readString();
-				if (false === $float = filter_var($text, FILTER_VALIDATE_FLOAT)) {
+				if (FALSE === $float = filter_var($text, FILTER_VALIDATE_FLOAT)) {
 					throw new DomainException(sprintf('"%s" is not a valid float', $text));
 				}
 				return $float;

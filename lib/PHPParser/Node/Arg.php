@@ -28,7 +28,7 @@ class PHPParser_Node_Arg extends PHPParser_NodeAbstract {
 	 * @param int $line Line
 	 * @param PHPParser_Node_Ignorable[] $ignorables All Ignorables
 	 */
-	public function __construct(PHPParser_Node_Expr $value, $byRef = false, $line = -1, $ignorables = array()) {
+	public function __construct(PHPParser_Node_Expr $value, $byRef = FALSE, $line = -1, $ignorables = array()) {
 		$this->setValue($value);
 		$this->setByRef($byRef);
 		parent::__construct($line, $ignorables);

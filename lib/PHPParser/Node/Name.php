@@ -69,7 +69,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract {
 	 * @return bool Whether the name is fully qualified
 	 */
 	public function isFullyQualified() {
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -78,7 +78,7 @@ class PHPParser_Node_Name extends PHPParser_NodeAbstract {
 	 * @return bool Whether the name is relative
 	 */
 	public function isRelative() {
-		return false;
+		return FALSE;
 	}
 
 	/**
