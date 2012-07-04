@@ -76,6 +76,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 				}
 			}
 		}
+		return $nodes;
 	}
 
 	/**
@@ -142,6 +143,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	 * @param array $ignorables Ignorables
 	 */
 	public function setIgnorables(array $ignorables) {
+		$this->setSelfAsSubNodeParent($ignorables, 'ignorables');
 		$this->ignorables = $ignorables;
 	}
 
@@ -151,6 +153,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 		if (!is_array($this->ignorables)) {
 			$this->ignorables = array();
 		}
+		$this->setSelfAsSubNodeParent($ignorable, 'ignorables');
 		$this->ignorables[] = $ignorable;
 	}
 
