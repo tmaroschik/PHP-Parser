@@ -696,12 +696,12 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract {
 	}
 
 	public function pModifiers($modifiers) {
-		return ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC ? 'public ' : '')
-				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED ? 'protected ' : '')
-				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE ? 'private ' : '')
-				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_STATIC ? 'static ' : '')
+		return ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_STATIC ? 'static ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT ? 'abstract ' : '')
-				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_FINAL ? 'final ' : '');
+				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_FINAL ? 'final ' : '')
+				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC ? 'public ' : '')
+				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED ? 'protected ' : '')
+				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE ? 'private ' : '');
 	}
 
 	public function pEncapsList(array $encapsList, $quote) {

@@ -100,14 +100,14 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	 */
 	protected function parseTag($line) {
 		$tagAndValue = array();
-		if (preg_match('/@[A-Za-z0-9\\\\]+\\\\([A-Za-z0-9]+)(?:\\((.*)\\))?$/', $line, $tagAndValue) === 0) {
+		if (preg_match('/@([A-Za-z0-9\\\-]+)(\(.*\))? ?(.*)/', $line, $tagAndValue) === 0) {
 			$tagAndValue = preg_split('/\s/', $line, 2);
 		} else {
 			array_shift($tagAndValue);
 		}
-		$tag = strtolower(trim($tagAndValue[0], '@'));
+		$tag = trim($tagAndValue[0].$tagAndValue[1], '@');
 		if (count($tagAndValue) > 1) {
-			$this->tags[$tag][] = trim($tagAndValue[1], ' "');
+			$this->tags[$tag][] = trim($tagAndValue[2], ' "');
 		} else {
 			$this->tags[$tag] = array();
 		}
@@ -116,8 +116,8 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	/**
 	 * Returns a string representation of the ignorable.
 	 *
-	 * @param bool $singleLineCommentAllowed * @return string String representation
-	 * @return string
+	 * @param bool $singleLineCommentAllowed
+	 * @return string String representation
 	 */
 	public function toString($singleLineCommentAllowed = FALSE) {
 		$docComment = array();
@@ -169,7 +169,7 @@ class PHPParser_Node_Ignorable_DocComment extends PHPParser_Node_Ignorable {
 	/**
 	 * @return array
 	 */
-	public function getTags() {
+	public function &getTags() {
 		return $this->tags;
 	}
 

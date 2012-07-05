@@ -7,7 +7,6 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	 */
 	static protected $reservedProperties = array(
 		'line' => TRUE,
-		'ignorables' => TRUE,
 		'attribute' => TRUE,
 		'attributes' => TRUE,
 		'subNodeNames' => TRUE,
