@@ -172,8 +172,7 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 		if (NULL != $this->stmts) {
 			$this->stmts = array();
 		}
-		$this->stmts[] = $stmt;
-		$this->setSelfAsSubNodeParent($stmt, 'stmts');
+		$this->stmts[] = $this->setSelfAsSubNodeParent($stmt, 'stmts');
 	}
 
 	/**
@@ -210,7 +209,7 @@ class PHPParser_Node_Stmt_If extends PHPParser_Node_Stmt {
 	/**
 	 * @param PHPParser_Node[] $stmts */
 	public function setStmts(array $stmts) {
-		$this->stmts = $stmts;
+		$this->stmts = $this->setSelfAsSubNodeParent($stmts, 'stmts');
 	}
 
 

@@ -699,6 +699,7 @@ class PHPParser_PrettyPrinter_TYPO3CGL extends PHPParser_PrettyPrinterAbstract {
 		return ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_STATIC ? 'static ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_ABSTRACT ? 'abstract ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_FINAL ? 'final ' : '')
+				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_LEGACY ? 'public ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC ? 'public ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED ? 'protected ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE ? 'private ' : '');

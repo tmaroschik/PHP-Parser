@@ -438,11 +438,11 @@ method_body:
 
 variable_modifiers:
       non_empty_member_modifiers                            { $$ = $1; }
-    | T_VAR                                                 { $$ = Stmt_Class::MODIFIER_PUBLIC; }
+    | T_VAR                                                 { $$ = Stmt_Class::MODIFIER_LEGACY; }
 ;
 
 method_modifiers:
-      /* empty */                                           { $$ = Stmt_Class::MODIFIER_PUBLIC; }
+      /* empty */                                           { $$ = Stmt_Class::MODIFIER_LEGACY; }
     | non_empty_member_modifiers                            { $$ = $1; }
 ;
 

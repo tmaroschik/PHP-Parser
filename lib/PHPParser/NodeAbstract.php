@@ -5,10 +5,11 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	/**
 	 * @var array
 	 */
-	static protected $reservedProperties = array(
+	static public $reservedProperties = array(
 		'line' => TRUE,
 		'attribute' => TRUE,
 		'attributes' => TRUE,
+		'ignorables' => TRUE,
 		'subNodeNames' => TRUE,
 		'nodeType' => TRUE,
 		'parent' => TRUE,
@@ -125,6 +126,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	 */
 	public function setLine($line) {
 		$this->line = (int)$line;
+		return $this;
 	}
 
 	/**
@@ -144,6 +146,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	public function setIgnorables(array $ignorables) {
 		$this->setSelfAsSubNodeParent($ignorables, 'ignorables');
 		$this->ignorables = $ignorables;
+		return $this;
 	}
 
 	/**
@@ -154,6 +157,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 		}
 		$this->setSelfAsSubNodeParent($ignorable, 'ignorables');
 		$this->ignorables[] = $ignorable;
+		return $this;
 	}
 
 	/**
@@ -175,6 +179,7 @@ abstract class PHPParser_NodeAbstract implements PHPParser_Node {
 	 */
 	public function setAttribute($key, $value) {
 		$this->attributes[$key] = $value;
+		return $this;
 	}
 
 	/**

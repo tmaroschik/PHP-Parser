@@ -675,6 +675,7 @@ class PHPParser_PrettyPrinter_Zend extends PHPParser_PrettyPrinterAbstract {
 
 	public function pModifiers($modifiers) {
 		return ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PUBLIC ? 'public ' : '')
+				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_LEGACY ? 'public ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PROTECTED ? 'protected ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE ? 'private ' : '')
 				. ($modifiers & PHPParser_Node_Stmt_Class::MODIFIER_STATIC ? 'static ' : '')

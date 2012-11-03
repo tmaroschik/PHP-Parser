@@ -15,6 +15,7 @@ class PHPParser_Node_Stmt_Class extends PHPParser_Node_Stmt {
 	const MODIFIER_STATIC = 8;
 	const MODIFIER_ABSTRACT = 16;
 	const MODIFIER_FINAL = 32;
+	const MODIFIER_LEGACY = 64;
 
 	/**
 	 * Contains type

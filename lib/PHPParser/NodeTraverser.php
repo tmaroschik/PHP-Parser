@@ -8,6 +8,16 @@ class PHPParser_NodeTraverser {
 	protected $visitors = array();
 
 	/**
+	 * @var array
+	 */
+	protected $levelVisitors = array();
+
+	/**
+	 * @var int
+	 */
+	protected $currentLevel = -1;
+
+	/**
 	 * @param PHPParser_NodeVisitor[] $visitors
 	 */
 	public function setVisitors(array $visitors = NULL) {
@@ -61,7 +71,7 @@ class PHPParser_NodeTraverser {
 				$nodes = $return;
 			}
 		}
-
+		$this->levelVisitors[$this->currentLevel + 1] = $this->visitors;
 		$nodes = $this->traverseArray($nodes);
 
 		foreach ($this->visitors as $visitor) {
@@ -80,13 +90,13 @@ class PHPParser_NodeTraverser {
 			if (is_array($node->$getterMethod())) {
 				$node->$setterMethod($this->traverseArray($node->$getterMethod()));
 			} elseif ($node->$getterMethod() instanceof PHPParser_Node) {
-				foreach ($this->visitors as $visitor) {
+				foreach ($this->levelVisitors[$this->currentLevel] as $visitor) {
 					if (NULL !== $return = $visitor->enterNode($node->$getterMethod())) {
 						$node->$setterMethod($return);
 					}
 				}
 				$node->$setterMethod($this->traverseNode($node->$getterMethod()));
-				foreach ($this->visitors as $visitor) {
+				foreach ($this->levelVisitors[$this->currentLevel] as $visitor) {
 					if (NULL !== $return = $visitor->leaveNode($node->$getterMethod())) {
 						$node->$setterMethod($return);
 					}
@@ -99,35 +109,49 @@ class PHPParser_NodeTraverser {
 
 	protected function traverseArray(array $nodes) {
 		$doNodes = array();
-
+		$this->currentLevel++;
+		if (!isset($this->levelVisitors[$this->currentLevel])) {
+			return $nodes;
+		}
+		$this->levelVisitors[$this->currentLevel + 1] = $this->levelVisitors[$this->currentLevel];
 		foreach ($nodes as $i => &$node) {
 			if (is_array($node)) {
 				$node = $this->traverseArray($node);
 			} elseif ($node instanceof PHPParser_Node) {
-				foreach ($this->visitors as $visitor) {
-					if (NULL !== $return = $visitor->enterNode($node)) {
-						$node = $return;
+				foreach ($this->levelVisitors[$this->currentLevel] as $key => $visitor) {
+					try {
+						if (NULL !== $return = $visitor->enterNode($node)) {
+							$node = $return;
+						}
+					} catch (PHPParser_Exception_EscapeDeeperTraversalException $e) {
+						unset($this->levelVisitors[$this->currentLevel + 1][$key]);
 					}
 				}
 
 				$node = $this->traverseNode($node);
 
-				foreach ($this->visitors as $visitor) {
-					$return = $visitor->leaveNode($node);
-
-					if (FALSE === $return) {
-						$doNodes[] = array($i, array());
-						break;
-					} elseif (is_array($return)) {
-						$doNodes[] = array($i, $return);
-						break;
-					} elseif (NULL !== $return) {
-						$node = $return;
+				foreach ($this->levelVisitors[$this->currentLevel] as $key =>  $visitor) {
+					try {
+						$return = $visitor->leaveNode($node);
+						if (FALSE === $return) {
+							$doNodes[] = array($i, array());
+							break;
+						} elseif (is_array($return)) {
+							$doNodes[] = array($i, $return);
+							break;
+						} elseif (NULL !== $return) {
+							$node = $return;
+						}
+					} catch (PHPParser_Exception_EscapeDeeperTraversalException $e) {
+						unset($this->levelVisitors[$this->currentLevel + 1][$key]);
 					}
 				}
 			}
 		}
-
+		if (isset($this->levelVisitors[$this->currentLevel + 1])) {
+			unset($this->levelVisitors[$this->currentLevel + 1]);
+		}
+		$this->currentLevel--;
 		if (!empty($doNodes)) {
 			while (list($i, $replace) = array_pop($doNodes)) {
 				array_splice($nodes, $i, 1, $replace);
